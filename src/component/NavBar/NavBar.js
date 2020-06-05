@@ -5,7 +5,7 @@ import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import classes from "./NavBar.module.css";
 
 const NavBar = () => {
-  const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [mustClear, setMustClear] = useState(false);
 
   return (
@@ -13,8 +13,7 @@ const NavBar = () => {
       <ul className={classes.List}>
         <Item
           item={"Categories"}
-          setOpen={setOpen}
-          open={open}
+          setVisible={setVisible}
           setMustClear={setMustClear}
         >
           <DropDownMenu
@@ -27,10 +26,10 @@ const NavBar = () => {
               "Toys and Games",
               "Hemo and Kitchen",
             ]}
-            setOpen={setOpen}
-            open={open}
+            visible={visible}
             mustClear={mustClear}
             setMustClear={setMustClear}
+            setVisible={setVisible}
           />
         </Item>
         <Item item="Deals" />

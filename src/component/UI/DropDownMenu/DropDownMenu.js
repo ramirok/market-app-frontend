@@ -7,22 +7,33 @@ import classes from "./DropDownMenu.module.css";
 import "./animationClasses.css";
 
 const DropDownMenu = (props) => {
-  const { list, styleCustom, setOpen, mustClear, setMustClear } = props;
+  const {
+    list,
+    styleCustom,
+    visible,
+    setVisible,
+    mustClear,
+    setMustClear,
+  } = props;
 
-  const [activeMenu, setActiveMenu] = useState("main");
+  console.log(visible);
+
   const [menuHeight, setMenuHeight] = useState(null);
-
-  const timerToClear = useRef(false);
+  const [dropDownClasses, setDropDownClasses] = useState(classes.Hidden);
+  const timerToClear = useRef(null);
 
   useEffect(() => {
-    console.log(mustClear);
+    clearTimeout(timerToClear.current);
+    visible
+      ? setDropDownClasses(classes.Visible)
+      : setDropDownClasses(classes.Hidden);
 
     if (mustClear) {
       timerToClear.current = setTimeout(() => {
-        setOpen(false);
-      }, 700);
+        setVisible(false);
+      }, 600);
     }
-  }, [mustClear, setOpen]);
+  }, [visible, mustClear, setVisible]);
 
   const calcHeight = (el) => {
     const height = el.offsetHeight;
@@ -30,74 +41,24 @@ const DropDownMenu = (props) => {
   };
 
   const dropDown = (
-    <CSSTransition
-      in={activeMenu === "main"}
-      unmountOnExit
-      timeout={200}
-      classNames="menu-primary"
-      onEnter={calcHeight}
-    >
-      <div className="menu">
-        {list.map((el) => (
-          <DropDownItem key={el}>{el}</DropDownItem>
-        ))}
-      </div>
-    </CSSTransition>
-  );
-
-  return (
     <div
-      className={classes.DropDown}
+      className={dropDownClasses}
       style={{ height: menuHeight, ...styleCustom }}
       onMouseEnter={() => {
-        clearTimeout(timerToClear.current);
         setMustClear(false);
-        setOpen(true);
+        setVisible(true);
       }}
       onMouseLeave={() => {
         setMustClear(true);
       }}
     >
-      {dropDown}
-      {/* <CSSTransition
-        in={activeMenu === "main"}
-        unmountOnExit
-        timeout={200}
-        classNames="menu-primary"
-        onEnter={calcHeight}
-      >
-        <div className="menu">
-          <DropDownItem changeState={setActiveMenu} goToMenu="settings">
-            My Profile
-          </DropDownItem>
-          <DropDownItem>Settings</DropDownItem>
-        </div>
-      </CSSTransition> */}
-
-      {/* <CSSTransition
-        in={activeMenu === "settings"}
-        unmountOnExit
-        timeout={200}
-        classNames="menu-secondary"
-        onEnter={calcHeight}
-      >
-        <div className="menu">
-          <DropDownItem>account</DropDownItem>
-          <DropDownItem>account</DropDownItem>
-          <DropDownItem>account</DropDownItem>
-          <DropDownItem>account</DropDownItem>
-          <DropDownItem>account</DropDownItem>
-          <DropDownItem>account</DropDownItem>
-          <DropDownItem>account</DropDownItem>
-          <DropDownItem>account</DropDownItem>
-
-          <DropDownItem changeState={setActiveMenu} goToMenu="main">
-            back
-          </DropDownItem>
-        </div>
-      </CSSTransition> */}
+      {list.map((el) => (
+        <DropDownItem key={el}>{el}</DropDownItem>
+      ))}
     </div>
   );
+
+  return dropDown;
 };
 
 export default DropDownMenu;

@@ -4,16 +4,27 @@ import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import classes from "./MyAccount.module.css";
 
 const MyAccount = () => {
-  const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [mustClear, setMustClear] = useState(false);
   return (
-    <span className={classes.MyAccount} onMouseEnter={() => setOpen(true)}>
+    <span
+      className={classes.MyAccount}
+      onMouseEnter={() => {
+        setMustClear(false);
+        setVisible(true);
+      }}
+      onMouseLeave={() => {
+        setMustClear(true);
+      }}
+    >
       My Account
-      {open && (
-        <DropDownMenu
-          list={["Your Account", "Your Orderds", "Security", "Log Out"]}
-          setOpen={setOpen}
-        />
-      )}
+      <DropDownMenu
+        list={["Your Account", "Your Orderds", "Security", "Log Out"]}
+        visible={visible}
+        mustClear={mustClear}
+        setMustClear={setMustClear}
+        setVisible={setVisible}
+      />
     </span>
   );
 };

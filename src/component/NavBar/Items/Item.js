@@ -2,22 +2,30 @@ import React from "react";
 import classes from "./Item.module.css";
 
 const Item = (props) => {
+  const { setVisible, setMustClear } = props;
+
   return (
     <li className={classes.Item}>
       <span
         onMouseEnter={
-          props.setOpen
+          setVisible
             ? () => {
-                props.setOpen(true);
-                props.setMustClear(false);
+                setMustClear(false);
+                setVisible(true);
               }
             : null
         }
-        onMouseLeave={props.setOpen ? () => props.setMustClear(true) : null}
+        onMouseLeave={
+          setMustClear
+            ? () => {
+                setMustClear(true);
+              }
+            : null
+        }
       >
         {props.item}
       </span>
-      {props.open && props.children}
+      {props.children}
     </li>
   );
 };
