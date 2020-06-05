@@ -1,0 +1,9 @@
+.Container {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template:
+    [start-searchbar] 8rem [ end-searchbar start-navbar] 5rem [end-navbar start-body] 1fr [end-body start-footer] 4rem [end-footer] /
+    [start-footer] 3vw [start-name] 1fr [end-name start-content] 1fr [end-content] 3vw [end-footer];
+  gap: 10px;
+}

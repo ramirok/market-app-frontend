@@ -1,0 +1,42 @@
+.HeaderBack {
+  grid-row: start-searchbar/end-navbar;
+  grid-column: start-footer / end-footer;
+  background-color: #dde1ed;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin: 0 1rem;
+}
+
+.SearchBarContainer {
+  grid-row: start-searchbar/end-searchbar;
+  grid-column: start-name/end-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Logo {
+  position: absolute;
+  height: 6rem;
+  width: 6rem;
+  background-color: #5b7bf4;
+  border-radius: 50%;
+  left: 5%;
+  cursor: pointer;
+}
+
+.SearchBar {
+  width: 60%;
+  border: none;
+  border-radius: 10px;
+  height: 3.4rem;
+  padding-left: 1rem;
+}
+
+.Button {
+  position: absolute;
+  right: 20.2%;
+  width: 10rem;
+  background-color: #5b7bf4;
+}

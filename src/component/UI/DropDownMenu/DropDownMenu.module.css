@@ -1,0 +1,11 @@
+.DropDown {
+  margin-top: 1rem;
+  position: absolute;
+  width: 20rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 10px 10px 50px -20px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+
+  transition: all 0.2s;
+}

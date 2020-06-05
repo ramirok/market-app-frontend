@@ -1,0 +1,15 @@
+.MenuItem {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  height: 3rem;
+  font-weight: 400;
+  color: black;
+  transition: all 0.4s;
+  padding: 2rem;
+}
+
+.MenuItem:hover {
+  background-color: #dde1ed;
+  border-radius: 5px;
+}

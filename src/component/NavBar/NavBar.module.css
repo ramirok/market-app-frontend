@@ -1,0 +1,9 @@
+.NavBar {
+  grid-row: start-navbar/end-navbar;
+  grid-column: start-name / end-content;
+  display: flex;
+  justify-content: center;
+}
+.List {
+  display: flex;
+}

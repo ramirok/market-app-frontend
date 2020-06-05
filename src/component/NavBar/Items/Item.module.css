@@ -1,0 +1,24 @@
+.Item {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-decoration: none;
+  padding: 0 7rem;
+  color: rgb(50, 50, 50);
+  list-style: none;
+  cursor: pointer;
+}
+
+.Link {
+  text-decoration: none;
+  transition: all 0.2s;
+  color: rgb(50, 50, 50);
+}
+
+.Link:visited {
+  color: rgb(50, 50, 50);
+}
+
+.Link:hover {
+  color: black;
+}

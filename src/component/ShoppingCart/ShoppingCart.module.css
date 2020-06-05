@@ -1,0 +1,10 @@
+.Cart {
+  position: absolute;
+  right: 1%;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-decoration: none;
+  cursor: pointer;
+  color: rgb(50, 50, 50);
+}
