@@ -1,9 +1,13 @@
 .Container {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: grid;
+
   grid-template:
-    [start-searchbar] 8rem [ end-searchbar start-navbar] 5rem [end-navbar start-body] 1fr [end-body start-footer] 4rem [end-footer] /
-    [start-footer] 3vw [start-name] 1fr [end-name start-content] 1fr [end-content] 3vw [end-footer];
+    [start-header] 8rem [end-header start-navbar] 5rem [end-navbar start-content] 1fr [end-content ] /
+    [start-footer] 3vw [start-name] minmax(0, 1fr)
+    [end-name start-content] 1fr [end-content] 3vw [end-footer];
   gap: 10px;
+  grid-auto-flow: row;
+  align-content: stretch;
 }

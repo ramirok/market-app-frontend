@@ -1,0 +1,72 @@
+.Head {
+  margin-top: -1rem;
+  grid-column: start-footer/end-footer;
+  grid-row: start-content/end-content;
+  background-color: #eeeeee;
+  height: 10rem;
+  width: 100%;
+}
+
+.CategoryContainer {
+  grid-column: start-name/end-content;
+  grid-row: start-content/end-content;
+  justify-self: end;
+  width: 110rem;
+  margin: 6rem 0;
+  height: 35rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.Categories {
+  align-self: center;
+  grid-column: start-name/end-name;
+  grid-row: start-content/end-content;
+  height: 35rem;
+  width: 15rem;
+  background-color: white;
+  box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
+  text-align: center;
+}
+
+.Item {
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+  line-height: 5rem;
+  font-size: 1.5rem;
+  color: rgb(50, 50, 50);
+  text-decoration: none;
+  position: relative;
+}
+
+.Item::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 0;
+  background-color: #5b7bf4;
+  bottom: 0;
+  left: 0;
+  transition: all 0.2s;
+}
+
+.Item:hover::after {
+  width: 100%;
+  opacity: 0.5;
+}
+
+.Item_active {
+  position: relative;
+  font-weight: 700;
+}
+
+.Item_active::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background-color: #5b7bf4;
+  bottom: 0;
+  left: 0;
+}

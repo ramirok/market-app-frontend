@@ -3,15 +3,16 @@
   border: 0;
   border-radius: 10px;
   color: white;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-weight: 700;
   cursor: pointer;
-}
-
-.ButtonGeneral:hover {
-  transform: scale(1.02);
+  transition: all 0.2s;
 }
 
 .ButtonGeneral:active {
-  transform: scale(1);
+  transform: scale(0.96);
+}
+
+.ButtonGeneral:focus {
+  outline: none;
 }

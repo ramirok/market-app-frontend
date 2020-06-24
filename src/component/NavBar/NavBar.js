@@ -1,37 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Item from "./Items/Item";
-import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import classes from "./NavBar.module.css";
 
+// SVG imports
+import { ReactComponent as Vegetables } from "../../assets/categories/vegetables.svg";
+import { ReactComponent as Fruits } from "../../assets/categories/fruits.svg";
+import { ReactComponent as Spices } from "../../assets/categories/spices.svg";
+import { ReactComponent as Snacks } from "../../assets/categories/snacks.svg";
+import { ReactComponent as Canned } from "../../assets/categories/canned.svg";
+
 const NavBar = () => {
-  const [visible, setVisible] = useState(false);
-  const [mustClear, setMustClear] = useState(false);
+  // DropDownMenu list items
+  const svgStyle = { height: "2rem", width: "2rem" };
+  const list = {
+    Vegetables: <Vegetables style={{ height: "2rem", width: "2rem" }} />,
+    Fruits: <Fruits style={svgStyle} />,
+    Spices: <Spices style={svgStyle} />,
+    Snacks: <Snacks style={svgStyle} />,
+    "Canned products": <Canned style={svgStyle} />,
+  };
 
   return (
     <nav className={classes.NavBar}>
       <ul className={classes.List}>
         <Item
           item={"Categories"}
-          setVisible={setVisible}
-          setMustClear={setMustClear}
-        >
-          <DropDownMenu
-            list={[
-              "Arts & Craft",
-              " Beauty and Personal Care",
-              "Electronics",
-              "Women's Fashion",
-              "Men's Fashion",
-              "Toys and Games",
-              "Hemo and Kitchen",
-            ]}
-            visible={visible}
-            mustClear={mustClear}
-            setMustClear={setMustClear}
-            setVisible={setVisible}
-          />
-        </Item>
+          dropDownMenu={{
+            list: list,
+          }}
+        />
         <Item item="Deals" />
         <Item item="History" />
         <Item item="Help" />

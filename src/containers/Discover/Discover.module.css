@@ -1,0 +1,15 @@
+.DiscoverContainer {
+  position: relative;
+  grid-column: start-name/end-content;
+  width: 100%;
+  padding-top: 2rem;
+}
+
+.Name {
+  position: absolute;
+  top: 1rem;
+  left: 5rem;
+  font-family: "Nunito", sans-serif;
+  font-size: 2rem;
+  color: grey;
+}

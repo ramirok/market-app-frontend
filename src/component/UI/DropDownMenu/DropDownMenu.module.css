@@ -1,6 +1,12 @@
 .Hidden {
-  display: none;
+  margin-top: 1rem;
   position: absolute;
+  width: 20rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 10px 10px 50px -20px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  display: none;
 }
 
 .Visible {
@@ -11,4 +17,23 @@
   border-radius: 10px;
   box-shadow: 10px 10px 50px -20px rgba(0, 0, 0, 0.75);
   overflow: hidden;
+  animation-name: appears;
+  animation-duration: 0.3s;
+  z-index: 1;
+}
+
+@keyframes appears {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.LogoContainer {
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
 }

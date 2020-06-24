@@ -1,10 +1,46 @@
-.MyAccount {
-  position: absolute;
-  right: 7%;
-  font-family: "Montserrat", sans-serif;
+.MyAccountContainer {
+  font-family: "Nunito", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
   text-decoration: none;
   cursor: pointer;
-  color: rgb(50, 50, 50);
+  color: white;
+  height: 3.4rem;
+  text-align: center;
+  line-height: 3.4rem;
+  box-shadow: 10px 10px 60px -14px rgba(0, 0, 0, 0.75);
+}
+
+.MyAccount {
+  display: inline-block;
+  background-color: #5b7bf4;
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 10rem;
+  transition: all 0.2s;
+  position: relative;
+  bottom: 1.2rem;
+}
+
+.MyAccount:active {
+  transform: scale(0.95);
+}
+
+.Bell {
+  display: inline-block;
+  cursor: pointer;
+  background-color: #5b7bf4;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 2.5rem;
+  height: 3.4rem;
+  margin-left: 2px;
+  transition: all 0.2s;
+  padding: 0.4rem;
+}
+
+.Bell:active {
+  transform: scale(0.95);
 }

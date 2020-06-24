@@ -1,24 +1,37 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import Button from "../../component/Button/Button";
+import Logo from "../../component/Logo/Logo";
 import NavBar from "../../component/NavBar/NavBar";
 import classes from "./Header.module.css";
 import ShoppingCart from "../../component/ShoppingCart/ShoppingCart";
 import MyAccount from "../../component/MyAccount/MyAccount";
+import Login from "../../component/Login/Login";
+import SignUp from "../../component/SignUp/SignUp";
 
 const Header = () => {
+  const isLogged = useSelector((state) => state.auth);
+
   return (
-    <>
-      <div className={classes.HeaderBack} />
+    <div className={classes.HeaderContainer}>
+      <Logo />
       <div className={classes.SearchBarContainer}>
-        <div className={classes.Logo}></div>
         <input type="text" className={classes.SearchBar} />
-        <Button name="Search" classFromProps={classes.Button} />
-        <MyAccount />
-        <ShoppingCart />
+        <Button text="Search" classFromProps={classes.Button} />
+        <NavBar />
       </div>
-      <NavBar />
-    </>
+      {isLogged.userId ? (
+        <>
+          <MyAccount />
+          <ShoppingCart />
+        </>
+      ) : (
+        <>
+          <Login /> <SignUp />
+        </>
+      )}
+    </div>
   );
 };
 

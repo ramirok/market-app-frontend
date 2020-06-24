@@ -1,0 +1,23 @@
+.LogoContainer {
+  text-align: center;
+}
+
+.Logo {
+  cursor: pointer;
+  height: 6rem;
+  width: 6rem;
+  background-color: #5b7bf4;
+  border-radius: 15px;
+  padding: 0.5rem;
+  box-shadow: 10px 10px 60px -14px rgba(0, 0, 0, 0.75);
+  transition: all 0.2s;
+}
+
+.Logo:active {
+  transform: scale(0.95);
+}
+
+.AppName {
+  font-family: "Amatic SC", cursive;
+  font-size: 4rem;
+}

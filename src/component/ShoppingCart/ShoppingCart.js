@@ -1,34 +1,41 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import classes from "./ShoppingCart.module.css";
+
+// SVG imports
 import { ReactComponent as Shopping } from "../../assets/shopping-cart.svg";
 
 const ShoppingCart = () => {
+  //Toggles dropDownMenu visibility onClick and onLeave
   const [visible, setVisible] = useState(false);
-  const [mustClear, setMustClear] = useState(false);
-  return (
-    <span className={classes.Cart}>
-      <Shopping
-        style={{ height: "3rem", width: "3rem" }}
-        onMouseEnter={() => {
-          setMustClear(false);
-          setVisible(true);
-        }}
-        onMouseLeave={() => {
-          setMustClear(true);
-        }}
-      />
 
+  const cartItems = useSelector((state) => state.cart);
+
+  const list = { ...cartItems };
+
+  const clicked = () => console.log("removed");
+
+  return (
+    <div
+      className={classes.CartContainer}
+      onClick={() => {
+        setVisible(true);
+      }}
+      onMouseLeave={() => {
+        setVisible(false);
+      }}
+    >
+      <Shopping className={classes.Bag} />
       <DropDownMenu
-        list={["Items", "Items2", "Items3", "View Shopping Cart"]}
-        styleCustom={{ right: "-3rem" }}
+        list={list}
+        styleCustom={{ right: "2rem" }}
         visible={visible}
-        mustClear={mustClear}
-        setMustClear={setMustClear}
         setVisible={setVisible}
+        clicked={clicked}
       />
-    </span>
+    </div>
   );
 };
 

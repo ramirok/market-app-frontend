@@ -1,0 +1,11 @@
+.NewArrivalsContainer {
+  grid-column: start-name/end-name;
+  max-width: 100%;
+  height: 20rem;
+  background-color: #dde1ed;
+  border-radius: 20px;
+  position: relative;
+  margin-top: 3rem;
+  overflow: hidden;
+  margin-right: 1rem;
+}

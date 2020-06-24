@@ -1,0 +1,34 @@
+.InputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.Input {
+  border: none;
+  border-bottom: 2px solid #dddddd;
+  height: 3rem;
+  margin-top: 1rem;
+}
+
+.InputContainer::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background-color: blue;
+  transition: all 0.2s;
+  opacity: 0.3;
+}
+
+.InputContainer:hover::after {
+  width: 100%;
+  opacity: 0.3;
+}
+
+.InputContainer .Input:focus {
+  border-bottom: 2px solid #5b7bf4;
+}

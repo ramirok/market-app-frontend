@@ -1,12 +1,24 @@
 .MenuItem {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   text-decoration: none;
   height: 3rem;
   font-weight: 400;
   color: black;
-  /* transition: all 0.4s; */
   padding: 2rem;
+  position: relative;
+  outline: none;
+}
+.MenuItem::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 70%;
+  background-color: #eeeeee;
+  bottom: 1%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .MenuItem:hover {

@@ -1,64 +1,56 @@
-import React, { useState, useEffect, useRef } from "react";
-import { CSSTransition } from "react-transition-group";
+import React, { useState, useEffect } from "react";
 
 import DropDownItem from "./DropDownItem/DropDownItem";
 import classes from "./DropDownMenu.module.css";
 
-import "./animationClasses.css";
-
-const DropDownMenu = (props) => {
-  const {
-    list,
-    styleCustom,
-    visible,
-    setVisible,
-    mustClear,
-    setMustClear,
-  } = props;
-
-  console.log(visible);
-
-  const [menuHeight, setMenuHeight] = useState(null);
+const DropDownMenu = React.memo((props) => {
+  // Toggle component classes when props.visible changes
   const [dropDownClasses, setDropDownClasses] = useState(classes.Hidden);
-  const timerToClear = useRef(null);
 
+  /*
+  Recives:
+  -list: menu item list
+  -styleCustom: custom inline-style
+  -visible: visible state
+  -setVisible: toggle visible state
+  */
+  const { list, styleCustom, visible, setVisible } = props;
+
+  // When visible state changes to false, class will set to hidden in 600ms
   useEffect(() => {
-    clearTimeout(timerToClear.current);
-    visible
-      ? setDropDownClasses(classes.Visible)
-      : setDropDownClasses(classes.Hidden);
-
-    if (mustClear) {
-      timerToClear.current = setTimeout(() => {
-        setVisible(false);
+    let timerToClear;
+    if (!visible) {
+      timerToClear = setTimeout(() => {
+        setDropDownClasses(classes.Hidden);
       }, 600);
+    } else {
+      setDropDownClasses(classes.Visible);
     }
-  }, [visible, mustClear, setVisible]);
+    return function () {
+      clearTimeout(timerToClear);
+    };
+  }, [visible]);
 
-  const calcHeight = (el) => {
-    const height = el.offsetHeight;
-    setMenuHeight(height);
-  };
-
-  const dropDown = (
+  return (
     <div
       className={dropDownClasses}
-      style={{ height: menuHeight, ...styleCustom }}
+      style={{ ...styleCustom }}
       onMouseEnter={() => {
-        setMustClear(false);
         setVisible(true);
       }}
       onMouseLeave={() => {
-        setMustClear(true);
+        setVisible(false);
       }}
     >
-      {list.map((el) => (
-        <DropDownItem key={el}>{el}</DropDownItem>
+      {/* Returns a dropDownItem for every key on list object*/}
+      {Object.keys(list).map((el) => (
+        <DropDownItem key={el} to={el}>
+          <span>{el}</span>
+          <span className={classes.LogoContainer}>{list[el]}</span>
+        </DropDownItem>
       ))}
     </div>
   );
-
-  return dropDown;
-};
+});
 
 export default DropDownMenu;

@@ -1,15 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./DropDownItem.module.css";
 
 const DropDownItem = (props) => {
+  /*
+  Recives:
+  -to
+  -props.children
+  */
+  const { to } = props;
   return (
-    <span
-      className={classes.MenuItem}
-      onClick={() => props.goToMenu && props.changeState(props.goToMenu)}
-    >
+    <Link to={to.toLowerCase().replace(" ", "-")} className={classes.MenuItem}>
       {props.children}
-    </span>
+    </Link>
   );
 };
 
