@@ -1,20 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import classes from "./DropDownItem.module.css";
+import classes from "./DropDownItemLink.module.css";
 
-const DropDownItem = (props) => {
+const DropDownItemLink = (props) => {
   /*
   Recives:
   -to
   -props.children
   */
-  const { to } = props;
+  const { to, name, img } = props;
   return (
     <Link to={to.toLowerCase().replace(" ", "-")} className={classes.MenuItem}>
-      {props.children}
+      <span>{name}</span>
+      <span>{img}</span>
     </Link>
   );
 };
 
-export default DropDownItem;
+export default DropDownItemLink;

@@ -19,7 +19,7 @@
   overflow: hidden;
   animation-name: appears;
   animation-duration: 0.3s;
-  z-index: 1;
+  z-index: 2;
 }
 
 @keyframes appears {

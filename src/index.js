@@ -10,6 +10,7 @@ import signupReducer from "./store/reducers/signup";
 import cartReducer from "./store/reducers/cart";
 import App from "./App";
 import "./index.css";
+import { loadState, saveState } from "./utils/localStorage";
 
 const rootReducer = combineReducers({
   signup: signupReducer,
@@ -17,7 +18,13 @@ const rootReducer = combineReducers({
   cart: cartReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const persistentState = loadState();
+
+const store = createStore(rootReducer, persistentState, applyMiddleware(thunk));
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
 
 ReactDOM.render(
   // <React.StrictMode>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import DropDownMenu from "../../UI/DropDownMenu/DropDownMenu";
 import classes from "./Item.module.css";
+import DropDownItemLink from "../../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
 
 const Item = (props) => {
   // Toggles dropDownMenu visibility onEnter and onLeave
@@ -38,11 +39,16 @@ Recives:
       </span>
       {/* Renders dropDownMenu if item recives dropDownMenu as props */}
       {dropDownMenu && (
-        <DropDownMenu
-          {...dropDownMenu}
-          visible={visible}
-          setVisible={setVisible}
-        />
+        <DropDownMenu visible={visible} setVisible={setVisible}>
+          {Object.keys(dropDownMenu).map((el) => (
+            <DropDownItemLink
+              key={el}
+              to={el}
+              img={dropDownMenu[el]}
+              name={el}
+            />
+          ))}
+        </DropDownMenu>
       )}
     </li>
   );

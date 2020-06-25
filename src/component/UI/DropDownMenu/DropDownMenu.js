@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import DropDownItem from "./DropDownItem/DropDownItem";
 import classes from "./DropDownMenu.module.css";
 
 const DropDownMenu = React.memo((props) => {
@@ -14,7 +13,7 @@ const DropDownMenu = React.memo((props) => {
   -visible: visible state
   -setVisible: toggle visible state
   */
-  const { list, styleCustom, visible, setVisible } = props;
+  const { styleCustom, visible, setVisible } = props;
 
   // When visible state changes to false, class will set to hidden in 600ms
   useEffect(() => {
@@ -42,13 +41,7 @@ const DropDownMenu = React.memo((props) => {
         setVisible(false);
       }}
     >
-      {/* Returns a dropDownItem for every key on list object*/}
-      {Object.keys(list).map((el) => (
-        <DropDownItem key={el} to={el}>
-          <span>{el}</span>
-          <span className={classes.LogoContainer}>{list[el]}</span>
-        </DropDownItem>
-      ))}
+      {props.children}
     </div>
   );
 });

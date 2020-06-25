@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import Header from "./containers/Header/Header";
 import Footer from "./component/Footer/Footer";
@@ -15,11 +14,6 @@ import Logout from "./component/Logout/Logout";
 import classes from "./App.module.css";
 
 const App = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const user = window.localStorage.getItem("logged");
-    dispatch({ type: "LOGIN_SUCCESS", ...JSON.parse(user) });
-  });
   return (
     <div className={classes.Container}>
       <Header />

@@ -1,0 +1,47 @@
+.MenuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  height: 3rem;
+  font-weight: 400;
+  color: black;
+  padding: 2rem;
+  padding-right: 1rem;
+  position: relative;
+  outline: none;
+}
+.MenuItem::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 70%;
+  background-color: #eeeeee;
+  bottom: 1%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.MenuItem:hover {
+  background-color: #dde1ed;
+  border-radius: 5px;
+}
+
+.Name {
+  flex-grow: 1;
+}
+
+.Number {
+  color: white;
+  background-color: #5b7bf4;
+  min-width: 3rem;
+  text-align: center;
+  border-radius: 5px;
+  margin-right: 1rem;
+}
+.Delete {
+  font-weight: 900;
+  min-width: 2rem;
+  text-align: center;
+  border-radius: 5px;
+}

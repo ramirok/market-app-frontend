@@ -40,7 +40,7 @@ const Category = () => {
         <ul style={{ listStyle: "none" }}>
           {/* Sets a link for every category */}
           {categoryList.map((el) => (
-            <li>
+            <li key={el}>
               <NavLink
                 className={classes.Item}
                 activeClassName={classes.Item_active}
@@ -55,7 +55,7 @@ const Category = () => {
       <div className={classes.CategoryContainer}>
         {/* Sets a card for every item  */}
         {items.map((el) => (
-          <Card {...el} />
+          <Card {...el} key={el.name} />
         ))}
       </div>
     </>

@@ -14,7 +14,7 @@ const NavBar = () => {
   // DropDownMenu list items
   const svgStyle = { height: "2rem", width: "2rem" };
   const list = {
-    Vegetables: <Vegetables style={{ height: "2rem", width: "2rem" }} />,
+    Vegetables: <Vegetables style={svgStyle} />,
     Fruits: <Fruits style={svgStyle} />,
     Spices: <Spices style={svgStyle} />,
     Snacks: <Snacks style={svgStyle} />,
@@ -24,12 +24,7 @@ const NavBar = () => {
   return (
     <nav className={classes.NavBar}>
       <ul className={classes.List}>
-        <Item
-          item={"Categories"}
-          dropDownMenu={{
-            list: list,
-          }}
-        />
+        <Item item={"Categories"} dropDownMenu={list} />
         <Item item="Deals" />
         <Item item="History" />
         <Item item="Help" />

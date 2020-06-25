@@ -13,7 +13,6 @@ export const login = (data) => {
 
     if (parsedResponse.error) {
       dispatch({ type: "LOGIN_FAIL", error: parsedResponse.error });
-      // throw new Error("Failed");
     } else {
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -31,7 +30,8 @@ export const clearError = () => {
 };
 
 export const logout = () => {
-  window.localStorage.clear();
+  console.log("clearead");
+
   return (dispatch) => {
     dispatch({ type: "LOGOUT" });
   };

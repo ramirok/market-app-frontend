@@ -5,13 +5,14 @@
   text-decoration: none;
   cursor: pointer;
   color: white;
-  height: 3.4rem;
   text-align: center;
-  line-height: 3.4rem;
   box-shadow: 10px 10px 60px -14px rgba(0, 0, 0, 0.75);
+  height: 3.4rem;
 }
 
 .MyAccount {
+  line-height: 3.4rem;
+  vertical-align: top;
   display: inline-block;
   background-color: #5b7bf4;
   border-radius: 10px;
@@ -19,8 +20,7 @@
   border-bottom-right-radius: 0;
   width: 10rem;
   transition: all 0.2s;
-  position: relative;
-  bottom: 1.2rem;
+  height: 100%;
 }
 
 .MyAccount:active {
@@ -28,7 +28,6 @@
 }
 
 .Bell {
-  display: inline-block;
   cursor: pointer;
   background-color: #5b7bf4;
   border-radius: 10px;

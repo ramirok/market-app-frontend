@@ -10,6 +10,7 @@ import { ReactComponent as Orders } from "../../assets/myaccount/orders.svg";
 import { ReactComponent as Security } from "../../assets/myaccount/security.svg";
 import { ReactComponent as LogOut } from "../../assets/myaccount/logout.svg";
 
+import DropDownItemLink from "../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
 const MyAccount = () => {
   //Toggles dropDownMenu visibility onClick and onLeave
   const [visible, setVisible] = useState(false);
@@ -37,7 +38,11 @@ const MyAccount = () => {
         My Account
       </span>
       <Bell className={classes.Bell} />
-      <DropDownMenu list={list} visible={visible} setVisible={setVisible} />
+      <DropDownMenu visible={visible} setVisible={setVisible}>
+        {Object.keys(list).map((el) => (
+          <DropDownItemLink key={el} to={el} img={list[el]} name={el} />
+        ))}
+      </DropDownMenu>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import classes from "./ShoppingCart.module.css";
 
 // SVG imports
 import { ReactComponent as Shopping } from "../../assets/shopping-cart.svg";
+import DropDownItemDiv from "../UI/DropDownMenu/DropDownItemDiv/DropDownItemDiv";
 
 const ShoppingCart = () => {
   //Toggles dropDownMenu visibility onClick and onLeave
@@ -14,8 +15,6 @@ const ShoppingCart = () => {
   const cartItems = useSelector((state) => state.cart);
 
   const list = { ...cartItems };
-
-  const clicked = () => console.log("removed");
 
   return (
     <div
@@ -28,13 +27,20 @@ const ShoppingCart = () => {
       }}
     >
       <Shopping className={classes.Bag} />
+
       <DropDownMenu
-        list={list}
         styleCustom={{ right: "2rem" }}
         visible={visible}
         setVisible={setVisible}
-        clicked={clicked}
-      />
+      >
+        {Object.keys(list).length >= 1 ? (
+          Object.keys(list).map((el) => (
+            <DropDownItemDiv key={el} to={el} name={el} list={list} />
+          ))
+        ) : (
+          <span className={classes.MenuItem}>Cart is empty</span>
+        )}
+      </DropDownMenu>
     </div>
   );
 };

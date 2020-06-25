@@ -5,7 +5,6 @@
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s;
-  line-height: 3.4rem;
   height: 3.4rem;
   box-shadow: 10px 10px 60px -14px rgba(0, 0, 0, 0.75);
 }
@@ -21,4 +20,11 @@
 
 .Bag:active {
   transform: scale(0.95);
+}
+
+.MenuItem {
+  display: block;
+  font-weight: 400;
+  color: #333333;
+  padding: 2rem;
 }

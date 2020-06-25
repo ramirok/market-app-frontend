@@ -1,6 +1,4 @@
-// const initialState = { item1: 2, item2: 6, item5: 3 };
-
-const reducer = (state = { "Cart is empty": "X" }, action) => {
+const reducer = (state = {}, action) => {
   switch (action.type) {
     case "ADD":
       const newItem = { ...state };
@@ -10,8 +8,13 @@ const reducer = (state = { "Cart is empty": "X" }, action) => {
       return { ...newItem };
 
     case "REMOVE":
-      return { ...state };
+      const removed = { ...state };
 
+      delete removed[action.item];
+
+      return { ...removed };
+    case "DELETE_ALL":
+      return {};
     default:
       return { ...state };
   }

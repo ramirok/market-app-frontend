@@ -30,10 +30,6 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (isLogged) {
-      window.localStorage.setItem(
-        "logged",
-        JSON.stringify({ userId: isLogged, token })
-      );
       history.push("/");
     }
   }, [isLogged, history, token]);
