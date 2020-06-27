@@ -1,6 +1,6 @@
-export const addItem = (item) => {
+export const addItem = (item, amount = 1) => {
   return (dispatch) => {
-    dispatch({ type: "ADD", item });
+    dispatch({ type: "ADD", item, amount });
   };
 };
 

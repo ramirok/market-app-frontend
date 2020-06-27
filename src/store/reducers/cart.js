@@ -3,7 +3,7 @@ const reducer = (state = {}, action) => {
     case "ADD":
       const newItem = { ...state };
 
-      newItem[action.item] = (newItem[action.item] || 0) + 1;
+      newItem[action.item] = (newItem[action.item] || 0) + action.amount;
 
       return { ...newItem };
 

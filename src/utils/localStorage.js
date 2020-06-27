@@ -12,7 +12,9 @@ export const loadState = () => {
 
 export const saveState = (state) => {
   try {
-    const serializedState = JSON.stringify(state);
+    const stateToSave = { ...state };
+    delete stateToSave.modal;
+    const serializedState = JSON.stringify(stateToSave);
     localStorage.setItem("logged", serializedState);
   } catch (error) {}
 };

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { signup } from "../../../store/actions/signup";
-import { useFormData } from "../../../utils/customHooks";
+import { useInputData } from "../../../utils/customHooks";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
 import classes from "./SignUpForm.module.css";
@@ -10,9 +10,9 @@ import classes from "./SignUpForm.module.css";
 const SignUpForm = (props) => {
   const dispatch = useDispatch();
   const isSignup = useSelector((state) => state.signup);
-  const name = useFormData("name");
-  const email = useFormData("email");
-  const password = useFormData("password");
+  const name = useInputData("name");
+  const email = useInputData("email");
+  const password = useInputData("password");
 
   useEffect(() => {
     if (isSignup.error) {

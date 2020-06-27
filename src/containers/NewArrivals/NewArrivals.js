@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { getSome } from "../../utils/fetchServices";
 import Carousel from "../../component/UI/Carousel/Carousel";
 import Card from "../../component/UI/Card/Card";
 import CardFirst from "../../component/UI/CardFirst/CardFirst";
@@ -11,9 +12,7 @@ const NewArrivals = () => {
 
   useEffect(() => {
     // Set items fetched
-    fetch("http://localhost:3001/products/new")
-      .then((response) => response.json())
-      .then((data) => setItems(data));
+    getSome("new").then((data) => setItems(data));
   }, []);
 
   return (

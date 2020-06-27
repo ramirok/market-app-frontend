@@ -13,10 +13,12 @@ import SignUpForm from "./component/SignUp/SignUpForm/SignUpForm";
 import Logout from "./component/Logout/Logout";
 import classes from "./App.module.css";
 
+import Modal from "./component/UI/Modal/Modal";
 const App = () => {
   return (
     <div className={classes.Container}>
       <Header />
+      <Modal />
       <Switch>
         <Route path="/log-out">
           <Logout />

@@ -5,6 +5,7 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
+import modalReducer from "./store/reducers/modal";
 import authReducer from "./store/reducers/auth";
 import signupReducer from "./store/reducers/signup";
 import cartReducer from "./store/reducers/cart";
@@ -13,6 +14,7 @@ import "./index.css";
 import { loadState, saveState } from "./utils/localStorage";
 
 const rootReducer = combineReducers({
+  modal: modalReducer,
   signup: signupReducer,
   auth: authReducer,
   cart: cartReducer,

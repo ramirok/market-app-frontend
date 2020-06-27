@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Spinner from "../../UI/Spinner/Spinner";
 import { login, clearError } from "../../../store/actions/auth";
-import { useFormData } from "../../../utils/customHooks";
+import { useInputData } from "../../../utils/customHooks";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
 import classes from "./LoginForm.module.css";
@@ -16,8 +16,8 @@ const LoginForm = () => {
   const token = useSelector((state) => state.auth.token);
   const history = useHistory();
   const dispatch = useDispatch();
-  const email = useFormData("email");
-  const password = useFormData("password");
+  const email = useInputData("email");
+  const password = useInputData("password");
 
   useEffect(() => {
     const timer = setTimeout(() => {

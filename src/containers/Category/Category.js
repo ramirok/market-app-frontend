@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
+import { getCategory } from "../../utils/fetchServices";
 import Card from "../../component/UI/Card/Card";
 import classes from "./Category.module.css";
 
@@ -13,15 +14,7 @@ const Category = () => {
 
   useEffect(() => {
     // Set items fetched
-    fetch(
-      `http://localhost:3001/products/${
-        category.includes("-")
-          ? category.slice(0, category.indexOf("-"))
-          : category
-      }`
-    )
-      .then((response) => response.json())
-      .then((data) => setItems(data));
+    getCategory(category).then((data) => setItems(data));
   }, [category]);
 
   // Category list for side navbar

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useFormData = (type) => {
+export const useInputData = (type) => {
   const [data, setData] = useState("");
 
   const value = data;

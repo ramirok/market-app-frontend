@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { getAll } from "../../utils/fetchServices";
 import Carousel from "../../component/UI/Carousel/Carousel";
 import Card from "../../component/UI/Card/Card";
 import classes from "./Discover.module.css";
@@ -10,9 +11,7 @@ const Discover = () => {
 
   useEffect(() => {
     // Set items fetched
-    fetch("http://localhost:3001/products")
-      .then((response) => response.json())
-      .then((data) => setItems(data));
+    getAll().then((data) => setItems(data));
   }, []);
   return (
     // Returns 2 carousel components

@@ -23,8 +23,43 @@
 }
 
 .MenuItem {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  height: 3rem;
   font-weight: 400;
-  color: #333333;
+  color: black;
   padding: 2rem;
+  position: relative;
+  outline: none;
+  padding-right: 3rem;
+}
+
+.MenuItem:hover {
+  background-color: #dde1ed;
+  border-radius: 5px;
+}
+
+.MenuItemNoHover {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  height: 3rem;
+  font-weight: 400;
+  color: black;
+  padding: 2rem;
+  position: relative;
+  outline: none;
+  padding-right: 3rem;
+}
+
+.Number {
+  color: white;
+  background-color: #5b7bf4;
+  min-width: 3rem;
+  text-align: center;
+  border-radius: 5px;
+  margin-right: 1rem;
 }

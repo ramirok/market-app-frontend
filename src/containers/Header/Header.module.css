@@ -8,31 +8,3 @@
   align-items: center;
   box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
 }
-
-.SearchBarContainer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 60%;
-}
-
-.SearchBar {
-  width: 80%;
-  border: none;
-  border-radius: 10px;
-  height: 3.4rem;
-  padding-left: 1rem;
-}
-
-.SearchBar:focus {
-  outline: none;
-}
-
-.Button {
-  position: absolute;
-  right: 10.3%;
-  width: 10rem;
-  background-color: #5b7bf4;
-}
