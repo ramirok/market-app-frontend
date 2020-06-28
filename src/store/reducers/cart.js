@@ -1,22 +1,31 @@
-const reducer = (state = {}, action) => {
+const reducer = (state = [], action) => {
   switch (action.type) {
     case "ADD":
-      const newItem = { ...state };
+      let exist = false;
+      let existIndex;
 
-      newItem[action.item] = (newItem[action.item] || 0) + action.amount;
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].name === action.item.name) {
+          exist = true;
+          existIndex = i;
+        }
+      }
 
-      return { ...newItem };
+      return exist
+        ? state.map((item, index) => {
+            if (index !== existIndex) {
+              return item;
+            }
+            return { ...item, amount: item.amount + action.amount };
+          })
+        : state.concat({ ...action.item, amount: action.amount });
 
     case "REMOVE":
-      const removed = { ...state };
-
-      delete removed[action.item];
-
-      return { ...removed };
-    case "DELETE_ALL":
-      return {};
+      return state.filter((el) => el.name !== action.item);
+    // case "DELETE_ALL":
+    //   return {};
     default:
-      return { ...state };
+      return state;
   }
 };
 

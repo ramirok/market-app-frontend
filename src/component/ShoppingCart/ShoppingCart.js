@@ -17,33 +17,36 @@ const ShoppingCart = () => {
 
   const cartItems = useSelector((state) => state.cart);
 
-  const list = { ...cartItems };
-
   let items;
 
-  if (Object.keys(list).length >= 1 && Object.keys(list).length < 7) {
-    items = Object.keys(list).map((el) => (
+  if (cartItems.length >= 1 && cartItems.length < 7) {
+    items = cartItems.map((el) => (
       <DropDownItemDiv
-        key={el}
-        to={el}
-        name={el}
-        amount={list[el]}
-        onClick={() => dispatch({ type: "SHOW" })}
+        key={el.name}
+        name={el.name}
+        amount={el.amount}
+        onClick={() =>
+          dispatch({
+            type: "SHOW",
+            img: el.img,
+            name: el.name,
+            price: el.price,
+            description: el.description,
+          })
+        }
       />
     ));
     items.push(<DropDownItemLink to="cart" name="View cart" key="cart" />);
-  } else if (Object.keys(list).length >= 7) {
-    items = Object.keys(list)
+  } else if (cartItems.length >= 7) {
+    items = cartItems
       .slice(0, 6)
       .map((el) => (
-        <DropDownItemDiv key={el} to={el} name={el} amount={list[el]} />
+        <DropDownItemDiv key={el.name} name={el.name} amount={el.amount} />
       ));
     items.push(
       <div className={classes.MenuItem} key="cart">
         View cart
-        <span className={classes.Number}>{`+${
-          Object.keys(list).length - 6
-        }`}</span>
+        <span className={classes.Number}>{`+${cartItems.length - 6}`}</span>
       </div>
     );
   } else {

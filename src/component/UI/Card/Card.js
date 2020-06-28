@@ -21,7 +21,9 @@ Recives:
   const { img, alt, price, name, description } = props;
 
   const addToChart = () => {
-    isLogged ? dispatch(addItem(name)) : history.push("/login");
+    isLogged
+      ? dispatch(addItem({ name, price, img, description }))
+      : history.push("/login");
   };
 
   return (

@@ -26,7 +26,17 @@ const Modal = () => {
 
   const addToChart = (amount) => {
     if (isLogged) {
-      dispatch(addItem(modalData.name, amount));
+      dispatch(
+        addItem(
+          {
+            name: modalData.name,
+            price: modalData.price,
+            img: modalData.img,
+            description: modalData.description,
+          },
+          amount
+        )
+      );
     } else {
       dispatch({ type: "HIDE" });
       history.push("/login");

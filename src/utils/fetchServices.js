@@ -1,7 +1,6 @@
 export const getAll = async () => {
   const response = await fetch("http://localhost:3001/products");
   const parsedResponse = await response.json();
-  console.log(parsedResponse);
 
   return parsedResponse;
 };

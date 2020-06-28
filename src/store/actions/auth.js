@@ -30,8 +30,6 @@ export const clearError = () => {
 };
 
 export const logout = () => {
-  console.log("clearead");
-
   return (dispatch) => {
     dispatch({ type: "LOGOUT" });
   };
