@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 
+import { getSome } from "../../utils/fetchServices";
 import Carousel from "../../component/UI/Carousel/Carousel";
 import Card from "../../component/UI/Card/Card";
 import CardFirst from "../../component/UI/CardFirst/CardFirst";
 import classes from "./TopSellers.module.css";
 
 const TopSellers = () => {
-  // Manage items to show in Card component
+  // Items to show in Card component
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     // Set items fetched
-    fetch("http://localhost:3001/products/top")
-      .then((response) => response.json())
-      .then((data) => setItems(data));
+    getSome("sortBy=sold").then((data) => setItems(data));
   }, []);
 
   return (

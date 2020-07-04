@@ -5,8 +5,9 @@ import classes from "./Button.module.css";
 const Button = (props) => {
   /*
 Recives:
- -text to display
- -custom class from props
+ -text: text to display
+ -classFromPros: custom styles
+ -onClick: onCLick handler
 */
   const { text, classFromProps, onClick } = props;
 

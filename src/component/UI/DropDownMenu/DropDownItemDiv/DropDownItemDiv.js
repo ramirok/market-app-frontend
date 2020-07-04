@@ -1,29 +1,33 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 
+import { useCart } from "../../../../context/cartContext";
+import { useUser } from "../../../../context/userContext";
 import { capitalizeName } from "../../../../utils/helpers";
-import { removeItem } from "../../../../store/actions/cart";
 import classes from "./DropDownItemDiv.module.css";
 
 const DropDownItemDiv = (props) => {
-  const dispatch = useDispatch();
-
+  const { delProductHandler } = useCart();
+  const { loginData } = useUser();
   /*
   Recives:
-  -to
-  -props.children
+  -name: item name
+  -amount: item amount
+  -onClick: onClick handler
   */
   const { name, amount, onClick } = props;
   return (
     <div className={classes.MenuItem}>
+      {/* Product name */}
       <span onClick={onClick} className={classes.Name}>
         {capitalizeName(name)}
       </span>
+
+      {/* Product amount */}
       <span className={classes.Number}>{amount}</span>
+
+      {/* Delete product button */}
       <span
-        onClick={() => {
-          dispatch(removeItem(name));
-        }}
+        onClick={() => delProductHandler(name, loginData.token)}
         className={classes.Delete}
       >
         X

@@ -6,8 +6,9 @@ import classes from "./DropDownItemLink.module.css";
 const DropDownItemLink = (props) => {
   /*
   Recives:
-  -to
-  -props.children
+  -to: link path
+  -name: item name
+  -img: SVG image
   */
   const { to, name, img } = props;
   return (

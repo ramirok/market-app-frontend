@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./SignUp.module.css";
-import { Link } from "react-router-dom";
 
 const SignUp = () => {
   return (

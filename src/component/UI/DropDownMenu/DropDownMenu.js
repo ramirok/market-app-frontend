@@ -3,9 +3,6 @@ import React, { useState, useEffect } from "react";
 import classes from "./DropDownMenu.module.css";
 
 const DropDownMenu = React.memo((props) => {
-  // Toggle component classes when props.visible changes
-  const [dropDownClasses, setDropDownClasses] = useState(classes.Hidden);
-
   /*
   Recives:
   -list: menu item list
@@ -15,8 +12,11 @@ const DropDownMenu = React.memo((props) => {
   */
   const { styleCustom, visible, setVisible } = props;
 
-  // When visible state changes to false, class will set to hidden in 600ms
+  // Toggle component classes when props.visible changes
+  const [dropDownClasses, setDropDownClasses] = useState(classes.Hidden);
+
   useEffect(() => {
+    // When visible changes to false, class will set to hidden in 600ms
     let timerToClear;
     if (!visible) {
       timerToClear = setTimeout(() => {

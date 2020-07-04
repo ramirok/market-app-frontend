@@ -9,7 +9,7 @@ const Category = () => {
   // Get param from URL
   const { category } = useParams();
 
-  // Manage items to show in Card component
+  // Items to show in Card component
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Category = () => {
     getCategory(category).then((data) => setItems(data));
   }, [category]);
 
-  // Category list for side navbar
+  // Category list for side menu
   const categoryList = [
     "Vegetables",
     "Fruits",
@@ -29,6 +29,8 @@ const Category = () => {
   return (
     <>
       <div className={classes.Head}></div>
+
+      {/* Categories menu */}
       <div className={classes.Categories}>
         <ul style={{ listStyle: "none" }}>
           {/* Sets a link for every category */}
@@ -45,9 +47,12 @@ const Category = () => {
           ))}
         </ul>
       </div>
+
+      {/* Products cards */}
       <div className={classes.CategoryContainer}>
         {/* Sets a card for every item  */}
         {items.map((el) => (
+          // Distribute el's properties: img, alt, price, description
           <Card {...el} key={el.name} />
         ))}
       </div>

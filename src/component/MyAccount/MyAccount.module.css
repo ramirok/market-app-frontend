@@ -43,3 +43,18 @@
 .Bell:active {
   transform: scale(0.95);
 }
+
+.Logout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  font-weight: 400;
+  color: black;
+  padding: 2rem;
+}
+
+.Logout:hover {
+  background-color: #dde1ed;
+  border-radius: 5px;
+}

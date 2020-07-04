@@ -24,10 +24,11 @@ const NavBar = () => {
   return (
     <nav className={classes.NavBar}>
       <ul className={classes.List}>
-        <Item item={"Categories"} dropDownMenu={list} />
-        <Item item="Deals" />
-        <Item item="History" />
-        <Item item="Help" />
+        {/* Only Categories has a dropDownMenu */}
+        <Item name={"Categories"} dropDownMenu={list} />
+        <Item name="Deals" />
+        <Item name="History" />
+        <Item name="Help" />
       </ul>
     </nav>
   );

@@ -9,13 +9,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
-    "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-slick": "^0.26.1",
-    "react-transition-group": "^4.4.1",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "react-slick": "^0.26.1"
   },
   "scripts": {
     "start": "react-scripts start",

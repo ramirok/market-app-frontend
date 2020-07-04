@@ -1,43 +1,20 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
-import Spinner from "../../UI/Spinner/Spinner";
-import { login, clearError } from "../../../store/actions/auth";
+import { useUser } from "../../../context/userContext";
 import { useInputData } from "../../../utils/customHooks";
+import Spinner from "../../UI/Spinner/Spinner";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
 import classes from "./LoginForm.module.css";
-import { useHistory } from "react-router-dom";
 
 const LoginForm = () => {
-  const message = useSelector((state) => state.auth.error);
-  const isLoading = useSelector((state) => state.auth.loading);
-  const isLogged = useSelector((state) => state.auth.userId);
-  const token = useSelector((state) => state.auth.token);
-  const history = useHistory();
-  const dispatch = useDispatch();
+  // customHook for user context:
+  // loginData returns ={message, loading, userId, token}
+  const { loginData, handleLogin } = useUser();
+
+  // customHook useInputData returns: type, value, onChange handler
   const email = useInputData("email");
   const password = useInputData("password");
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(clearError());
-    }, 3000);
-    return function () {
-      clearTimeout(timer);
-    };
-  }, [message, dispatch]);
-
-  useEffect(() => {
-    if (isLogged) {
-      history.push("/");
-    }
-  }, [isLogged, history, token]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await dispatch(login({ email: email.value, password: password.value }));
-  };
 
   return (
     <div className={classes.Background}>
@@ -45,13 +22,13 @@ const LoginForm = () => {
         <Input {...email} />
         <Input {...password} />
         <div className={classes.MessageContainer}>
-          <p className={classes.Message}>{message}</p>
-          {isLoading && <Spinner />}
+          <p className={classes.Message}>{loginData.message}</p>
+          {loginData.loading && <Spinner />}
         </div>
         <Button
           text="Login"
           classFromProps={classes.Button}
-          onClick={handleSubmit}
+          onClick={(e) => handleLogin(e, email.value, password.value)}
         />
       </form>
     </div>

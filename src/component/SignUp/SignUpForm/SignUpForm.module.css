@@ -22,13 +22,19 @@
   height: fit-content;
 }
 
+.MessageContainer {
+  display: flex;
+  height: 2rem;
+}
+
 .Message {
+  transform: translate(-50%, -50%);
   position: absolute;
-  bottom: 10rem;
   color: red;
 }
 
 .Button {
   background-color: #5b7bf4;
   width: 20rem;
+  margin-top: 2rem;
 }

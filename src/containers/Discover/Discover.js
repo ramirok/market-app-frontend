@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-import { getAll } from "../../utils/fetchServices";
+import { getSome } from "../../utils/fetchServices";
 import Carousel from "../../component/UI/Carousel/Carousel";
 import Card from "../../component/UI/Card/Card";
 import classes from "./Discover.module.css";
 
 const Discover = () => {
-  // Manage items to show in Card component
+  // Items to show in Card component
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     // Set items fetched
-    getAll().then((data) => setItems(data));
+    getSome().then((data) => setItems(data));
   }, []);
   return (
     // Returns 2 carousel components

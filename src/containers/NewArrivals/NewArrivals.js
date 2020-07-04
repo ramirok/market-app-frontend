@@ -7,12 +7,12 @@ import CardFirst from "../../component/UI/CardFirst/CardFirst";
 import classes from "./NewArrivals.module.css";
 
 const NewArrivals = () => {
-  // Manage items to show in Card component
+  // Items to show in Card component
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     // Set items fetched
-    getSome("new").then((data) => setItems(data));
+    getSome("sortBy=created_at").then((data) => setItems(data));
   }, []);
 
   return (

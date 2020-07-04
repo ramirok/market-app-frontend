@@ -10,10 +10,10 @@ const Item = (props) => {
 
   /*
 Recives:
- -dropDownMenu item list
- -navbar item list
+ -dropDownMenu: items for the dropDownMenu
+ -name: NavBar element name 
 */
-  const { dropDownMenu, item } = props;
+  const { dropDownMenu, name } = props;
 
   return (
     <li className={classes.Item}>
@@ -35,7 +35,7 @@ Recives:
             : null
         }
       >
-        {item}
+        {name}
       </span>
       {/* Renders dropDownMenu if item recives dropDownMenu as props */}
       {dropDownMenu && (

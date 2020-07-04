@@ -10,38 +10,40 @@ import Discover from "./containers/Discover/Discover";
 import Category from "./containers/Category/Category";
 import LoginForm from "./component/Login/LoginForm/LoginForm";
 import SignUpForm from "./component/SignUp/SignUpForm/SignUpForm";
-import Logout from "./component/Logout/Logout";
 import classes from "./App.module.css";
-
 import Modal from "./component/UI/Modal/Modal";
+import { UserProvider } from "./context/userContext";
+import { CartProvider } from "./context/cartContext";
+
 const App = () => {
   return (
-    <div className={classes.Container}>
-      <Header />
-      <Modal />
-      <Switch>
-        <Route path="/log-out">
-          <Logout />
-        </Route>
-        <Route path="/login">
-          <LoginForm />
-        </Route>
-        <Route path="/signup">
-          <SignUpForm />
-        </Route>
-        <Route path="/:category">
-          <Category />
-        </Route>
-        <Route path="/">
-          <NewArrivals />
-          <TopSellers />
-          <History />
-          <Discover />
-        </Route>
-      </Switch>
+    <UserProvider>
+      <CartProvider>
+        <div className={classes.Container}>
+          <Header />
+          <Modal />
+          <Switch>
+            <Route path="/login">
+              <LoginForm />
+            </Route>
+            <Route path="/signup">
+              <SignUpForm />
+            </Route>
+            <Route path="/:category">
+              <Category />
+            </Route>
+            <Route path="/">
+              <NewArrivals />
+              <TopSellers />
+              <History />
+              <Discover />
+            </Route>
+          </Switch>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </CartProvider>
+    </UserProvider>
   );
 };
 

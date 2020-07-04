@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
+import { useUser } from "../../context/userContext";
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
+import DropDownItemLink from "../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
 import classes from "./MyAccount.module.css";
 
 // SVG imports
@@ -10,10 +12,11 @@ import { ReactComponent as Orders } from "../../assets/myaccount/orders.svg";
 import { ReactComponent as Security } from "../../assets/myaccount/security.svg";
 import { ReactComponent as LogOut } from "../../assets/myaccount/logout.svg";
 
-import DropDownItemLink from "../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
 const MyAccount = () => {
   //Toggles dropDownMenu visibility onClick and onLeave
   const [visible, setVisible] = useState(false);
+
+  const { handleLogout } = useUser();
 
   // DropDownMenu list items
   const svgStyle = { height: "2rem", width: "2rem" };
@@ -21,7 +24,6 @@ const MyAccount = () => {
     "Your Account": <Account style={svgStyle} />,
     "Your Orders": <Orders style={svgStyle} />,
     Security: <Security style={svgStyle} />,
-    "Log Out": <LogOut style={svgStyle} />,
   };
 
   return (
@@ -42,6 +44,13 @@ const MyAccount = () => {
         {Object.keys(list).map((el) => (
           <DropDownItemLink key={el} to={el} img={list[el]} name={el} />
         ))}
+        {/* Logout button */}
+        <div className={classes.Logout} onClick={handleLogout}>
+          Log Out
+          <span>
+            <LogOut style={svgStyle} />
+          </span>
+        </div>
       </DropDownMenu>
     </div>
   );

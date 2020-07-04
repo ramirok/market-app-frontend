@@ -1,28 +1,32 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
+import { useUser } from "../../context/userContext";
 import Logo from "../../component/Logo/Logo";
 import SearchBar from "../../component/SearchBar/SearchBar";
-import classes from "./Header.module.css";
 import ShoppingCart from "../../component/ShoppingCart/ShoppingCart";
 import MyAccount from "../../component/MyAccount/MyAccount";
 import Login from "../../component/Login/Login";
 import SignUp from "../../component/SignUp/SignUp";
+import classes from "./Header.module.css";
 
 const Header = () => {
-  const isLogged = useSelector((state) => state.auth);
+  // customHook for user context:
+  // loginData returns ={message, loading, userId, token}
+  const { loginData } = useUser();
 
   return (
     <div className={classes.HeaderContainer}>
       <Logo />
       <SearchBar />
-      {isLogged.userId ? (
+      {loginData.userId ? (
         <>
+          {/* if user is loggedIn */}
           <MyAccount />
           <ShoppingCart />
         </>
       ) : (
         <>
+          {/* if user isn't loggedIn */}
           <Login /> <SignUp />
         </>
       )}

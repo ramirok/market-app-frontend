@@ -1,48 +1,68 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 
+import { useCart } from "../../context/cartContext";
+import { useUser } from "../../context/userContext";
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
+import DropDownItemDiv from "../UI/DropDownMenu/DropDownItemDiv/DropDownItemDiv";
+import DropDownItemLink from "../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
+import ProductModal from "../UI/Modal/ProductModal/ProductModal";
 import classes from "./ShoppingCart.module.css";
 
 // SVG imports
 import { ReactComponent as Shopping } from "../../assets/shopping-cart.svg";
-import DropDownItemDiv from "../UI/DropDownMenu/DropDownItemDiv/DropDownItemDiv";
-import DropDownItemLink from "../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
 
 const ShoppingCart = () => {
   //Toggles dropDownMenu visibility onClick and onLeave
   const [visible, setVisible] = useState(false);
 
-  const dispatch = useDispatch();
+  // Toggles modal visibility
+  const [isOpen, setIsOpen] = useState(false);
 
-  const cartItems = useSelector((state) => state.cart);
+  // Sets product to fetch when modal is open
+  const [itemName, setItemName] = useState("");
 
+  // customHook for user context:
+  // loginData = {message, loading, userId, token}
+  const { loginData } = useUser();
+
+  // customHook for cart context
+  // cartItems = [array of items]
+  // getAllCart: fetches usser's cart
+  const { cartItems, getAllCart } = useCart();
+
+  useEffect(() => {
+    console.log("rendered shoppingcart");
+
+    // fetches user's cart on first render
+    getAllCart(loginData.token);
+  }, [loginData.token, getAllCart]);
+
+  // list of items to show in shopping cart dropDownMenu
   let items;
 
   if (cartItems.length >= 1 && cartItems.length < 7) {
+    // between 1 -7 items: shows them all
     items = cartItems.map((el) => (
       <DropDownItemDiv
         key={el.name}
         name={el.name}
-        amount={el.amount}
-        onClick={() =>
-          dispatch({
-            type: "SHOW",
-            img: el.img,
-            name: el.name,
-            price: el.price,
-            description: el.description,
-          })
-        }
+        amount={el.quantity}
+        onClick={() => {
+          setItemName(el.name);
+          setIsOpen(true);
+        }}
       />
     ));
+    // view Cart link
     items.push(<DropDownItemLink to="cart" name="View cart" key="cart" />);
   } else if (cartItems.length >= 7) {
+    // more than 7 items: shows 6 and "View cart +n"
     items = cartItems
       .slice(0, 6)
       .map((el) => (
-        <DropDownItemDiv key={el.name} name={el.name} amount={el.amount} />
+        <DropDownItemDiv key={el.name} name={el.name} amount={el.quantity} />
       ));
+    // view cart link
     items.push(
       <div className={classes.MenuItem} key="cart">
         View cart
@@ -50,29 +70,37 @@ const ShoppingCart = () => {
       </div>
     );
   } else {
+    // 0 items: shows "empty cart"
     items = <span className={classes.MenuItemNoHover}>Cart is empty</span>;
   }
 
   return (
-    <div
-      className={classes.CartContainer}
-      onClick={() => {
-        setVisible(true);
-      }}
-      onMouseLeave={() => {
-        setVisible(false);
-      }}
-    >
-      <Shopping className={classes.Bag} />
-
-      <DropDownMenu
-        styleCustom={{ right: "2rem" }}
-        visible={visible}
-        setVisible={setVisible}
+    <>
+      {/* Modal */}
+      {isOpen && (
+        <ProductModal isOpen={isOpen} setIsOpen={setIsOpen} item={itemName} />
+      )}
+      <div
+        className={classes.CartContainer}
+        onClick={() => {
+          setVisible(true);
+        }}
+        onMouseLeave={() => {
+          setVisible(false);
+        }}
       >
-        {items}
-      </DropDownMenu>
-    </div>
+        {/* SVG icon */}
+        <Shopping className={classes.Bag} />
+
+        <DropDownMenu
+          styleCustom={{ right: "2rem" }}
+          visible={visible}
+          setVisible={setVisible}
+        >
+          {items}
+        </DropDownMenu>
+      </div>
+    </>
   );
 };
 
