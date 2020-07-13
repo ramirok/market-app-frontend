@@ -43,7 +43,7 @@ Recives:
           {Object.keys(dropDownMenu).map((el) => (
             <DropDownItemLink
               key={el}
-              to={el}
+              to={`/category/${el}`}
               img={dropDownMenu[el]}
               name={el}
             />

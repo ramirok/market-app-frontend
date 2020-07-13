@@ -18,8 +18,8 @@ const ShoppingCart = () => {
   // Toggles modal visibility
   const [isOpen, setIsOpen] = useState(false);
 
-  // Sets product to fetch when modal is open
-  const [itemName, setItemName] = useState("");
+  // Data for product modal
+  const [modalData, setModalData] = useState({});
 
   // customHook for user context:
   // loginData = {message, loading, userId, token}
@@ -31,8 +31,6 @@ const ShoppingCart = () => {
   const { cartItems, getAllCart } = useCart();
 
   useEffect(() => {
-    console.log("rendered shoppingcart");
-
     // fetches user's cart on first render
     getAllCart(loginData.token);
   }, [loginData.token, getAllCart]);
@@ -47,8 +45,9 @@ const ShoppingCart = () => {
         key={el.name}
         name={el.name}
         amount={el.quantity}
+        id={el.id}
         onClick={() => {
-          setItemName(el.name);
+          setModalData(el);
           setIsOpen(true);
         }}
       />
@@ -57,15 +56,22 @@ const ShoppingCart = () => {
     items.push(<DropDownItemLink to="cart" name="View cart" key="cart" />);
   } else if (cartItems.length >= 7) {
     // more than 7 items: shows 6 and "View cart +n"
-    items = cartItems
-      .slice(0, 6)
-      .map((el) => (
-        <DropDownItemDiv key={el.name} name={el.name} amount={el.quantity} />
-      ));
+    items = cartItems.slice(0, 6).map((el) => (
+      <DropDownItemDiv
+        key={el.name}
+        name={el.name}
+        amount={el.quantity}
+        id={el.id}
+        onClick={() => {
+          setModalData(el);
+          setIsOpen(true);
+        }}
+      />
+    ));
     // view cart link
     items.push(
       <div className={classes.MenuItem} key="cart">
-        View cart
+        <DropDownItemLink to="cart" name="View cart" />
         <span className={classes.Number}>{`+${cartItems.length - 6}`}</span>
       </div>
     );
@@ -78,7 +84,11 @@ const ShoppingCart = () => {
     <>
       {/* Modal */}
       {isOpen && (
-        <ProductModal isOpen={isOpen} setIsOpen={setIsOpen} item={itemName} />
+        <ProductModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          modalData={modalData}
+        />
       )}
       <div
         className={classes.CartContainer}

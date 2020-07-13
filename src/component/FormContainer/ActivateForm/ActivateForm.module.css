@@ -1,0 +1,11 @@
+.Message {
+  color: red;
+  text-align: center;
+  margin: 1rem 0;
+  height: 3.5rem;
+  line-height: 1.5rem;
+}
+.Button {
+  background-color: #5b7bf4;
+  width: 20rem;
+}

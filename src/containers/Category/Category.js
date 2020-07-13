@@ -7,15 +7,15 @@ import classes from "./Category.module.css";
 
 const Category = () => {
   // Get param from URL
-  const { category } = useParams();
+  const { cat } = useParams();
 
   // Items to show in Card component
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     // Set items fetched
-    getCategory(category).then((data) => setItems(data));
-  }, [category]);
+    getCategory(cat).then((data) => setItems(data));
+  }, [cat]);
 
   // Category list for side menu
   const categoryList = [
@@ -39,7 +39,7 @@ const Category = () => {
               <NavLink
                 className={classes.Item}
                 activeClassName={classes.Item_active}
-                to={`/${el.replace(" ", "-").toLowerCase()}`}
+                to={`/category/${el.replace(" ", "-").toLowerCase()}`}
               >
                 {el}
               </NavLink>

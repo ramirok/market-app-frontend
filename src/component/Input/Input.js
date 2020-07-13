@@ -10,7 +10,7 @@ Recives:
  -onChenge: onChange handler
 
 */
-  const { type } = props;
+  const { type, label } = props;
 
   switch (type) {
     case "email":
@@ -18,7 +18,7 @@ Recives:
 
       return (
         <div className={classes.InputContainer}>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{label}</label>
           {/* spread type, value, onChange atributes*/}
           <input {...props} id="email" className={classes.Input} />
         </div>
@@ -28,7 +28,7 @@ Recives:
 
       return (
         <div className={classes.InputContainer}>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{label}</label>
           {/* spread type, value, onChange atributes*/}
           <input {...props} id="password" className={classes.Input} />
         </div>
@@ -36,10 +36,9 @@ Recives:
     default:
       //Input type text
 
-      const firstLetter = type.charAt(0).toUpperCase(); //Capitalize first letter for label
       return (
         <div className={classes.InputContainer}>
-          <label htmlFor={type}>{`${firstLetter}${type.slice(1)}`}</label>
+          <label htmlFor={type}>{label}</label>
           {/* spread type, value, onChange atributes*/}
           <input type="text" {...props} id={type} className={classes.Input} />
         </div>

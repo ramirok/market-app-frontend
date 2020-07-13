@@ -6,7 +6,8 @@
   height: 3rem;
   font-weight: 400;
   color: black;
-  padding: 2rem;
+  padding: 1rem;
+  margin: 1rem;
   padding-right: 1rem;
   position: relative;
   outline: none;
@@ -17,9 +18,9 @@
   height: 1px;
   width: 70%;
   background-color: #eeeeee;
-  bottom: 1%;
   margin-left: auto;
   margin-right: auto;
+  bottom: -0.5rem;
 }
 
 .MenuItem:hover {

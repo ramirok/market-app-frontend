@@ -19,9 +19,9 @@ export const CartProvider = (props) => {
 
   // Post new item to cart
   const addProductHandler = useCallback(
-    async (name, price, quantity, token) => {
+    async (id, quantity, token) => {
       if (token) {
-        const response = await postCart({ name, price, quantity }, token);
+        const response = await postCart({ id, quantity }, token);
         setCartItems(response);
       } else {
         history.push("/login");
@@ -31,8 +31,8 @@ export const CartProvider = (props) => {
   );
 
   // Delete item from cart
-  const delProductHandler = async (item, token) => {
-    const response = await delCart(item, token);
+  const delProductHandler = async (id, token) => {
+    const response = await delCart(id, token);
     setCartItems(response);
   };
 

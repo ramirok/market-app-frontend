@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useUser } from "../../../../context/userContext";
 import { useCart } from "../../../../context/cartContext";
 import { capitalizeName } from "../../../../utils/helpers";
-import { getItem } from "../../../../utils/fetchServices";
 import Modal from "../Modal";
 import Button from "../../../Button/Button";
 
 import classes from "./ProductModal.module.css";
+
+// SVG imports
+import { ReactComponent as Spinner } from "../../../../assets/spinner.svg";
 
 const ProductModal = (props) => {
   /*
@@ -17,7 +19,7 @@ Recives:
  -item: item to fetch
  -props.children
 */
-  const { isOpen, setIsOpen, item } = props;
+  const { isOpen, setIsOpen, modalData } = props;
 
   // customHook for user context:
   // loginData returns ={message, loading, userId, token}
@@ -29,18 +31,8 @@ Recives:
   // product amount to add to cart
   const [amount, setAmount] = useState(0);
 
-  // default modal data, before fetch actual data
-  const [modalData, setModalData] = useState({
-    name: "name",
-    description: "description",
-    price: 6,
-    img: "img",
-  });
-
-  useEffect(() => {
-    // get item data and sets modalData
-    getItem(item).then((data) => setModalData(data));
-  }, [item]);
+  // isLoading state for spinner
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -57,12 +49,12 @@ Recives:
       <div className={classes.Info}>
         <h3>{capitalizeName(modalData.name)}</h3>
         <p>
-          {capitalizeName(modalData.description)}{" "}
+          {capitalizeName(modalData.description)}
           {modalData.img.includes("vegetables") ||
           modalData.img.includes("fruits")
-            ? "x kg"
+            ? " x kg"
             : modalData.img.includes("spices")
-            ? "x 100g"
+            ? " x 100g"
             : null}
         </p>
 
@@ -87,16 +79,36 @@ Recives:
             onClick={() => setAmount(amount + 1)}
           />
           <Button
-            text="Add"
+            text={
+              isLoading ? (
+                <Spinner
+                  stroke="white"
+                  strokeWidth="5"
+                  style={{
+                    position: "absolute",
+                    transform: "translate(-50%,-50%)",
+                    height: "3.5rem",
+                    width: "3.5rem",
+                  }}
+                />
+              ) : (
+                "Add"
+              )
+            }
             classFromProps={classes.ButtonAddCart}
-            onClick={async () => {
-              await addProductHandler(
-                modalData.name,
-                modalData.price,
-                amount,
-                loginData.token
-              );
-            }}
+            onClick={
+              !isLoading
+                ? async () => {
+                    setIsLoading(true);
+                    await addProductHandler(
+                      modalData.id,
+                      amount,
+                      loginData.token
+                    );
+                    setIsOpen(false);
+                  }
+                : null
+            }
           />
         </div>
       </div>

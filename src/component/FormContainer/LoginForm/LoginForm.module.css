@@ -1,4 +1,4 @@
-.Background {
+/* .Background {
   grid-column: start-footer/end-footer;
   margin-top: -10px;
   margin-bottom: -10px;
@@ -12,7 +12,6 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   font-family: "Nunito", sans-serif;
   font-size: 1.5rem;
@@ -20,21 +19,24 @@
   margin: 4rem;
   border-radius: 15px;
   height: fit-content;
-}
-
-.MessageContainer {
-  display: flex;
-  height: 2rem;
-}
+} */
 
 .Message {
-  transform: translate(-50%, -50%);
-  position: absolute;
   color: red;
+  text-align: center;
+  margin: 1rem 0;
+  height: 3.5rem;
+  line-height: 1.5rem;
 }
 
-.Button {
+.ButtonLogin {
   background-color: #5b7bf4;
   width: 20rem;
-  margin-top: 2rem;
+}
+
+.ButtonForgot {
+  border: 1px solid #5b7bf4;
+  color: #5b7bf4;
+  width: 20rem;
+  background-color: white;
 }

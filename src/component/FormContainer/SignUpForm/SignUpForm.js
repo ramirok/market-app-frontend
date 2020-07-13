@@ -5,8 +5,11 @@ import { signup } from "../../../utils/fetchServices";
 import { useInputData } from "../../../utils/customHooks";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
-import Spinner from "../../UI/Spinner/Spinner";
 import classes from "./SignUpForm.module.css";
+import FormContainer from "../FormContainer";
+
+// SVG imports
+import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 
 const SignUpForm = () => {
   const history = useHistory();
@@ -56,38 +59,58 @@ const SignUpForm = () => {
       : // if succeed, sets succeed to true
         setSignupData((prevState) => ({
           ...prevState,
-          message: "Successfully signed up!",
+          message: response.message,
           succeed: true,
           loading: false,
         }));
   };
 
   return (
-    <div className={classes.Background}>
-      <form className={classes.FormContainer}>
-        <Input {...name} />
-        <Input {...email} />
-        <Input {...password} />
-        <div className={classes.MessageContainer}>
-          <p className={classes.Message}>{signupData.message}</p>
-          {signupData.loading && <Spinner />}
-        </div>
-        {/* if succeed shows switch to login button, else show sign up button */}
-        {signupData.succeed ? (
-          <Button
-            text="Switch to login"
-            classFromProps={classes.Button}
-            onClick={() => history.push("/login")}
+    <FormContainer>
+      {/* <div className={classes.Background}>
+        <form className={classes.FormContainer}> */}
+      <Input {...name} label={"Name"} />
+      <br style={{ marginBottom: "2rem" }} />
+      <Input {...email} label={"Email"} />
+      <br style={{ marginBottom: "2rem" }} />
+      <Input {...password} label={"Password"} />
+      {/* <div className={classes.MessageContainer}> */}
+      {signupData.loading ? (
+        <p className={classes.Message}>
+          <Spinner
+            stroke="black"
+            strokeWidth="5"
+            style={{
+              display: "block",
+              margin: "auto",
+              height: "3.5rem",
+              width: "3.5rem",
+            }}
           />
-        ) : (
-          <Button
-            text="Sign Up"
-            classFromProps={classes.Button}
-            onClick={handleSubmit}
-          />
-        )}
-      </form>
-    </div>
+        </p>
+      ) : signupData.message ? (
+        <p className={classes.Message}>{signupData.message}</p>
+      ) : (
+        <p className={classes.Message}>&nbsp;</p>
+      )}
+      {/* </div> */}
+      {/* if succeed shows switch to login button, else show sign up button */}
+      {signupData.succeed ? (
+        <Button
+          text="Switch to login"
+          classFromProps={classes.Button}
+          onClick={() => history.push("/login")}
+        />
+      ) : (
+        <Button
+          text="Sign Up"
+          classFromProps={classes.Button}
+          onClick={handleSubmit}
+        />
+      )}
+      {/* </form>
+      </div> */}
+    </FormContainer>
   );
 };
 

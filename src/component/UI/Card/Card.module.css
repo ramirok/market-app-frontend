@@ -21,7 +21,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  height: 95%;
+  max-height: 95%;
+  max-width: 100%;
 }
 
 .CardFoot {

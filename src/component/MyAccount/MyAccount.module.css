@@ -44,6 +44,27 @@
   transform: scale(0.95);
 }
 
+.Hello {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5rem;
+  font-weight: 400;
+  color: #888888;
+  padding: 2rem;
+  cursor: default;
+  position: relative;
+}
+
+.Hello::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 70%;
+  background-color: #eeeeee;
+  bottom: 0;
+}
+
 .Logout {
   display: flex;
   justify-content: space-between;

@@ -12,29 +12,24 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   font-family: "Nunito", sans-serif;
   font-size: 1.5rem;
   padding: 4rem;
   margin: 4rem;
   border-radius: 15px;
-  height: fit-content;
-}
-
-.MessageContainer {
-  display: flex;
-  height: 2rem;
+  height: 40rem;
 }
 
 .Message {
-  transform: translate(-50%, -50%);
-  position: absolute;
   color: red;
+  text-align: center;
+  margin: 1rem 0;
+  height: 3.5rem;
+  line-height: 1.5rem;
 }
 
 .Button {
   background-color: #5b7bf4;
   width: 20rem;
-  margin-top: 2rem;
 }
