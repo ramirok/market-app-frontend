@@ -5,7 +5,6 @@
   background-color: #eeeeee;
   display: flex;
   justify-content: center;
-  min-height: calc(100vh - 18rem);
 }
 
 .FormContainer {

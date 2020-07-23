@@ -52,7 +52,7 @@ const Category = () => {
       <div className={classes.CategoryContainer}>
         {/* Sets a card for every item  */}
         {items.map((el) => (
-          // Distribute el's properties: img, alt, price, description
+          // Distribute el's properties: name, img, price, description
           <Card {...el} key={el.name} />
         ))}
       </div>

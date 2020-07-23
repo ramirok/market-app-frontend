@@ -18,7 +18,7 @@ const Header = () => {
     <div className={classes.HeaderContainer}>
       <Logo />
       <SearchBar />
-      {loginData.userId ? (
+      {loginData.token ? (
         <>
           {/* if user is loggedIn */}
           <MyAccount />

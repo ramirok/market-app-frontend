@@ -18,6 +18,7 @@ Recives:
   return (
     <li className={classes.Item}>
       <span
+        style={{ cursor: "pointer" }}
         // Sets event if item recives dropDownMenu as props
         onMouseEnter={
           dropDownMenu
@@ -37,6 +38,7 @@ Recives:
       >
         {name}
       </span>
+
       {/* Renders dropDownMenu if item recives dropDownMenu as props */}
       {dropDownMenu && (
         <DropDownMenu visible={visible} setVisible={setVisible}>

@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import { signup } from "../../../utils/fetchServices";
 import { useInputData } from "../../../utils/customHooks";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
-import classes from "./SignUpForm.module.css";
+import Spinner from "../../UI/Spinner/Spinner";
 import FormContainer from "../FormContainer";
-
-// SVG imports
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
+import classes from "./SignUpForm.module.css";
 
 const SignUpForm = () => {
-  const history = useHistory();
-
   // Signup state
   const [signupData, setSignupData] = useState({
     message: null,
@@ -21,13 +16,13 @@ const SignUpForm = () => {
     succeed: false, //When true shows switch to login button
   });
 
-  // customHook useInputData returns: type, value, onChange handler
-  const name = useInputData("name");
-  const email = useInputData("email");
-  const password = useInputData("password");
+  // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
+  const name = useInputData("name", true); //second argument true for validation
+  const email = useInputData("email", true); //second argument true for validation
+  const password = useInputData("password", true); //second argument true for validation
 
   useEffect(() => {
-    // When signUp fails, clears error after 3s
+    // clears message after 3s
     const timer = setTimeout(() => {
       setSignupData((prevState) => ({ ...prevState, message: null }));
     }, 3000);
@@ -48,68 +43,47 @@ const SignUpForm = () => {
       email: email.value,
       password: password.value,
     });
-
-    response.error
-      ? // if fails, sets error
-        setSignupData((prevState) => ({
-          ...prevState,
-          message: response.error,
-          loading: false,
-        }))
-      : // if succeed, sets succeed to true
-        setSignupData((prevState) => ({
-          ...prevState,
-          message: response.message,
-          succeed: true,
-          loading: false,
-        }));
+    setSignupData((prevState) => ({
+      ...prevState,
+      message: response.message,
+      loading: false,
+      succeed: response.ok,
+    }));
   };
 
   return (
     <FormContainer>
-      {/* <div className={classes.Background}>
-        <form className={classes.FormContainer}> */}
       <Input {...name} label={"Name"} />
       <br style={{ marginBottom: "2rem" }} />
       <Input {...email} label={"Email"} />
       <br style={{ marginBottom: "2rem" }} />
       <Input {...password} label={"Password"} />
-      {/* <div className={classes.MessageContainer}> */}
-      {signupData.loading ? (
-        <p className={classes.Message}>
-          <Spinner
-            stroke="black"
-            strokeWidth="5"
-            style={{
-              display: "block",
-              margin: "auto",
-              height: "3.5rem",
-              width: "3.5rem",
-            }}
-          />
-        </p>
-      ) : signupData.message ? (
-        <p className={classes.Message}>{signupData.message}</p>
-      ) : (
-        <p className={classes.Message}>&nbsp;</p>
-      )}
-      {/* </div> */}
-      {/* if succeed shows switch to login button, else show sign up button */}
+      <p
+        className={classes.Message}
+        style={{ color: signupData.succeed ? "green" : "red" }}
+      >
+        {signupData.loading ? <Spinner /> : signupData.message}
+      </p>
+
+      {/* if succeed shows check email message, else show sign up button */}
       {signupData.succeed ? (
-        <Button
-          text="Switch to login"
-          classFromProps={classes.Button}
-          onClick={() => history.push("/login")}
-        />
+        <p className={classes.checkMail}>Check your mail!</p>
       ) : (
         <Button
           text="Sign Up"
-          classFromProps={classes.Button}
-          onClick={handleSubmit}
+          classFromProps={
+            email.isValid && password.isValid && name.isValid
+              ? classes.Button
+              : classes.ButtonDisabled
+          }
+          onClick={
+            // allows onClick when email, password and name input are valid
+            email.isValid && password.isValid && name.isValid
+              ? handleSubmit
+              : (e) => e.preventDefault()
+          }
         />
       )}
-      {/* </form>
-      </div> */}
     </FormContainer>
   );
 };

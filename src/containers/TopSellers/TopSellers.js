@@ -20,7 +20,7 @@ const TopSellers = () => {
       <Carousel>
         <CardFirst>TopSellers</CardFirst>
         {items.map((el) => (
-          // Distribute el's properties: img, alt, price, description
+          // Distribute el's properties: name, img, price, description
           <Card {...el} key={el.name}></Card>
         ))}
       </Carousel>

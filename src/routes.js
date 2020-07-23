@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import NewArrivals from "./containers/NewArrivals/NewArrivals";
 import TopSellers from "./containers/TopSellers/TopSellers";
@@ -7,9 +7,12 @@ import History from "./containers/History/History";
 import Discover from "./containers/Discover/Discover";
 import LoginForm from "./component/FormContainer/LoginForm/LoginForm";
 import SignUpForm from "./component/FormContainer/SignUpForm/SignUpForm";
+import ForgotPassForm from "./component/FormContainer/ForgotPassForm/ForgotPassForm";
 import ResetPassForm from "./component/FormContainer/ResetPassForm/ResetPassForm";
 import ActivateForm from "./component/FormContainer/ActivateForm/ActivateForm";
 import Category from "./containers/Category/Category";
+import AccountSecurity from "./containers/AccountSecurity/AccountSecurity";
+import ShoppingCart from "./containers/ShoppingCart/ShoppingCart";
 
 const ROUTES = [
   //   { path: "/", key: "ROOT", exact: true, component: () => <h1>Log in</h1> },
@@ -51,10 +54,42 @@ const ROUTES = [
         component: LoginForm,
       },
       {
+        path: "/auth/forgot",
+        key: "AUTH_FORGOT",
+        exact: true,
+        component: ForgotPassForm,
+      },
+
+      {
         path: "/auth/reset/:token",
         key: "AUTH_RESET",
         exact: true,
         component: ResetPassForm,
+      },
+    ],
+  },
+  {
+    path: "/app",
+    key: "APP",
+    component: (props) => {
+      return localStorage.getItem("NewState") ? (
+        <RenderRoutes {...props} />
+      ) : (
+        <Redirect to={"/"} />
+      );
+    },
+    routes: [
+      {
+        path: "/app/security",
+        key: "APP_SECURITY",
+        exact: true,
+        component: AccountSecurity,
+      },
+      {
+        path: "/app/cart",
+        key: "APP_LOGIN",
+        exact: true,
+        component: ShoppingCart,
       },
     ],
   },

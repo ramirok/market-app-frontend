@@ -23,8 +23,10 @@ export const CartProvider = (props) => {
       if (token) {
         const response = await postCart({ id, quantity }, token);
         setCartItems(response);
+        return true;
       } else {
-        history.push("/login");
+        history.push("/auth/login");
+        return false;
       }
     },
     [history]
@@ -33,6 +35,7 @@ export const CartProvider = (props) => {
   // Delete item from cart
   const delProductHandler = async (id, token) => {
     const response = await delCart(id, token);
+
     setCartItems(response);
   };
 

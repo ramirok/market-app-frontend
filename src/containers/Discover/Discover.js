@@ -16,6 +16,7 @@ const Discover = () => {
   return (
     // Returns 2 carousel components
     <>
+      {/* first 15 items carousel */}
       <div className={classes.DiscoverContainer}>
         <h3 className={classes.Name}>More products</h3>
         <Carousel
@@ -25,11 +26,13 @@ const Discover = () => {
           }}
         >
           {items.slice(0, 15).map((el) => (
-            // Distribute el's properties: img, alt, price, description
+            // Distribute el's properties: name, img, price, description
             <Card {...el} key={el.name}></Card>
           ))}
         </Carousel>
       </div>
+
+      {/* second 15 items carousel */}
       <div className={classes.DiscoverContainer} style={{ paddingTop: "0" }}>
         <Carousel
           customSettings={{
@@ -39,7 +42,7 @@ const Discover = () => {
           customStyle={{ paddingTop: "0" }}
         >
           {items.slice(15, 30).map((el) => (
-            // Distribute el's properties: img, alt, price, description
+            // Distribute el's properties: name, img, price, description
             <Card {...el} key={el.name}></Card>
           ))}
         </Carousel>

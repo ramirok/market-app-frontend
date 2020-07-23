@@ -8,9 +8,11 @@ import classes from "./ShoppingCart.module.css";
 const ShoppingCart = () => {
   // customHook for cart context
   // cartItems = [array of items]
-  // getAllCart: fetches usser's cart
+  // addProductHandler: add to cart
+  // delProductHandler: remove from cart
   const { cartItems, addProductHandler, delProductHandler } = useCart();
 
+  // total price
   const total =
     cartItems.length > 0
       ? cartItems
@@ -21,7 +23,9 @@ const ShoppingCart = () => {
   return (
     <>
       <div className={classes.Head}></div>
+
       <div className={classes.Container}>
+        {/* cart products */}
         {cartItems.map((el) => (
           <ProductCard
             key={el.name}
@@ -30,6 +34,8 @@ const ShoppingCart = () => {
             delProductHandler={delProductHandler}
           />
         ))}
+
+        {/* total price */}
         <div className={classes.Product}>
           <p>Total</p>
           <p className={classes.Price}>{`$ ${total.toFixed(2)}`}</p>

@@ -43,6 +43,6 @@
 .Delete {
   font-weight: 900;
   min-width: 2rem;
-  text-align: center;
-  border-radius: 5px;
+  display: flex;
+  justify-content: center;
 }

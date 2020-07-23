@@ -1,24 +1,66 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 
+import { activateAcc } from "../../../utils/fetchServices";
 import FormContainer from "../FormContainer";
 import Button from "../../Button/Button";
-import { activateAcc } from "../../../utils/fetchServices";
-
+import Spinner from "../../UI/Spinner/Spinner";
 import classes from "./ActivateForm.module.css";
-import { useParams } from "react-router-dom";
 
 const ActivateForm = () => {
+  // get token from url param
   const { token } = useParams();
 
-  const [message, setMessage] = useState("");
+  const history = useHistory();
+
+  // message state from fetch response
+  const [message, setMessage] = useState(null);
+
+  // loading state for spinner
+  const [loading, setLoading] = useState(true);
+
+  // account activation succeed
+  const [succeed, setSucceed] = useState(false);
 
   useEffect(() => {
-    activateAcc(token).then((response) => setMessage(response.message));
-  });
+    // fetch with token
+    activateAcc(token).then((response) => {
+      setSucceed(response.ok);
+      setMessage(response.message);
+      setLoading(false);
+    });
+  }, [token]);
+
+  const succeedButton = succeed ? (
+    // shows login button if activation succeeds
+    <Button
+      text="Switch to login"
+      classFromProps={classes.Button}
+      onClick={() => history.push("/auth/login")}
+    />
+  ) : (
+    // show try again message if activation fails
+    <p className={classes.Failed}>Please try again!</p>
+  );
+
   return (
     <FormContainer>
-      <p className={classes.Message}>{message}</p>
-      <Button text="Switch to login" classFromProps={classes.Button} />
+      {/* shows spinner if loading = true */}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <p
+            className={classes.Message}
+            style={{
+              color: succeed ? "green" : "red",
+            }}
+          >
+            {message}
+          </p>
+          {succeedButton}
+        </>
+      )}
     </FormContainer>
   );
 };

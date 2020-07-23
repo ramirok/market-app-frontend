@@ -6,9 +6,27 @@
   line-height: 1.5rem;
 }
 
+.checkMail {
+  color: #5b7bf4;
+  width: 20rem;
+  text-align: center;
+  border-bottom: 1px solid #5b7bf4;
+  line-height: 3rem;
+  font-weight: 700;
+}
+
 .ButtonOk {
   background-color: #5b7bf4;
   width: 20rem;
+}
+
+.ButtonOkDisabled {
+  background-color: grey;
+  width: 20rem;
+}
+
+.ButtonOkDisabled:active {
+  transform: scale(1);
 }
 
 .ButtonCancel {

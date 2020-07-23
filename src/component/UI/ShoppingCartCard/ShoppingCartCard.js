@@ -3,68 +3,81 @@ import React, { useState, useEffect } from "react";
 import { capitalizeName } from "../../../utils/helpers";
 import { useUser } from "../../../context/userContext";
 import Button from "../../Button/Button";
+import Spinner from "../Spinner/Spinner";
 import classes from "./ShoppingCartCard.module.css";
 
-// SVG imports
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
-
 const ProductCart = (props) => {
-  console.log("rendering card");
-
+  /*
+Recives:
+ -name: product name
+ -img: img url
+ -description: product description
+ -price: product price
+ -id: product id
+ -quantity: product quantity retrived from the cart
+ -addProductHandler: add product to the cart
+ -delProductHandler: remove product from the cart
+*/
   const {
     name,
     img,
     description,
-    quantity,
     price,
     id,
-    delProductHandler,
+    quantity,
     addProductHandler,
+    delProductHandler,
   } = props;
 
+  // customHook for user context:
+  // loginData returns ={message, loading, userId, token}
+  const { loginData } = useUser();
+
+  // loading state for spinner
+  const [isLoading, setIsLoading] = useState(false);
+
+  // amount state for fetch
+  const [amount, setAmount] = useState(quantity);
+
   useEffect(() => {
+    // set amount to quantity retrived from the cart
     setAmount(quantity);
   }, [quantity]);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [amount, setAmount] = useState(quantity);
-  const { loginData } = useUser();
 
   const handleSubmitOnEnter = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     const newAmount = e.target.userInput.value - quantity;
-    await addProductHandler(id, newAmount, loginData.token);
+    // if user input <= 0, delete product from cart
+    parseInt(e.target.userInput.value) <= 0
+      ? await delProductHandler(id, loginData.token)
+      : await addProductHandler(id, newAmount, loginData.token);
     setIsLoading(false);
   };
 
   const handleSubmitOnOk = async (value) => {
     setIsLoading(true);
     const newAmount = value - quantity;
-    await addProductHandler(id, newAmount, loginData.token);
+    // if user input <= 0, delete product from cart
+    parseInt(value) <= 0
+      ? await delProductHandler(id, loginData.token)
+      : await addProductHandler(id, newAmount, loginData.token);
     setIsLoading(false);
   };
 
   return (
     <div className={classes.Product}>
-      <div style={{ position: "absolute", right: "2rem", top: "2rem" }}>
-        {isLoading && (
-          <Spinner
-            stroke="black"
-            strokeWidth="6"
-            style={{
-              position: "absolute",
-              height: "4rem",
-              width: "4rem",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        )}
-      </div>
-      <div className={classes.ImageContainer}>
-        <img src={img} alt={name} className={classes.Image} />
+      {/* show spinner if isLoading = true */}
+      <div style={{ position: "absolute", right: "1rem", top: "1rem" }}>
+        {isLoading && <Spinner />}
       </div>
 
+      {/* product image */}
+      <div className={classes.ImageContainer}>
+        <img src={`/${img}`} alt={name} className={classes.Image} />
+      </div>
+
+      {/* product info */}
       <div className={classes.InfoContainer}>
         {capitalizeName(name)}
         {img.includes("vegetables") || img.includes("fruits")
@@ -75,24 +88,33 @@ const ProductCart = (props) => {
         <p>{description}</p>
       </div>
 
+      {/* buttons and input */}
       <div className={classes.ButtonsContainer}>
         <Button
           text="-"
           classFromProps={classes.ButtonRemove}
           onClick={
+            // allows onClick if isLoading = false
             !isLoading
-              ? async () => {
-                  setIsLoading(true);
-                  await addProductHandler(id, -1, loginData.token);
-                  setIsLoading(false);
-                }
+              ? quantity > 1
+                ? async () => {
+                    setIsLoading(true);
+                    await addProductHandler(id, -1, loginData.token);
+                    setIsLoading(false);
+                  }
+                : async () => {
+                    setIsLoading(true);
+                    await delProductHandler(id, loginData.token);
+                  }
               : null
           }
         />
+
         <form onSubmit={handleSubmitOnEnter}>
           <input
             type="number"
             name="userInput"
+            min="0"
             className={classes.Input}
             value={amount}
             onChange={(e) => {
@@ -100,10 +122,12 @@ const ProductCart = (props) => {
             }}
           />
         </form>
+
         <Button
           text="+"
           classFromProps={classes.ButtonAdd}
           onClick={
+            // allows onClick if isLoading = false
             !isLoading
               ? async () => {
                   setIsLoading(true);
@@ -113,6 +137,8 @@ const ProductCart = (props) => {
               : null
           }
         />
+
+        {/* if user inputs value (amount), show ok button to fetch new quantity  */}
         {quantity !== amount && (
           <span
             className={classes.ButtonOk}
@@ -123,16 +149,20 @@ const ProductCart = (props) => {
         )}
       </div>
 
+      {/* price */}
       <div className={classes.Price}>
         <p
           style={{ color: "#888888", fontSize: "1.5rem" }}
         >{`$ ${price} x ${quantity}`}</p>
         <p>$ {(price * quantity).toFixed(2)}</p>
       </div>
+
+      {/* remove product button */}
       <Button
         text="X"
         classFromProps={classes.ButtonDel}
         onClick={
+          // allows onClick if isLoading = false
           !isLoading
             ? async () => {
                 setIsLoading(true);

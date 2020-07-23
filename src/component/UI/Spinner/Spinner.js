@@ -1,24 +1,27 @@
 import React from "react";
 
-import classes from "./Spinner.module.css";
+import { ReactComponent as SpinnerSvg } from "../../../assets/spinner.svg";
 
 const Spinner = (props) => {
-  const { color } = props;
-
-  let classToApply;
-  if (color === "black") {
-    classToApply = classes.lds_ring_Black;
-  } else if (color === "white") {
-    classToApply = classes.lds_ring_White;
-  }
+  /*
+Recives:
+ -white: white spinner
+ -small: small spinner
+*/
+  const { white, small } = props;
 
   return (
-    <div className={classToApply}>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <SpinnerSvg
+      stroke={white ? "white" : "black"}
+      style={
+        small
+          ? {
+              height: "2rem",
+              width: "2rem",
+            }
+          : null
+      }
+    />
   );
 };
 

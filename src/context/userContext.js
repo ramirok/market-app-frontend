@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
 import {
@@ -17,9 +17,7 @@ export const UserProvider = (props) => {
   // Login data
   const [loginData, setLoginData] = useState(
     loadState() || {
-      message: null,
       loading: false,
-      userId: null,
       name: null,
       email: null,
       token: null,
@@ -28,25 +26,12 @@ export const UserProvider = (props) => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    if (loginData.message) {
-      // When login fails, clears error after 3s
-      const timer = setTimeout(() => {
-        setLoginData((prevState) => ({ ...prevState, message: null }));
-      }, 3000);
-      return function () {
-        clearTimeout(timer);
-      };
-    }
-  }, [loginData.token, loginData.message]);
-
   // Login
   const handleLogin = async (e, email, password) => {
     e.preventDefault();
     setLoginData((prevState) => ({
       ...prevState,
       loading: true,
-      message: null,
     }));
 
     const response = await login({
@@ -54,36 +39,27 @@ export const UserProvider = (props) => {
       password: password,
     });
 
-    if (response.error) {
-      // if fails, sets error
-      setLoginData((prevState) => ({
-        ...prevState,
-        message: response.error,
+    if (response.ok) {
+      // if succeed, sets loginData and saves localStorage
+      setLoginData({
         loading: false,
-      }));
-
-      // boolean for redirect
-      return false;
-    } else {
-      // if succeed, sets token and userId and saves localStorage
-      setLoginData((prevState) => ({
-        ...prevState,
-        loading: false,
-        userId: response.user.id,
-        token: response.token,
         name: response.user.name,
         email: response.user.email,
-      }));
+        token: response.token,
+      });
       saveState({
         token: response.token,
-        userId: response.user.id,
         name: response.user.name,
         email: response.user.email,
       });
-
-      // boolean for redirect
-      return true;
+    } else {
+      setLoginData((prevState) => ({
+        ...prevState,
+        loading: false,
+      }));
     }
+
+    return { succeed: response.ok, message: response.message };
   };
 
   // Logout
@@ -91,9 +67,9 @@ export const UserProvider = (props) => {
     await logout(loginData.token);
     window.localStorage.clear();
     setLoginData({
-      message: null,
       loading: false,
-      userId: null,
+      name: null,
+      email: null,
       token: null,
     });
     history.push("/");
@@ -104,14 +80,14 @@ export const UserProvider = (props) => {
     setLoginData((prevState) => ({
       ...prevState,
       loading: true,
-      message: null,
     }));
     const response = await logoutAll(loginData.token);
     setLoginData((prevState) => ({
       ...prevState,
-      message: response.message,
       loading: false,
     }));
+
+    return { succeed: response.ok, message: response.message };
   }, [loginData.token]);
 
   // Change Password
@@ -120,28 +96,14 @@ export const UserProvider = (props) => {
       setLoginData((prevState) => ({
         ...prevState,
         loading: true,
-        message: null,
+      }));
+      const response = await changePass(loginData.token, data);
+      setLoginData((prevState) => ({
+        ...prevState,
+        loading: false,
       }));
 
-      const response = await changePass(loginData.token, data);
-
-      if (response.error) {
-        setLoginData((prevState) => ({
-          ...prevState,
-          message: response.error,
-          loading: false,
-        }));
-
-        return false;
-      } else {
-        setLoginData((prevState) => ({
-          ...prevState,
-          message: response.message,
-          loading: false,
-        }));
-
-        return true;
-      }
+      return { succeed: response.ok, message: response.message };
     },
     [loginData.token]
   );
@@ -151,53 +113,39 @@ export const UserProvider = (props) => {
     setLoginData((prevState) => ({
       ...prevState,
       loading: true,
-      message: null,
     }));
 
     const response = await forgotPass(email);
 
-    if (response.error) {
-      setLoginData((prevState) => ({
-        ...prevState,
-        message: response.error,
-        loading: false,
-      }));
-    } else {
-      setLoginData((prevState) => ({
-        ...prevState,
-        message: response.message,
-        loading: false,
-      }));
-    }
+    setLoginData((prevState) => ({
+      ...prevState,
+      loading: false,
+    }));
+    return { succeed: response.ok, message: response.message };
   };
 
   // Reset Password
-  const handleResetPassword = async (token, newPass) => {
+  const handleResetPassword = async (token, password, passwordConfirmation) => {
     setLoginData((prevState) => ({
       ...prevState,
       loading: true,
-      message: null,
     }));
-    const response = await resetPass({ resetLink: token, newPass });
 
-    if (response.error) {
-      setLoginData((prevState) => ({
-        ...prevState,
-        message: response.error,
-        loading: false,
-      }));
+    const response = await resetPass({
+      resetLink: token,
+      password,
+      passwordConfirmation,
+    });
 
-      return false;
-    } else {
-      setLoginData((prevState) => ({
-        ...prevState,
-        message: response.message,
-        loading: false,
-      }));
-      return true;
-    }
+    setLoginData((prevState) => ({
+      ...prevState,
+      loading: false,
+    }));
+
+    return { succeed: response.ok, message: response.message };
   };
 
+  // stuff context will provide
   const value = useMemo(() => {
     return {
       loginData,

@@ -34,6 +34,15 @@
   width: 20rem;
 }
 
+.ButtonLoginDisabled {
+  background-color: grey;
+  width: 20rem;
+}
+
+.ButtonLoginDisabled:active {
+  transform: scale(1);
+}
+
 .ButtonForgot {
   border: 1px solid #5b7bf4;
   color: #5b7bf4;

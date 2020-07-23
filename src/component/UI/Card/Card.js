@@ -4,21 +4,19 @@ import { useUser } from "../../../context/userContext";
 import { useCart } from "../../../context/cartContext";
 import { capitalizeName } from "../../../utils/helpers";
 import ProductModal from "../Modal/ProductModal/ProductModal";
+import Spinner from "../Spinner/Spinner";
 import classes from "./Card.module.css";
-
-// SVG imports
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 
 const Card = (props) => {
   /*
 Recives:
--name: product name
+ -id: product id
+ -name: product name
  -img: img url
- -alt: alt text for image
  -price: product price
  -description: product description
 */
-  const { id, name, img, alt, price, description } = props;
+  const { id, name, img, price, description } = props;
 
   // Toggles modal visibility
   const [isOpen, setIsOpen] = useState(false);
@@ -35,11 +33,11 @@ Recives:
 
   return (
     <>
+      {/* Renders modal when is open = true */}
       {isOpen && (
         <ProductModal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          item={name}
           modalData={{ name, img, price, description, id }}
         />
       )}
@@ -53,43 +51,32 @@ Recives:
             setIsOpen(true);
           }}
         >
-          <img src={`/${img}`} alt={alt} className={classes.Image} />
+          <img src={`/${img}`} alt={name} className={classes.Image} />
         </div>
 
         {/* add to chart button */}
         <div
           className={classes.Plus}
           onClick={
+            // allows on click if loading = false
             !isLoading
               ? async () => {
                   setIsLoading(true);
-                  await addProductHandler(id, 1, loginData.token);
-                  setIsLoading(false);
+                  // if product added successfully, setLoading = false
+                  (await addProductHandler(id, 1, loginData.token)) &&
+                    setIsLoading(false);
                 }
               : null
           }
         >
-          {isLoading ? (
-            <Spinner
-              stroke="white"
-              strokeWidth="5"
-              style={{
-                position: "absolute",
-                height: "2.5rem",
-                width: "2.5rem",
-              }}
-            />
-          ) : (
-            "+"
-          )}
+          {/* shows spinner if loading = true */}
+          {isLoading ? <Spinner white /> : "+"}
         </div>
 
         {/* card footer */}
         <div className={classes.CardFoot}>
           <span>{`$ ${price} `}</span>
-          <span className={classes.Name}>
-            {name ? capitalizeName(name) : undefined}
-          </span>
+          <span className={classes.Name}>{capitalizeName(name)}</span>
           <span className={classes.Name}>{description}</span>
         </div>
       </div>

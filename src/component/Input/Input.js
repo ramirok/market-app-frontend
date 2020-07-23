@@ -6,11 +6,20 @@ const Input = (props) => {
   /*
 Recives:
  -tpye: input type
- -value: input value
- -onChenge: onChange handler
-
+ -label : input label text
+ -isValid: validation checked
+ -error: array of validation errors
+ -rest: input value and onChange
 */
-  const { type, label } = props;
+  const { type, label, isValid, error, ...rest } = props;
+
+  // add style if recives isValid
+  let check = {};
+  if (isValid === true) {
+    check = { borderBottom: "2px solid blue" };
+  } else if (isValid === false) {
+    check = { borderBottom: "2px solid red" };
+  }
 
   switch (type) {
     case "email":
@@ -19,8 +28,19 @@ Recives:
       return (
         <div className={classes.InputContainer}>
           <label htmlFor="email">{label}</label>
-          {/* spread type, value, onChange atributes*/}
-          <input {...props} id="email" className={classes.Input} />
+          <input
+            {...rest} //spread value and onChange atributes
+            type={type}
+            id="email"
+            className={classes.Input}
+            style={check}
+          />
+          {/* if isValid = false, shows (!) with tooltip */}
+          {isValid === false && (
+            <div className={classes.Tooltip}>
+              !<span className={classes.TooltipText}>{error.join(".\n")}</span>
+            </div>
+          )}
         </div>
       );
     case "password":
@@ -29,8 +49,19 @@ Recives:
       return (
         <div className={classes.InputContainer}>
           <label htmlFor="password">{label}</label>
-          {/* spread type, value, onChange atributes*/}
-          <input {...props} id="password" className={classes.Input} />
+          <input
+            {...rest} //spread value and onChange atributes
+            type={type}
+            id="password"
+            className={classes.Input}
+            style={check}
+          />
+          {/* if isValid = false, shows (!) with tooltip */}
+          {isValid === false && (
+            <div className={classes.Tooltip}>
+              !<span className={classes.TooltipText}>{error.join(".\n")}</span>
+            </div>
+          )}
         </div>
       );
     default:
@@ -39,8 +70,19 @@ Recives:
       return (
         <div className={classes.InputContainer}>
           <label htmlFor={type}>{label}</label>
-          {/* spread type, value, onChange atributes*/}
-          <input type="text" {...props} id={type} className={classes.Input} />
+          <input
+            type="text"
+            {...rest} //spread value and onChange atributes
+            id={type}
+            className={classes.Input}
+            style={check}
+          />
+          {/* if isValid = false, shows (!) with tooltip */}
+          {isValid === false && (
+            <div className={classes.Tooltip}>
+              !<span className={classes.TooltipText}>{error.join(".\n")}</span>
+            </div>
+          )}
         </div>
       );
   }

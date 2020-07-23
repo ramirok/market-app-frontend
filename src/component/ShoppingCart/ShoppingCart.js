@@ -17,7 +17,6 @@ const ShoppingCart = () => {
 
   // Toggles modal visibility
   const [isOpen, setIsOpen] = useState(false);
-
   // Data for product modal
   const [modalData, setModalData] = useState({});
 
@@ -53,7 +52,7 @@ const ShoppingCart = () => {
       />
     ));
     // view Cart link
-    items.push(<DropDownItemLink to="cart" name="View cart" key="cart" />);
+    items.push(<DropDownItemLink to="/app/cart" name="View cart" key="cart" />);
   } else if (cartItems.length >= 7) {
     // more than 7 items: shows 6 and "View cart +n"
     items = cartItems.slice(0, 6).map((el) => (
@@ -71,7 +70,7 @@ const ShoppingCart = () => {
     // view cart link
     items.push(
       <div className={classes.MenuItem} key="cart">
-        <DropDownItemLink to="cart" name="View cart" />
+        <DropDownItemLink to="/app/cart" name="View cart" />
         <span className={classes.Number}>{`+${cartItems.length - 6}`}</span>
       </div>
     );
@@ -90,6 +89,7 @@ const ShoppingCart = () => {
           modalData={modalData}
         />
       )}
+
       <div
         className={classes.CartContainer}
         onClick={() => {
@@ -102,6 +102,7 @@ const ShoppingCart = () => {
         {/* SVG icon */}
         <Shopping className={classes.Bag} />
 
+        {/* dropDownMenu links */}
         <DropDownMenu
           styleCustom={{ right: "2rem" }}
           visible={visible}

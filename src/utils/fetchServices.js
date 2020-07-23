@@ -1,15 +1,10 @@
+const baseUrl = "http://localhost:3001/";
+
 // ----------PRODUCTS---------
-
-export const getItem = async (item) => {
-  const response = await fetch(`http://localhost:3001/products/${item}`);
-  const parsedResponse = await response.json();
-
-  return parsedResponse;
-};
 
 export const getCategory = async (category) => {
   const response = await fetch(
-    `http://localhost:3001/products/cat/${
+    `${baseUrl}products/cat/${
       category.includes("-")
         ? category.slice(0, category.indexOf("-"))
         : category
@@ -20,7 +15,16 @@ export const getCategory = async (category) => {
 };
 
 export const getSome = async (query) => {
-  const response = await fetch(`http://localhost:3001/products/?${query}`);
+  const response = query
+    ? await fetch(`${baseUrl}products?${query}`)
+    : await fetch(`${baseUrl}products`);
+
+  const parsedResponse = await response.json();
+  return parsedResponse;
+};
+
+export const getSuggestions = async (value) => {
+  const response = await fetch(`${baseUrl}products/autosuggest?q=${value}`);
   const parsedResponse = await response.json();
   return parsedResponse;
 };
@@ -28,7 +32,7 @@ export const getSome = async (query) => {
 // ----------CART---------
 
 export const getCart = async (token) => {
-  const response = await fetch(`http://localhost:3001/cart`, {
+  const response = await fetch(`${baseUrl}cart`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const parsedResponse = await response.json();
@@ -37,7 +41,7 @@ export const getCart = async (token) => {
 };
 
 export const postCart = async (data, token) => {
-  const response = await fetch("http://localhost:3001/cart", {
+  const response = await fetch(`${baseUrl}cart`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -51,10 +55,11 @@ export const postCart = async (data, token) => {
 };
 
 export const delCart = async (id, token) => {
-  const response = await fetch(`http://localhost:3001/cart/${id}`, {
+  const response = await fetch(`${baseUrl}cart/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
+
   const parsedResponse = await response.json();
   return parsedResponse.products;
 };
@@ -62,60 +67,66 @@ export const delCart = async (id, token) => {
 // ----------USER---------
 
 export const signup = async (data) => {
-  const response = await fetch("http://localhost:3001/users", {
+  const response = await fetch(`${baseUrl}users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
   const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
   return parsedResponse;
 };
 
 export const activateAcc = async (token) => {
-  const response = await fetch("http://localhost:3001/users/activate", {
+  const response = await fetch(`${baseUrl}users/activate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ token }),
   });
 
   const parsedResponse = await response.json();
-  console.log(parsedResponse);
+  parsedResponse.ok = response.ok;
 
   return parsedResponse;
 };
 
 export const login = async (data) => {
-  const response = await fetch("http://localhost:3001/users/login", {
+  const response = await fetch(`${baseUrl}users/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
   const parsedResponse = await response.json(); //{ user:{email, password, id}, token}
+  parsedResponse.ok = response.ok;
+
   return parsedResponse;
 };
 
 export const logout = async (token) => {
-  await fetch("http://localhost:3001/users/logout", {
+  await fetch(`${baseUrl}users/logout`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
 export const logoutAll = async (token) => {
-  const response = await fetch("http://localhost:3001/users/logoutAll", {
+  const response = await fetch(`${baseUrl}users/logoutAll`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
   });
 
   const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
   return parsedResponse;
 };
 
 export const changePass = async (token, data) => {
-  const respone = await fetch("http://localhost:3001/users/change", {
-    method: "POST",
+  const response = await fetch(`${baseUrl}users/change`, {
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -123,28 +134,34 @@ export const changePass = async (token, data) => {
     body: JSON.stringify(data),
   });
 
-  const parsedResponse = await respone.json();
+  const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
   return parsedResponse;
 };
 
 export const forgotPass = async (email) => {
-  const response = await fetch("http://localhost:3001/users/forgot-pass", {
-    method: "PUT",
+  const response = await fetch(`${baseUrl}users/forgot-pass`, {
+    method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email }),
   });
 
   const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
   return parsedResponse;
 };
 
 export const resetPass = async (data) => {
-  const response = await fetch("http://localhost:3001/users/reset-pass", {
+  const response = await fetch(`${baseUrl}users/reset-pass`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
   const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
   return parsedResponse;
 };

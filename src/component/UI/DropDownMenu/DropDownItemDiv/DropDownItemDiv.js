@@ -3,10 +3,8 @@ import React, { useState } from "react";
 import { useCart } from "../../../../context/cartContext";
 import { useUser } from "../../../../context/userContext";
 import { capitalizeName } from "../../../../utils/helpers";
+import Spinner from "../../Spinner/Spinner";
 import classes from "./DropDownItemDiv.module.css";
-
-// SVG imports
-import { ReactComponent as Spinner } from "../../../../assets/spinner.svg";
 
 const DropDownItemDiv = (props) => {
   const { delProductHandler } = useCart();
@@ -35,6 +33,7 @@ const DropDownItemDiv = (props) => {
       {/* Delete product button */}
       <span
         onClick={
+          // allows onClick when loading = false
           !isLoading
             ? async () => {
                 setIsLoading(true);
@@ -44,20 +43,7 @@ const DropDownItemDiv = (props) => {
         }
         className={classes.Delete}
       >
-        {isLoading ? (
-          <Spinner
-            stroke="black"
-            strokeWidth="5"
-            style={{
-              position: "absolute",
-              transform: "translate(-50%,-50%)",
-              height: "2.5rem",
-              width: "2.5rem",
-            }}
-          />
-        ) : (
-          "X"
-        )}
+        {isLoading ? <Spinner small /> : "X"}
       </span>
     </div>
   );

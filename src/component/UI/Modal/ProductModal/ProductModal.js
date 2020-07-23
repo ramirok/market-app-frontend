@@ -5,18 +5,15 @@ import { useCart } from "../../../../context/cartContext";
 import { capitalizeName } from "../../../../utils/helpers";
 import Modal from "../Modal";
 import Button from "../../../Button/Button";
+import Spinner from "../../Spinner/Spinner";
 
 import classes from "./ProductModal.module.css";
-
-// SVG imports
-import { ReactComponent as Spinner } from "../../../../assets/spinner.svg";
 
 const ProductModal = (props) => {
   /*
 Recives:
  -isOpen: modal open/close state
  -setIsOpen: changes isOpen state
- -item: item to fetch
  -props.children
 */
   const { isOpen, setIsOpen, modalData } = props;
@@ -29,7 +26,7 @@ Recives:
   const { addProductHandler } = useCart();
 
   // product amount to add to cart
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
 
   // isLoading state for spinner
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +36,7 @@ Recives:
       {/* Image Container */}
       <div className={classes.ImageContainer}>
         <img
-          src={modalData.img}
+          src={`/${modalData.img}`}
           alt={modalData.name}
           className={classes.Image}
         />
@@ -47,7 +44,10 @@ Recives:
 
       {/* Info Container */}
       <div className={classes.Info}>
+        {/* name */}
         <h3>{capitalizeName(modalData.name)}</h3>
+
+        {/* description */}
         <p>
           {capitalizeName(modalData.description)}
           {modalData.img.includes("vegetables") ||
@@ -58,19 +58,24 @@ Recives:
             : null}
         </p>
 
+        {/* price */}
         <h4 className={classes.Price}>{`Unit price $ ${modalData.price}`}</h4>
+
+        {/* amount and total price */}
         <div>
           <p>
             Amount <span>{amount}</span>
           </p>
           <p>Total {`$ ${(amount * modalData.price).toFixed(2)}`}</p>
         </div>
+
+        {/* buttons */}
         <div className={classes.ButtonsContainer}>
           <Button
             text="-"
             classFromProps={classes.ButtonRemove}
             onClick={() => {
-              setAmount(amount ? amount - 1 : 0);
+              setAmount(amount > 1 ? amount - 1 : 1);
             }}
           />
           <Button
@@ -79,24 +84,11 @@ Recives:
             onClick={() => setAmount(amount + 1)}
           />
           <Button
-            text={
-              isLoading ? (
-                <Spinner
-                  stroke="white"
-                  strokeWidth="5"
-                  style={{
-                    position: "absolute",
-                    transform: "translate(-50%,-50%)",
-                    height: "3.5rem",
-                    width: "3.5rem",
-                  }}
-                />
-              ) : (
-                "Add"
-              )
-            }
+            // shows spinner when isLoading = true
+            text={isLoading ? <Spinner white /> : "Add"}
             classFromProps={classes.ButtonAddCart}
             onClick={
+              // allows on click when isLoading = false
               !isLoading
                 ? async () => {
                     setIsLoading(true);

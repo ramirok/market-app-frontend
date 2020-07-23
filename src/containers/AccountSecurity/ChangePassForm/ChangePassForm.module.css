@@ -7,9 +7,11 @@
 }
 
 .Message {
+  color: red;
   text-align: center;
   margin: -1.5rem 0;
-  line-height: 3.5rem;
+  height: 3.5rem;
+  line-height: 1.5rem;
 }
 
 .ButtonsContainer {
@@ -26,4 +28,13 @@
 .ButtonCancel {
   width: 8rem;
   background-color: #5b7bf4;
+}
+
+.ButtonDisabled {
+  background-color: grey;
+  width: 13rem;
+}
+
+.ButtonDisabled:active {
+  transform: scale(1);
 }

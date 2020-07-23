@@ -3,6 +3,15 @@
   width: 20rem;
 }
 
+.ButtonDisabled {
+  background-color: grey;
+  width: 20rem;
+}
+
+.ButtonDisabled:active {
+  transform: scale(1);
+}
+
 .Message {
   color: red;
   text-align: center;

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { useUser } from "../../context/userContext";
 import { capitalizeName } from "../../utils/helpers";
+import Spinner from "../UI/Spinner/Spinner";
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import DropDownItemLink from "../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
 import classes from "./MyAccount.module.css";
@@ -11,21 +13,22 @@ import { ReactComponent as Bell } from "../../assets/bell.svg";
 import { ReactComponent as Orders } from "../../assets/myaccount/orders.svg";
 import { ReactComponent as Security } from "../../assets/myaccount/security.svg";
 import { ReactComponent as LogOut } from "../../assets/myaccount/logout.svg";
-import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 
 const MyAccount = () => {
   //Toggles dropDownMenu visibility onClick and onLeave
   const [visible, setVisible] = useState(false);
 
+  // loading state for logout spinner
   const [isLoading, setIsLoading] = useState(false);
 
   // logout handler
   const { handleLogout, loginData } = useUser();
 
+  const history = useHistory();
+
   // DropDownMenu list items
   const svgStyle = { height: "2rem", width: "2rem" };
   const list = {
-    // "Your Account": <Account style={svgStyle} />,
     "Your Orders": <Orders style={svgStyle} />,
     Security: <Security style={svgStyle} />,
   };
@@ -44,37 +47,35 @@ const MyAccount = () => {
         My Account
       </span>
       <Bell className={classes.Bell} />
+
       <DropDownMenu visible={visible} setVisible={setVisible}>
+        {/* shows a hello username message */}
         <div className={classes.Hello}>{`Hello ${capitalizeName(
           loginData.name.split(" ")[0]
         )}`}</div>
+
+        {/* dropDownMenu links */}
         {Object.keys(list).map((el) => (
-          <DropDownItemLink key={el} to={el} img={list[el]} name={el} />
+          <DropDownItemLink
+            key={el}
+            to={`/app/${el}`}
+            img={list[el]}
+            name={el}
+          />
         ))}
+
         {/* Logout button */}
         <div
           className={classes.Logout}
-          onClick={() => {
+          onClick={async () => {
             setIsLoading(true);
-            handleLogout();
+            await handleLogout();
+            history.push("/");
           }}
         >
           Log Out
           <span>
-            {isLoading ? (
-              <Spinner
-                stroke="black"
-                strokeWidth="5"
-                style={{
-                  position: "absolute",
-                  transform: "translate(-50%,-50%)",
-                  height: "2.5rem",
-                  width: "2.5rem",
-                }}
-              />
-            ) : (
-              <LogOut style={svgStyle} />
-            )}
+            {isLoading ? <Spinner small /> : <LogOut style={svgStyle} />}
           </span>
         </div>
       </DropDownMenu>

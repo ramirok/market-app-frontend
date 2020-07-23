@@ -1,5 +1,4 @@
 .Message {
-  color: red;
   text-align: center;
   margin: 1rem 0;
   height: 3.5rem;
@@ -8,4 +7,13 @@
 .Button {
   background-color: #5b7bf4;
   width: 20rem;
+}
+
+.Failed {
+  color: red;
+  width: 20rem;
+  text-align: center;
+  border-bottom: 1px solid red;
+  line-height: 3rem;
+  font-weight: 700;
 }
