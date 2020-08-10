@@ -23,6 +23,16 @@ const LoginForm = () => {
   const email = useInputData("email", true); //second argument true for validation
   const password = useInputData("password");
 
+  // google link
+  const [googleLink, setGoogleLink] = useState("");
+
+  useEffect(() => {
+    // fetches and sets google link
+    fetch("http://localhost:3001/users/login/google")
+      .then((response) => response.json())
+      .then((data) => setGoogleLink(data.url));
+  }, []);
+
   useEffect(() => {
     if (message) {
       // clears message after 3 seconds
@@ -39,7 +49,7 @@ const LoginForm = () => {
     <FormContainer>
       <>
         <Input {...email} label={"Email"} />
-        <br style={{ marginBottom: "2rem" }} />
+        <br style={{ marginBottom: "3rem" }} />
         <Input {...password} label={"Password"} />
         <p className={classes.Message}>
           {loginData.loading ? <Spinner /> : message}
@@ -52,8 +62,8 @@ const LoginForm = () => {
               : classes.ButtonLoginDisabled
           }
           onClick={
-            // allows on click if email is a valid email and pasword has value
-            email.isValid && password.value
+            // allows on click if email is a valid email address, pasword has value and loading = false
+            email.isValid && password.value && !loginData.loading
               ? async (e) => {
                   // if login succeeds, redirects to "/"
                   const response = await handleLogin(
@@ -67,7 +77,14 @@ const LoginForm = () => {
               : (e) => e.preventDefault()
           }
         />
-        <br style={{ marginBottom: "2rem" }} />
+        <br style={{ marginBottom: "3rem" }} />
+
+        {/* login with google button */}
+        <a href={googleLink} className={classes.Link}>
+          Login with Google
+        </a>
+
+        <br style={{ marginBottom: "3rem" }} />
         <Button
           text="Forgot password?"
           classFromProps={classes.ButtonForgot}

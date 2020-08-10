@@ -44,9 +44,9 @@ const ResetPassForm = () => {
   return (
     <FormContainer>
       <Input {...password} label={"New Password"} />
-      <br style={{ marginBottom: "2rem" }} />
+      <br style={{ marginBottom: "3rem" }} />
       <Input {...passwordConfirmation} label={"Repeat new Password"} />
-      <br style={{ marginBottom: "2rem" }} />
+      <br style={{ marginBottom: "3rem" }} />
       <p
         className={classes.Message}
         style={{ color: succeed ? "green" : "red" }}
@@ -54,11 +54,15 @@ const ResetPassForm = () => {
         {loginData.loading ? <Spinner /> : message}
       </p>
       {succeed ? (
-        // if succeeds show login button
+        // if succeeds show go back button
         <Button
-          text="Switch to login"
+          text="Go back"
           classFromProps={classes.Button}
-          onClick={() => history.push("/auth/login")}
+          onClick={() =>
+            loginData.token
+              ? history.push("/app/security")
+              : history.push("/auth/login")
+          }
         />
       ) : (
         <Button
@@ -69,8 +73,10 @@ const ResetPassForm = () => {
               : classes.ButtonDisabled
           }
           onClick={
-            // allows on click if password and password confirmation are valid
-            password.isValid && passwordConfirmation.isValid
+            // allows on click if password and password confirmation are valid, and loading = false
+            password.isValid &&
+            passwordConfirmation.isValid &&
+            !loginData.loading
               ? async (e) => {
                   e.preventDefault();
                   const response = await handleResetPassword(

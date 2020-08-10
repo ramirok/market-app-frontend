@@ -1,0 +1,15 @@
+.Message {
+  color: red;
+  text-align: center;
+  height: 3.5rem;
+  line-height: 1.5rem;
+}
+
+.ButtonOk {
+  position: absolute;
+  top: 1rem;
+  left: 18rem;
+  width: 5rem;
+  height: 2.5rem;
+  background-color: #5b7bf4;
+}

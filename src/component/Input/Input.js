@@ -43,16 +43,37 @@ Recives:
           )}
         </div>
       );
+    case "number":
+      //Input type number
+
+      return (
+        <div className={classes.InputContainer}>
+          <label htmlFor={label}>{label}</label>
+          <input
+            {...rest} //spread value and onChange atributes
+            type={"text"}
+            id={label}
+            className={classes.Input}
+            style={check}
+          />
+          {/* if isValid = false, shows (!) with tooltip */}
+          {isValid === false && (
+            <div className={classes.Tooltip}>
+              !<span className={classes.TooltipText}>{error.join(".\n")}</span>
+            </div>
+          )}
+        </div>
+      );
     case "password":
       //Input type password
 
       return (
         <div className={classes.InputContainer}>
-          <label htmlFor="password">{label}</label>
+          <label htmlFor={label}>{label}</label>
           <input
             {...rest} //spread value and onChange atributes
             type={type}
-            id="password"
+            id={label}
             className={classes.Input}
             style={check}
           />
@@ -69,11 +90,11 @@ Recives:
 
       return (
         <div className={classes.InputContainer}>
-          <label htmlFor={type}>{label}</label>
+          <label htmlFor={label}>{label}</label>
           <input
             type="text"
             {...rest} //spread value and onChange atributes
-            id={type}
+            id={label}
             className={classes.Input}
             style={check}
           />

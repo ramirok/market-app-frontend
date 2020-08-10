@@ -1,8 +1,11 @@
 //---------- capitalize string ----------
-export const capitalizeName = (string) => {
-  return string
-    ? string.charAt(0).toUpperCase() + string.slice(1).replace("-", " ")
-    : null;
+export const capitalizeName = (string = "") => {
+  const words = string.match(/[A-Za-z][a-z]*/g) || [];
+  return words
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.substring(1);
+    })
+    .join(" ");
 };
 
 //---------- input validation ----------
@@ -12,8 +15,8 @@ export const checkValidity = (value, type, newPass) => {
 
   switch (type) {
     case "email":
-      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      isValid = regex.test(value);
+      const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      isValid = emailRegex.test(value);
       error.push("Enter a valid email address");
       break;
 
@@ -46,9 +49,21 @@ export const checkValidity = (value, type, newPass) => {
       error.push("Minimun 4 characters");
       break;
 
+    case "number":
+      const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/g;
+      isValid = phoneRegex.test(value);
+      error.push("Please a valid number");
+      break;
+
     default:
       return null;
   }
 
   return { isValid, error };
+};
+
+//---------- read jwt token ----------
+export const jwtDecode = (t) => {
+  const payload = JSON.parse(window.atob(t.split(".")[1]));
+  return payload;
 };

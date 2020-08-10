@@ -49,14 +49,19 @@ const SignUpForm = () => {
       loading: false,
       succeed: response.ok,
     }));
+    if (response.ok) {
+      name.onChange({ target: { value: "" } });
+      email.onChange({ target: { value: "" } });
+      password.onChange({ target: { value: "" } });
+    }
   };
 
   return (
     <FormContainer>
-      <Input {...name} label={"Name"} />
-      <br style={{ marginBottom: "2rem" }} />
+      <Input {...name} label={"User name"} />
+      <br style={{ marginBottom: "3rem" }} />
       <Input {...email} label={"Email"} />
-      <br style={{ marginBottom: "2rem" }} />
+      <br style={{ marginBottom: "3rem" }} />
       <Input {...password} label={"Password"} />
       <p
         className={classes.Message}
@@ -77,8 +82,11 @@ const SignUpForm = () => {
               : classes.ButtonDisabled
           }
           onClick={
-            // allows onClick when email, password and name input are valid
-            email.isValid && password.isValid && name.isValid
+            // allows onClick when email, password and name input are valid, and loading = false
+            email.isValid &&
+            password.isValid &&
+            name.isValid &&
+            !signupData.loading
               ? handleSubmit
               : (e) => e.preventDefault()
           }

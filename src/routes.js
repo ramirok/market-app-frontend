@@ -13,6 +13,8 @@ import ActivateForm from "./component/FormContainer/ActivateForm/ActivateForm";
 import Category from "./containers/Category/Category";
 import AccountSecurity from "./containers/AccountSecurity/AccountSecurity";
 import ShoppingCart from "./containers/ShoppingCart/ShoppingCart";
+import GoogleForm from "./component/FormContainer/GoogleForm/GoogleForm";
+import ChangePass from "./component/FormContainer/ChangePassForm/ChangePassForm";
 
 const ROUTES = [
   //   { path: "/", key: "ROOT", exact: true, component: () => <h1>Log in</h1> },
@@ -31,9 +33,23 @@ const ROUTES = [
   },
   { path: "/category/:cat", key: "CAT", component: Category },
   {
+    path: "/auth/reset/:token",
+    key: "AUTH_RESET",
+    exact: true,
+    component: ResetPassForm,
+  },
+  {
     path: "/auth",
     key: "AUTH",
-    component: RenderRoutes,
+    // component: RenderRoutes,
+    component: (props) => {
+      return localStorage.getItem("NewState") ? (
+        <Redirect to={"/"} />
+      ) : (
+        <RenderRoutes {...props} />
+      );
+    },
+
     routes: [
       {
         path: "/auth/signup",
@@ -48,6 +64,12 @@ const ROUTES = [
         component: ActivateForm,
       },
       {
+        path: "/auth/google",
+        key: "AUTH_GOOGLE",
+        exact: true,
+        component: GoogleForm,
+      },
+      {
         path: "/auth/login",
         key: "AUTH_LOGIN",
         exact: true,
@@ -58,13 +80,6 @@ const ROUTES = [
         key: "AUTH_FORGOT",
         exact: true,
         component: ForgotPassForm,
-      },
-
-      {
-        path: "/auth/reset/:token",
-        key: "AUTH_RESET",
-        exact: true,
-        component: ResetPassForm,
       },
     ],
   },
@@ -86,8 +101,14 @@ const ROUTES = [
         component: AccountSecurity,
       },
       {
+        path: "/app/security/change",
+        key: "APP_CHANGE",
+        exact: true,
+        component: ChangePass,
+      },
+      {
         path: "/app/cart",
-        key: "APP_LOGIN",
+        key: "APP_CART",
         exact: true,
         component: ShoppingCart,
       },

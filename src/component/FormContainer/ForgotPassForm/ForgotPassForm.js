@@ -59,8 +59,8 @@ const ForgotPassForm = () => {
               email.isValid ? classes.ButtonOk : classes.ButtonOkDisabled
             }
             onClick={
-              // allows on click when email input is a valid email
-              email.isValid
+              // allows on click when email input is a valid email and loading = false
+              email.isValid && !loginData.loading
                 ? async (e) => {
                     e.preventDefault();
                     const response = await handleForgotPassword(email.value);
@@ -70,7 +70,7 @@ const ForgotPassForm = () => {
                 : (e) => e.preventDefault()
             }
           />
-          <br style={{ marginBottom: "2rem" }} />
+          <br style={{ marginBottom: "3rem" }} />
           <Button
             text="Cancel"
             classFromProps={classes.ButtonCancel}

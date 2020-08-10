@@ -9,11 +9,11 @@ Recives:
  -classFromPros: custom styles
  -onClick: onCLick handler
 */
-  const { text, classFromProps, onClick } = props;
+  const { text, classFromProps, onClick, id } = props;
 
   const classesForButton = [classFromProps, classes.ButtonGeneral];
   return (
-    <button className={classesForButton.join(" ")} onClick={onClick}>
+    <button id={id} className={classesForButton.join(" ")} onClick={onClick}>
       {text}
     </button>
   );

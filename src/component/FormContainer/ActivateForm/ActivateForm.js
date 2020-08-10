@@ -24,7 +24,7 @@ const ActivateForm = () => {
 
   useEffect(() => {
     // fetch with token
-    activateAcc(token).then((response) => {
+    activateAcc({ token }).then((response) => {
       setSucceed(response.ok);
       setMessage(response.message);
       setLoading(false);

@@ -83,7 +83,7 @@ export const activateAcc = async (token) => {
   const response = await fetch(`${baseUrl}users/activate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ token }),
+    body: JSON.stringify(token),
   });
 
   const parsedResponse = await response.json();
@@ -100,6 +100,17 @@ export const login = async (data) => {
   });
 
   const parsedResponse = await response.json(); //{ user:{email, password, id}, token}
+  parsedResponse.ok = response.ok;
+
+  return parsedResponse;
+};
+
+export const loginGoogle = async (code) => {
+  const response = await fetch(
+    `http://localhost:3001/users/login/google${code}`
+  );
+
+  const parsedResponse = await response.json();
   parsedResponse.ok = response.ok;
 
   return parsedResponse;
@@ -144,7 +155,7 @@ export const forgotPass = async (email) => {
   const response = await fetch(`${baseUrl}users/forgot-pass`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
+    body: JSON.stringify(email),
   });
 
   const parsedResponse = await response.json();
@@ -161,6 +172,34 @@ export const resetPass = async (data) => {
   });
 
   const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
+  return parsedResponse;
+};
+
+export const getUserDetails = async (token) => {
+  const response = await fetch(`${baseUrl}users/user-details`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
+  return parsedResponse;
+};
+
+export const putUserDetails = async (token, data) => {
+  const response = await fetch(`${baseUrl}users/user-details`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const parsedResponse = await response.json();
+
   parsedResponse.ok = response.ok;
 
   return parsedResponse;

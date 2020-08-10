@@ -1,8 +1,9 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import {
   login,
+  loginGoogle,
   logout,
   logoutAll,
   changePass,
@@ -11,18 +12,28 @@ import {
 } from "../utils/fetchServices";
 import { saveState, loadState } from "../utils/localStorage";
 
+import { jwtDecode } from "../utils/helpers";
+
 const UserContext = React.createContext();
 
 export const UserProvider = (props) => {
   // Login data
-  const [loginData, setLoginData] = useState(
-    loadState() || {
-      loading: false,
-      name: null,
-      email: null,
-      token: null,
+  const [loginData, setLoginData] = useState({
+    loading: false,
+    name: null,
+    email: null,
+    token: null,
+  });
+
+  // load State
+  const loadedState = useMemo(() => loadState(), []);
+
+  useEffect(() => {
+    if (loadedState) {
+      setLoginData(loadedState);
+      console.log(jwtDecode(loadedState.token));
     }
-  );
+  }, [loadedState]);
 
   const history = useHistory();
 
@@ -62,6 +73,37 @@ export const UserProvider = (props) => {
     return { succeed: response.ok, message: response.message };
   };
 
+  // Login Google
+  const handleLoginGoogle = useCallback(async (code) => {
+    setLoginData((prevState) => ({
+      ...prevState,
+      loading: true,
+    }));
+    const response = await loginGoogle(code);
+
+    if (response.ok) {
+      // if succeed, sets loginData and saves localStorage
+      setLoginData({
+        loading: false,
+        name: response.user.name,
+        email: response.user.email,
+        token: response.token,
+      });
+      saveState({
+        token: response.token,
+        name: response.user.name,
+        email: response.user.email,
+      });
+    } else {
+      setLoginData((prevState) => ({
+        ...prevState,
+        loading: false,
+      }));
+    }
+
+    return { succeed: response.ok, message: response.message };
+  }, []);
+
   // Logout
   const handleLogout = useCallback(async () => {
     await logout(loginData.token);
@@ -77,15 +119,15 @@ export const UserProvider = (props) => {
 
   // Logout All
   const handleLogoutAll = useCallback(async () => {
-    setLoginData((prevState) => ({
-      ...prevState,
-      loading: true,
-    }));
+    // setLoginData((prevState) => ({
+    //   ...prevState,
+    //   loading: true,
+    // }));
     const response = await logoutAll(loginData.token);
-    setLoginData((prevState) => ({
-      ...prevState,
-      loading: false,
-    }));
+    // setLoginData((prevState) => ({
+    //   ...prevState,
+    //   loading: false,
+    // }));
 
     return { succeed: response.ok, message: response.message };
   }, [loginData.token]);
@@ -115,7 +157,7 @@ export const UserProvider = (props) => {
       loading: true,
     }));
 
-    const response = await forgotPass(email);
+    const response = await forgotPass({ email });
 
     setLoginData((prevState) => ({
       ...prevState,
@@ -151,12 +193,19 @@ export const UserProvider = (props) => {
       loginData,
       handleLogout,
       handleLogin,
+      handleLoginGoogle,
       handleLogoutAll,
       handleChangePassword,
       handleForgotPassword,
       handleResetPassword,
     };
-  }, [loginData, handleLogout, handleLogoutAll, handleChangePassword]);
+  }, [
+    loginData,
+    handleLoginGoogle,
+    handleLogout,
+    handleLogoutAll,
+    handleChangePassword,
+  ]);
 
   return (
     <UserContext.Provider value={value}>{props.children}</UserContext.Provider>

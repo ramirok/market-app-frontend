@@ -1,0 +1,47 @@
+.Loading {
+  height: 1rem;
+  width: 100%;
+  background: linear-gradient(91deg, #dde1ed, #ffffff);
+  background-size: 400% 400%;
+  -webkit-animation: loading 1s ease infinite;
+  -moz-animation: loading 1s ease infinite;
+  animation: loading 1s ease infinite;
+  border-radius: 5px;
+
+  display: inline-block;
+  margin: auto 0;
+}
+
+@-webkit-keyframes loading {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 51%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes loading {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 51%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes loading {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 51%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
