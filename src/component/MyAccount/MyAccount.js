@@ -13,6 +13,7 @@ import { ReactComponent as Bell } from "../../assets/bell.svg";
 import { ReactComponent as Orders } from "../../assets/myaccount/orders.svg";
 import { ReactComponent as Security } from "../../assets/myaccount/security.svg";
 import { ReactComponent as LogOut } from "../../assets/myaccount/logout.svg";
+import { ReactComponent as ShoppingCart } from "../../assets/shopping-cart.svg";
 
 const MyAccount = () => {
   //Toggles dropDownMenu visibility onClick and onLeave
@@ -29,8 +30,9 @@ const MyAccount = () => {
   // DropDownMenu list items
   const svgStyle = { height: "2rem", width: "2rem" };
   const list = {
-    "Your Orders": <Orders style={svgStyle} />,
-    Security: <Security style={svgStyle} />,
+    Cart: <ShoppingCart style={svgStyle} />,
+    Orders: <Orders style={svgStyle} />,
+    Account: <Security style={svgStyle} />,
   };
 
   return (

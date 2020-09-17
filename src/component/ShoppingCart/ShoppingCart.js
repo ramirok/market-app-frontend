@@ -99,12 +99,16 @@ const ShoppingCart = () => {
           setVisible(false);
         }}
       >
+        {/* if cart has items, show item count icon */}
+        {cartItems.length > 0 ? (
+          <span className={classes.ItemCount}>{cartItems.length}</span>
+        ) : null}
         {/* SVG icon */}
         <Shopping className={classes.Bag} />
 
         {/* dropDownMenu links */}
         <DropDownMenu
-          styleCustom={{ right: "2rem" }}
+          styleCustom={{ right: "0" }}
           visible={visible}
           setVisible={setVisible}
         >

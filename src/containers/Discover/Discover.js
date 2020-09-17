@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { getSome } from "../../utils/fetchServices";
 import Carousel from "../../component/UI/Carousel/Carousel";
-import Card from "../../component/UI/Card/Card";
+import ProductCard from "../../component/UI/Card/ProductCard/ProductCard";
 import classes from "./Discover.module.css";
 
 const Discover = () => {
@@ -27,7 +27,7 @@ const Discover = () => {
         >
           {items.slice(0, 15).map((el) => (
             // Distribute el's properties: name, img, price, description
-            <Card {...el} key={el.name}></Card>
+            <ProductCard {...el} key={el.name} />
           ))}
         </Carousel>
       </div>
@@ -43,7 +43,7 @@ const Discover = () => {
         >
           {items.slice(15, 30).map((el) => (
             // Distribute el's properties: name, img, price, description
-            <Card {...el} key={el.name}></Card>
+            <ProductCard {...el} key={el.name} />
           ))}
         </Carousel>
       </div>

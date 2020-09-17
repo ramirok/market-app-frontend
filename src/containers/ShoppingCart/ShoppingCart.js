@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { useCart } from "../../context/cartContext";
-import ProductCard from "../../component/UI/ShoppingCartCard/ShoppingCartCard";
+import CartCard from "../../component/UI/Card/CartCard/CartCard";
 import Button from "../../component/Button/Button";
+import Spinner from "../../component/UI/Spinner/Spinner";
 import classes from "./ShoppingCart.module.css";
 
 const ShoppingCart = () => {
@@ -10,40 +12,73 @@ const ShoppingCart = () => {
   // cartItems = [array of items]
   // addProductHandler: add to cart
   // delProductHandler: remove from cart
-  const { cartItems, addProductHandler, delProductHandler } = useCart();
+  const { cartItems, loaded, addProductHandler, delProductHandler } = useCart();
 
-  // total price
-  const total =
-    cartItems.length > 0
-      ? cartItems
-          .map((el) => el.price * el.quantity)
-          .reduce((acc, cur) => acc + cur)
-      : 0;
+  const [loading, setLoading] = useState(true);
+  const [totalPrice, setTotalPrice] = useState(null);
 
+  useEffect(() => {
+    // if cart has loaded
+    if (loaded) {
+      // if has items, set price
+      if (cartItems.length > 0) {
+        setTotalPrice(
+          cartItems
+            .map((el) => el.price * el.quantity)
+            .reduce((acc, cur) => acc + cur)
+        );
+        setLoading(false);
+
+        // if it has no items, set price = null
+      } else {
+        setTotalPrice(null);
+        setLoading(false);
+      }
+    }
+  }, [cartItems, loaded]);
+
+  const history = useHistory();
   return (
     <>
       <div className={classes.Head}></div>
 
       <div className={classes.Container}>
-        {/* cart products */}
-        {cartItems.map((el) => (
-          <ProductCard
-            key={el.name}
-            {...el}
-            addProductHandler={addProductHandler}
-            delProductHandler={delProductHandler}
-          />
-        ))}
+        {/* shows spinner when loading */}
+        {loading ? (
+          <div className={classes.SpinnerContainer}>
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {/* cart products */}
+            {cartItems.map((el) => (
+              <CartCard
+                key={el.name}
+                {...el}
+                addProductHandler={addProductHandler}
+                delProductHandler={delProductHandler}
+              />
+            ))}
 
-        {/* total price */}
-        <div className={classes.Product}>
-          <p>Total</p>
-          <p className={classes.Price}>{`$ ${total.toFixed(2)}`}</p>
-          <Button
-            text="Proced to checkout"
-            classFromProps={classes.ButtonCheckout}
-          />
-        </div>
+            {/* total price */}
+            {totalPrice ? (
+              <div className={classes.TotalPrice}>
+                <p>Total</p>
+                <p className={classes.Price}>{`$ ${totalPrice.toFixed(2)}`}</p>
+                <Button
+                  text="Proced to checkout"
+                  classFromProps={classes.ButtonCheckout}
+                  onClick={() => history.push("/app/checkout")}
+                />
+              </div>
+            ) : (
+              // if the are no items in the cart
+              <div className={classes.EmptyCart}>
+                <p>Your cart is empty</p>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </>
   );

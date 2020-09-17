@@ -13,7 +13,7 @@ import classes from "./AccountSecurity.module.css";
 
 const AccountSecurity = () => {
   // customHook for user context:
-  // loginData returns ={message, loading, token}
+  // loginData returns ={loading, token}
   const { loginData, handleLogoutAll } = useUser();
 
   // succeed and message state for logout all

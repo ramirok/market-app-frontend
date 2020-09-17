@@ -1,0 +1,38 @@
+.Button {
+  background-color: #5b7bf4;
+}
+
+.ItemContainer {
+  border-bottom: 1px solid #cccccc;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.ItemDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.ImageContainer {
+  margin: auto 0;
+}
+
+.PriceItemTotal {
+  background-color: #5b7bf4;
+  border-radius: 5px;
+  color: white;
+  padding: 0.1rem 0.5rem;
+}
+
+.PriceTotal {
+  width: fit-content;
+  background-color: #5b7bf4;
+  border-radius: 5px;
+  color: white;
+  padding: 0.1rem 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: auto;
+}

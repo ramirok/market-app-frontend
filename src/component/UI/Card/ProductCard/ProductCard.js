@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-import { useUser } from "../../../context/userContext";
-import { useCart } from "../../../context/cartContext";
-import { capitalizeName } from "../../../utils/helpers";
-import ProductModal from "../Modal/ProductModal/ProductModal";
-import Spinner from "../Spinner/Spinner";
-import classes from "./Card.module.css";
+import { useUser } from "../../../../context/userContext";
+import { useCart } from "../../../../context/cartContext";
+import { capitalizeName } from "../../../../utils/helpers";
+import ProductModal from "../../Modal/ProductModal/ProductModal";
+import Spinner from "../../Spinner/Spinner";
+import classes from "./ProductCard.module.css";
 
-const Card = (props) => {
+const ProductCard = (props) => {
   /*
 Recives:
  -id: product id
@@ -84,4 +84,4 @@ Recives:
   );
 };
 
-export default Card;
+export default ProductCard;

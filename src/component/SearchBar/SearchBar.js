@@ -81,7 +81,11 @@ const SearchBar = () => {
       )}
 
       <div className={classes.SearchBarContainer} ref={wrapperRef}>
-        <input className={classes.SearchBar} {...search} />
+        <input
+          className={classes.SearchBar}
+          {...search}
+          placeholder="Search..."
+        />
         <div className={classes.SuggestionContainer}>
           {/* Shows first 6 suggestions */}
           {suggestions.slice(0, 7).map((el) => (

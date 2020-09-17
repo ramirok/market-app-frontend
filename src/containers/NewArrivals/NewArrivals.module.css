@@ -9,3 +9,41 @@
   overflow: hidden;
   margin-right: 1rem;
 }
+
+.NewIcon {
+  width: 7rem;
+  height: 7rem;
+  position: absolute;
+  transform: rotate(20deg);
+  top: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.Curve {
+  position: absolute;
+  bottom: 0;
+  height: 10rem;
+  width: 15rem;
+  transform: rotate(180deg);
+  z-index: 1;
+}
+
+.Curve2 {
+  position: absolute;
+  bottom: 0;
+  height: 15rem;
+  width: 15rem;
+  transform: rotate(180deg);
+  /* transform: scaleY(-1); */
+}
+
+.Title {
+  font-family: "Amatic SC", cursive;
+  font-size: 3.5rem;
+  padding-left: 1rem;
+  margin-top: auto;
+  color: white;
+  font-weight: 700;
+  z-index: 2;
+}

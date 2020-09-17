@@ -7,11 +7,13 @@
   width: 100%;
 }
 
-.CategoryContainer {
+.Container {
   grid-column: start-name/end-content;
   grid-row: start-content/end-content;
-  justify-self: end;
-  width: 110rem;
+  display: flex;
+}
+
+.CategoryContainer {
   margin: 6rem 0;
   height: 35rem;
   display: flex;
@@ -20,11 +22,9 @@
 }
 
 .Categories {
-  align-self: center;
-  grid-column: start-name/end-name;
-  grid-row: start-content/end-content;
+  margin: 6rem 0;
   height: 35rem;
-  width: 15rem;
+  min-width: 15rem;
   background-color: white;
   box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
   text-align: center;

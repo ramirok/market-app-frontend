@@ -1,0 +1,52 @@
+.CardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  background-color: white;
+  box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
+  text-align: center;
+  padding: 2rem;
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  min-width: 80%;
+  
+}
+
+.ImagesContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7rem;
+  height: 100%;
+}
+
+.Image {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.ProductContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #cccccc;
+}
+.ProductContainer:last-of-type {
+  border-bottom: none;
+}
+
+.ProductInfo {
+  text-align: left;
+}
+
+.PriceTotal {
+  margin-left: auto;
+  background-color: #5b7bf4;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+}

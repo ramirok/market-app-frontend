@@ -15,6 +15,8 @@ import AccountSecurity from "./containers/AccountSecurity/AccountSecurity";
 import ShoppingCart from "./containers/ShoppingCart/ShoppingCart";
 import GoogleForm from "./component/FormContainer/GoogleForm/GoogleForm";
 import ChangePass from "./component/FormContainer/ChangePassForm/ChangePassForm";
+import Checkout from "./containers/Checkout/Checkuout";
+import Orders from "./containers/Orders/Orders";
 
 const ROUTES = [
   //   { path: "/", key: "ROOT", exact: true, component: () => <h1>Log in</h1> },
@@ -95,7 +97,7 @@ const ROUTES = [
     },
     routes: [
       {
-        path: "/app/security",
+        path: "/app/account",
         key: "APP_SECURITY",
         exact: true,
         component: AccountSecurity,
@@ -111,6 +113,18 @@ const ROUTES = [
         key: "APP_CART",
         exact: true,
         component: ShoppingCart,
+      },
+      {
+        path: "/app/checkout",
+        key: "APP_CHECKOUT",
+        exact: true,
+        component: Checkout,
+      },
+      {
+        path: "/app/orders",
+        key: "APP_ORDERS",
+        exact: true,
+        component: Orders,
       },
     ],
   },

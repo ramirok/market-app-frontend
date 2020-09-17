@@ -199,7 +199,48 @@ export const putUserDetails = async (token, data) => {
   });
 
   const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
 
+  return parsedResponse;
+};
+
+export const createOrder = async (token) => {
+  const response = await fetch("http://localhost:3001/users/purchase-aproved", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
+  return parsedResponse;
+};
+
+export const onAprove = async (token, data) => {
+  const response = await fetch("http://localhost:3001/users/reset-cart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  const parsedResponse = await response.json();
+  parsedResponse.ok = response.ok;
+
+  return parsedResponse;
+};
+
+export const getOrders = async (token) => {
+  const response = await fetch("http://localhost:3001/users/orders", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const parsedResponse = await response.json();
   parsedResponse.ok = response.ok;
 
   return parsedResponse;

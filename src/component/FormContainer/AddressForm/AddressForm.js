@@ -63,6 +63,7 @@ const AddressForm = (props) => {
             : null
         }
       />
+
       <Input {...state} label="State:" placeholder={props.placeholders.state} />
       <br style={{ marginBottom: "3rem" }} />
       <Input {...city} label="City:" placeholder={props.placeholders.city} />

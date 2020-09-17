@@ -7,6 +7,24 @@
   transition: all 0.2s;
   height: 3.4rem;
   box-shadow: 10px 10px 60px -14px rgba(0, 0, 0, 0.75);
+  position: relative;
+}
+
+.ItemCount {
+  font-weight: 400;
+  font-size: 1.5rem;
+  position: absolute;
+  left: 3rem;
+  z-index: 1;
+  display: block;
+  background-color: #f7d360;
+  border-radius: 50%;
+  text-align: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Bag {

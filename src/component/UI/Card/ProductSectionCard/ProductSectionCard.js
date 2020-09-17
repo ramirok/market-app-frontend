@@ -1,6 +1,6 @@
 import React from "react";
 
-import classes from "./CardFirst.module.css";
+import classes from "./ProductSectionCard.module.css";
 
 const CardFirst = (props) => {
   /*

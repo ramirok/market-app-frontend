@@ -9,3 +9,40 @@
   overflow: hidden;
   margin-left: 1rem;
 }
+.MedalIcon {
+  width: 8rem;
+  height: 8rem;
+  position: absolute;
+  transform: rotate(-45deg);
+  top: 0;
+  left: 1.5rem;
+  z-index: 3;
+}
+
+.Curve {
+  position: absolute;
+  bottom: 0;
+  height: 10rem;
+  width: 15rem;
+  transform: rotate(180deg);
+  z-index: 1;
+}
+
+.Curve2 {
+  position: absolute;
+  bottom: 0;
+  height: 15rem;
+  width: 15rem;
+  transform: rotate(180deg);
+  transform: scaleY(-1);
+}
+
+.Title {
+  font-family: "Amatic SC", cursive;
+  font-size: 3.5rem;
+  padding-left: 1rem;
+  margin-top: auto;
+  color: white;
+  font-weight: 700;
+  z-index: 2;
+}

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import { capitalizeName } from "../../../utils/helpers";
-import { useUser } from "../../../context/userContext";
-import Button from "../../Button/Button";
-import Spinner from "../Spinner/Spinner";
-import classes from "./ShoppingCartCard.module.css";
+import { capitalizeName } from "../../../../utils/helpers";
+import { useUser } from "../../../../context/userContext";
+import Button from "../../../Button/Button";
+import Spinner from "../../Spinner/Spinner";
+import classes from "./CartCard.module.css";
 
-const ProductCart = (props) => {
+const CartCard = (props) => {
   /*
 Recives:
  -name: product name
@@ -175,4 +175,4 @@ Recives:
   );
 };
 
-export default ProductCart;
+export default CartCard;

@@ -11,36 +11,19 @@
   grid-column: start-name/end-content;
   grid-row: start-content/end-content;
   display: flex;
+  align-items: center;
   flex-direction: column;
   margin-top: 6rem;
-  padding: 0 10rem;
 }
 
 .SpinnerContainer {
   background-color: white;
+  border-radius: 10px;
   padding: 5rem;
   box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
-  margin: 0 auto;
 }
 
-.TotalPrice {
-  font-family: "Nunito", sans-serif;
-  font-size: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 30%;
-  height: 10rem;
-  margin-bottom: 2rem;
-  align-self: flex-end;
-  background-color: #dde1ed;
-  box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
-  text-align: center;
-  padding: 1rem;
-  position: relative;
-}
-
-.EmptyCart {
+.NoOrders {
   height: 20rem;
   width: 50%;
   background-color: white;
@@ -52,18 +35,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.Price {
-  width: 30%;
-  align-self: center;
-  font-family: "Nunito", sans-serif;
-  color: rgb(50, 50, 50);
-  font-size: 2rem;
-}
-
-.ButtonCheckout {
-  background-color: #5b7bf4;
-  width: 20rem;
-  margin: 0 auto;
 }
