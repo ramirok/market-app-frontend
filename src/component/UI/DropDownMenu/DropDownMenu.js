@@ -5,7 +5,6 @@ import classes from "./DropDownMenu.module.css";
 const DropDownMenu = React.memo((props) => {
   /*
   Recives:
-  -list: menu item list
   -styleCustom: custom inline-style
   -visible: visible state
   -setVisible: toggle visible state

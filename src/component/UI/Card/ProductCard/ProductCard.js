@@ -28,7 +28,7 @@ Recives:
   const [isLoading, setIsLoading] = useState(false);
 
   // customHook for user context:
-  // loginData = {message, loading, userId, token}
+  // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
   return (

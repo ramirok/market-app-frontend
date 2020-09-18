@@ -11,7 +11,7 @@ import classes from "./Header.module.css";
 
 const Header = () => {
   // customHook for user context:
-  // loginData returns ={message, loading, userId, token}
+  // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
   return (

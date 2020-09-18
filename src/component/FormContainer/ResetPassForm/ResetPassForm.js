@@ -16,7 +16,7 @@ const ResetPassForm = () => {
   const history = useHistory();
 
   // customHook for user context:
-  // loginData returns ={message, loading, token}
+  // loginData returns ={name, email, token}
   const { loginData, handleResetPassword } = useUser();
 
   // reset pass succeed

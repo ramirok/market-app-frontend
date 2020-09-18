@@ -11,8 +11,10 @@ import { ReactComponent as Snacks } from "../../assets/categories/snacks.svg";
 import { ReactComponent as Canned } from "../../assets/categories/canned.svg";
 
 const NavBar = () => {
-  // DropDownMenu list items
+  // style for svgs
   const svgStyle = { height: "2rem", width: "2rem" };
+
+  // DropDownMenu list items
   const list = {
     Vegetables: <Vegetables style={svgStyle} />,
     Fruits: <Fruits style={svgStyle} />,

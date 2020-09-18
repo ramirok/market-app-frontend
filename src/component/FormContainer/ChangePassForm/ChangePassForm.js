@@ -10,7 +10,7 @@ import classes from "./ChangePassForm.module.css";
 
 const ChangePassForm = () => {
   // customHook for user context:
-  // loginData returns ={message, loading, token}
+  // loginData returns ={name, email, token}
   const { loginData, handleChangePassword, handleForgotPassword } = useUser();
 
   // succeed status for message

@@ -28,8 +28,8 @@ const ROUTES = [
       <>
         <NewArrivals />
         <TopSellers />
-        <History />
         <Discover />
+        <History />
       </>
     ),
   },

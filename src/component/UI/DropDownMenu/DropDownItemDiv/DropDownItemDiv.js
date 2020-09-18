@@ -7,11 +7,6 @@ import Spinner from "../../Spinner/Spinner";
 import classes from "./DropDownItemDiv.module.css";
 
 const DropDownItemDiv = (props) => {
-  const { delProductHandler } = useCart();
-  const { loginData } = useUser();
-
-  const [isLoading, setIsLoading] = useState(false);
-
   /*
   Recives:
   -name: item name
@@ -20,6 +15,17 @@ const DropDownItemDiv = (props) => {
   -id: product id
   */
   const { name, amount, onClick, id } = props;
+
+  // customHook for cart context
+  const { delProductHandler } = useCart();
+
+  // customHook for user context:
+  // loginData returns ={name, email, token}
+  const { loginData } = useUser();
+
+  // loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className={classes.MenuItem}>
       {/* Product name */}

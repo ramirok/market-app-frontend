@@ -11,7 +11,7 @@ import classes from "./ForgotPassForm.module.css";
 
 const ForgotPassForm = () => {
   // customHook for user context:
-  // loginData returns ={message, loading, token}
+  // loginData returns ={name, email, token}
   const { loginData, handleForgotPassword } = useUser();
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors

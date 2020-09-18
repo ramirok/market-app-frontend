@@ -11,7 +11,7 @@ const GoogleForm = () => {
   const { search } = useLocation();
 
   // customHook for user context:
-  // loginData returns ={message, loading, token}
+  // loginData returns ={name, email, token}
   const { loginData, handleLoginGoogle } = useUser();
 
   // message state from fetch response

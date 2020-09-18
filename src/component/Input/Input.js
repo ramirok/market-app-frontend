@@ -9,7 +9,7 @@ Recives:
  -label : input label text
  -isValid: validation checked
  -error: array of validation errors
- -rest: input value and onChange
+ -rest: input value and onChange handler
 */
   const { type, label, isValid, error, ...rest } = props;
 

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useUser } from "../../../../context/userContext";
 import { useCart } from "../../../../context/cartContext";
 import { capitalizeName } from "../../../../utils/helpers";
+import { postHistory } from "../../../../utils/fetchServices";
 import Modal from "../Modal";
 import Button from "../../../Button/Button";
 import Spinner from "../../Spinner/Spinner";
@@ -19,7 +20,7 @@ Recives:
   const { isOpen, setIsOpen, modalData } = props;
 
   // customHook for user context:
-  // loginData returns ={message, loading, userId, token}
+  // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
   // customHook for cart context
@@ -30,6 +31,11 @@ Recives:
 
   // isLoading state for spinner
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // post last seen item
+    postHistory(loginData.token, { newId: props.modalData.id });
+  }, [loginData.token, props.modalData.id]);
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>

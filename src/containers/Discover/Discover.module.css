@@ -2,14 +2,26 @@
   position: relative;
   grid-column: start-name/end-content;
   width: 100%;
+  background-color: #dde1ed;
   padding-top: 2rem;
+  border-radius: 20px;
+}
+
+.NameContainer {
+  position: absolute;
+  display: flex;
+  top: 1rem;
+  left: 2rem;
 }
 
 .Name {
-  position: absolute;
-  top: 1rem;
-  left: 5rem;
-  font-family: "Nunito", sans-serif;
+  font-family: "Nunito";
   font-size: 2rem;
-  color: grey;
+  color: rgb(50, 50, 50);
+  margin-right: 0.5rem;
+}
+
+.DiscoverIcon {
+  width: 2.5rem;
+  height: 2.5rem;
 }

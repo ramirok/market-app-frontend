@@ -8,7 +8,6 @@ const Modal = (props) => {
 Recives:
  -isOpen: modal open/close state
  -setIsOpen: changes isOpen state
- -props.children
 */
   const { isOpen, setIsOpen } = props;
 

@@ -12,7 +12,7 @@ import classes from "./Checkout.module.css";
 
 const Checkout = () => {
   // customHook for user context:
-  // loginData returns ={loading, token}
+  // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
   // customHook for cart context

@@ -11,7 +11,7 @@ import classes from "./LoginForm.module.css";
 
 const LoginForm = () => {
   // customHook for user context:
-  // loginData returns ={message, loading, token}
+  // loginData returns ={name, email, token}
   const { loginData, handleLogin } = useUser();
 
   const history = useHistory();

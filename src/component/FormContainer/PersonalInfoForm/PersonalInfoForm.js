@@ -13,11 +13,11 @@ const PersonalInfoForm = (props) => {
 Recives:
  -setEditable: set editable to false when the form is successfully submited
  -placeholders: placeholders for inputs
- -onClick: onCLick handler
 */
   const { setEditable, placeholders } = props;
+
   // customHook for user context:
-  // loginData returns ={message, loading, token}
+  // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
   // form state

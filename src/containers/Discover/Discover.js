@@ -5,6 +5,9 @@ import Carousel from "../../component/UI/Carousel/Carousel";
 import ProductCard from "../../component/UI/Card/ProductCard/ProductCard";
 import classes from "./Discover.module.css";
 
+// SVG imports
+import { ReactComponent as DiscoverIcon } from "../../assets/more-products.svg";
+
 const Discover = () => {
   // Items to show in Card component
   const [items, setItems] = useState([]);
@@ -18,34 +21,39 @@ const Discover = () => {
     <>
       {/* first 15 items carousel */}
       <div className={classes.DiscoverContainer}>
-        <h3 className={classes.Name}>More products</h3>
-        <Carousel
-          customSettings={{
-            slidesToScroll: 3,
-            infinite: true,
-          }}
-        >
-          {items.slice(0, 15).map((el) => (
-            // Distribute el's properties: name, img, price, description
-            <ProductCard {...el} key={el.name} />
-          ))}
-        </Carousel>
-      </div>
+        <div className={classes.NameContainer}>
+          <h3 className={classes.Name}>More products</h3>
+          <DiscoverIcon className={classes.DiscoverIcon} />
+        </div>
+        <div>
+          <Carousel
+            customSettings={{
+              slidesToScroll: 3,
+              infinite: true,
+            }}
+          >
+            {items.slice(0, 15).map((el) => (
+              // Distribute el's properties: name, img, price, description
+              <ProductCard {...el} key={el.name} />
+            ))}
+          </Carousel>
+        </div>
 
-      {/* second 15 items carousel */}
-      <div className={classes.DiscoverContainer} style={{ paddingTop: "0" }}>
-        <Carousel
-          customSettings={{
-            slidesToScroll: 3,
-            infinite: true,
-          }}
-          customStyle={{ paddingTop: "0" }}
-        >
-          {items.slice(15, 30).map((el) => (
-            // Distribute el's properties: name, img, price, description
-            <ProductCard {...el} key={el.name} />
-          ))}
-        </Carousel>
+        {/* second 15 items carousel */}
+        <div className={classes.DiscoverContainer} style={{ paddingTop: "0" }}>
+          <Carousel
+            customSettings={{
+              slidesToScroll: 3,
+              infinite: true,
+            }}
+            customStyle={{ paddingTop: "0" }}
+          >
+            {items.slice(15, 30).map((el) => (
+              // Distribute el's properties: name, img, price, description
+              <ProductCard {...el} key={el.name} />
+            ))}
+          </Carousel>
+        </div>
       </div>
     </>
   );

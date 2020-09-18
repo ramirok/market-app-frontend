@@ -9,8 +9,15 @@ import Spinner from "../../UI/Spinner/Spinner";
 import classes from "./AddressForm.module.css";
 
 const AddressForm = (props) => {
+  /*
+Recives:
+ -setEditable: set editable to false when the form is successfully submited
+ -placeholders: placeholders for inputs
+*/
+  const { setEditable, placeholders } = props;
+
   // customHook for user context:
-  // loginData returns ={message, loading, token}
+  // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
   // form state
@@ -47,7 +54,7 @@ const AddressForm = (props) => {
 
                 if (response.ok) {
                   // if fetch succeeds, sets form editable = false
-                  return props.setEditable((prev) => ({
+                  return setEditable((prev) => ({
                     ...prev,
                     address: false,
                     newFetch: true,
@@ -64,26 +71,22 @@ const AddressForm = (props) => {
         }
       />
 
-      <Input {...state} label="State:" placeholder={props.placeholders.state} />
+      <Input {...state} label="State:" placeholder={placeholders.state} />
       <br style={{ marginBottom: "3rem" }} />
-      <Input {...city} label="City:" placeholder={props.placeholders.city} />
+      <Input {...city} label="City:" placeholder={placeholders.city} />
       <br style={{ marginBottom: "3rem" }} />
       <Input
         {...zipCode}
         label="Zip Code:"
-        placeholder={props.placeholders.zipCode}
+        placeholder={placeholders.zipCode}
       />
       <br style={{ marginBottom: "3rem" }} />
-      <Input
-        {...street}
-        label="Street:"
-        placeholder={props.placeholders.street}
-      />
+      <Input {...street} label="Street:" placeholder={placeholders.street} />
       <br style={{ marginBottom: "3rem" }} />
       <Input
         {...streetNumber}
         label="Street Number:"
-        placeholder={props.placeholders.streetNumber}
+        placeholder={placeholders.streetNumber}
       />
       <br style={{ marginBottom: "3rem" }} />
       <p className={classes.Message} style={{ color: "red" }}>

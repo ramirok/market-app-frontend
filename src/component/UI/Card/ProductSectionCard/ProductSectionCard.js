@@ -1,3 +1,5 @@
+// just arrived and top sellers presentation card
+
 import React from "react";
 
 import classes from "./ProductSectionCard.module.css";
