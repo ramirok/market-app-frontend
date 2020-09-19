@@ -247,19 +247,12 @@ export const getOrders = async (token) => {
 };
 
 export const postHistory = async (token, data) => {
-  const response = await fetch("http://localhost:3001/users/history", {
+  await fetch(`http://localhost:3001/users/history/${data}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
   });
-
-  const parsedResponse = await response.json();
-  parsedResponse.ok = response.ok;
-
-  return parsedResponse;
 };
 
 export const getHistory = async (token) => {
