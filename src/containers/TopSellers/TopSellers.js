@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { getSome } from "../../utils/fetchServices";
-import Carousel from "../../component/UI/Carousel/Carousel";
+import Slider from "../../component/UI/Slider/Slider";
 import ProductCard from "../../component/UI/Card/ProductCard/ProductCard";
 import ProductSectionCard from "../../component/UI/Card/ProductSectionCard/ProductSectionCard";
 import classes from "./TopSellers.module.css";
@@ -22,18 +22,21 @@ const TopSellers = () => {
 
   return (
     <div className={classes.TopSellersContainer}>
-      <Carousel>
+      <Slider>
+        {/* presentation card */}
         <ProductSectionCard>
           <Curve className={classes.Curve} />
           <Curve2 className={classes.Curve2} />
           <p className={classes.Title}>Top Sellers</p>
           <TopSeller className={classes.MedalIcon} />
         </ProductSectionCard>
+
+        {/* product cards */}
         {items.map((el) => (
           // Distribute el's properties: name, img, price, description
           <ProductCard {...el} key={el.name} />
         ))}
-      </Carousel>
+      </Slider>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../context/userContext";
 import { getHistory } from "../../utils/fetchServices";
 import ProductCard from "../../component/UI/Card/ProductCard/ProductCard";
-import Carousel from "../../component/UI/Carousel/Carousel";
+import Slider from "../../component/UI/Slider/Slider";
 import classes from "./History.module.css";
 
 // SVG imports
@@ -18,7 +18,7 @@ const History = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    // when the is a token, get user's history
+    // when there is a token, get user's history
     if (loginData.token) {
       getHistory(loginData.token).then((data) => setItems(data));
     }
@@ -28,6 +28,7 @@ const History = () => {
   if (items.length < 1) {
     return null;
   }
+
   return (
     <div className={classes.HistoryContainer}>
       {/* section name */}
@@ -37,12 +38,14 @@ const History = () => {
       </div>
 
       {/* carousel */}
-      <Carousel customSettings={{ slidesToScroll: 3, infinite: false }}>
-        {items.map((el) => (
-          // Distribute el's properties: name, img, price, description
-          <ProductCard {...el} key={el.name} />
-        ))}
-      </Carousel>
+      <div style={{ marginTop: "2rem" }}>
+        <Slider>
+          {items.map((el) => (
+            // Distribute el's properties: name, img, price, description
+            <ProductCard {...el} key={el.name} />
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 };

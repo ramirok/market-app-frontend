@@ -1,7 +1,12 @@
-.CarouselContainer {
-  height: 100%;
-  padding: 2rem 0;
+.ComponentContainer {
+  width: 100%;
   position: relative;
+}
+
+.Slider {
+  display: flex;
+  width: fit-content;
+  transition: all 0.5s;
 }
 
 .PrevArrowContainer {
@@ -15,11 +20,11 @@
   border-radius: 50%;
   cursor: pointer;
   z-index: 3;
-  opacity: 0;
   transition: all 0.1s;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
 }
 
 .NextArrowContainer {
@@ -33,11 +38,11 @@
   border-radius: 50%;
   cursor: pointer;
   z-index: 3;
-  opacity: 0;
   transition: all 0.1s;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
 }
 
 .NextArrow {
@@ -70,10 +75,10 @@
   background-color: white;
 }
 
-.CarouselContainer:hover .NextArrowContainer {
+.ComponentContainer:hover .NextArrowContainer {
   opacity: 1;
 }
 
-.CarouselContainer:hover .PrevArrowContainer {
+.ComponentContainer:hover .PrevArrowContainer {
   opacity: 1;
 }

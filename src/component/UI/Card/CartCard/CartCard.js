@@ -30,7 +30,7 @@ Recives:
   } = props;
 
   // customHook for user context:
-  // loginData returns ={message, loading, userId, token}
+  // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
   // loading state for spinner

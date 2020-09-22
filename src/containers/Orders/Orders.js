@@ -8,7 +8,7 @@ import classes from "./Orders.module.css";
 
 const Orders = () => {
   // customHook for user context:
-  // loginData returns ={loading, token}
+  // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
   // orders to show

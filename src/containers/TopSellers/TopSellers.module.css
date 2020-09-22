@@ -4,11 +4,13 @@
   height: 20rem;
   background-color: #dde1ed;
   border-radius: 20px;
-  position: relative;
   margin-top: 3rem;
-  overflow: hidden;
   margin-left: 1rem;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
 }
+
 .MedalIcon {
   width: 8rem;
   height: 8rem;
@@ -23,7 +25,7 @@
   position: absolute;
   bottom: 0;
   height: 10rem;
-  width: 15rem;
+  width: 30rem;
   transform: rotate(180deg);
   z-index: 1;
 }
@@ -32,7 +34,7 @@
   position: absolute;
   bottom: 0;
   height: 15rem;
-  width: 15rem;
+  width: 30rem;
   transform: rotate(180deg);
   transform: scaleY(-1);
 }
@@ -40,7 +42,7 @@
 .Title {
   font-family: "Amatic SC", cursive;
   font-size: 3.5rem;
-  padding-left: 1rem;
+  padding-bottom: 1.5rem;
   margin-top: auto;
   color: white;
   font-weight: 700;

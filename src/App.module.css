@@ -6,7 +6,8 @@
   grid-template:
     [start-header] 8rem [end-header start-navbar] 5rem [end-navbar start-content] 1fr [end-content ] /
     [start-footer] 3vw [start-name] minmax(0, 1fr)
-    [end-name start-content] 1fr [end-content] 3vw [end-footer];
+    [end-name start-content] minmax(0, 1fr) [end-content] 3vw [end-footer];
+
   gap: 10px;
   grid-auto-flow: row;
   align-content: stretch;

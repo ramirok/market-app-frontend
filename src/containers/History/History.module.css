@@ -2,9 +2,10 @@
   position: relative;
   grid-column: start-name/end-content;
   width: 100%;
-  padding-top: 2rem;
+  padding: 2rem 0;
   background-color: #dde1ed;
   border-radius: 20px;
+  margin: 3rem 0;
 }
 
 .NameContainer {

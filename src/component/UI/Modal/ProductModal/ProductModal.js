@@ -34,7 +34,6 @@ Recives:
 
   useEffect(() => {
     // post last seen item
-    // postHistory(loginData.token, { newId: props.modalData.id });
     postHistory(loginData.token, props.modalData.id);
   }, [loginData.token, props.modalData.id]);
 

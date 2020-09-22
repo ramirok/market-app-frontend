@@ -31,7 +31,6 @@ export const UserProvider = (props) => {
   useEffect(() => {
     if (loadedState) {
       setLoginData(loadedState);
-      console.log(jwtDecode(loadedState.token));
     }
   }, [loadedState]);
 
@@ -51,17 +50,17 @@ export const UserProvider = (props) => {
     });
 
     if (response.ok) {
-      // if succeed, sets loginData and saves localStorage
+      // if succeed, sets loginData and saves to localStorage
+
+      const decodedToken = jwtDecode(response.token);
       setLoginData({
         loading: false,
-        name: response.user.name,
-        email: response.user.email,
+        name: decodedToken.name,
+        email: decodedToken.email,
         token: response.token,
       });
       saveState({
         token: response.token,
-        name: response.user.name,
-        email: response.user.email,
       });
     } else {
       setLoginData((prevState) => ({

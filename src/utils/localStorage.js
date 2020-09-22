@@ -1,3 +1,5 @@
+import { jwtDecode } from "./helpers";
+
 // --------- Saves localStorage ----------
 export const saveState = (state) => {
   try {
@@ -14,7 +16,13 @@ export const loadState = () => {
     if (serializedState === null) {
       return undefined;
     }
-    return JSON.parse(serializedState);
+    const parsedState = JSON.parse(serializedState);
+    const decodedData = jwtDecode(parsedState.token);
+    return {
+      token: parsedState.token,
+      name: decodedData.name,
+      email: decodedData.email,
+    };
   } catch (error) {
     return undefined;
   }
