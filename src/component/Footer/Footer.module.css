@@ -1,8 +1,11 @@
 .FooterContainer {
   background-color: #dde1ed;
-  grid-column: start-footer/end-footer;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 4rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

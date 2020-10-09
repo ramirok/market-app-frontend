@@ -1,14 +1,14 @@
-.Product {
+.Container {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  height: 15rem;
   margin-bottom: 2rem;
   background-color: white;
   box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
   text-align: center;
   padding: 1rem;
   position: relative;
+  align-items: center;
 }
 
 .ImageContainer {
@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 20%;
+  width: 50%;
 }
 
 .Image {
@@ -26,7 +26,7 @@
 }
 
 .InfoContainer {
-  width: 20%;
+  width: 50%;
   font-family: "Nunito", sans-serif;
   align-self: center;
   line-height: 4rem;
@@ -43,7 +43,6 @@
   align-items: center;
   border: 1px solid #cccccc;
   border-radius: 10px;
-  height: fit-content;
   position: relative;
 }
 
@@ -70,17 +69,22 @@
 .ButtonAdd {
   background-color: #5b7bf4;
   width: 4rem;
-  margin: 0 auto;
 }
 
 .ButtonRemove {
   background-color: #5b7bf4;
   width: 4rem;
-  margin: 0 auto;
+}
+
+.PriceAndDelete {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+  flex-basis: 20rem;
+  padding-right: 5rem;
 }
 
 .Price {
-  width: 10%;
   align-self: center;
   font-family: "Nunito", sans-serif;
   color: rgb(50, 50, 50);
@@ -91,6 +95,7 @@
   align-self: center;
   background-color: #5b7bf4;
   width: 4rem;
+  margin-left: 2rem;
 }
 
 /* remove arrow from number input */
@@ -101,4 +106,18 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+@media screen and (max-width: 700px) {
+  .Container {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  .PriceAndDelete {
+    flex-basis: 0;
+    justify-content: center;
+    padding-right: 0;
+  }
 }

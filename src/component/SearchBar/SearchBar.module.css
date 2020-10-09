@@ -1,18 +1,23 @@
-.SearchBarContainer {
+.Container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  width: 60%;
+}
+
+.SearchBarContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .SearchBar {
-  width: 80%;
   border: none;
   border-radius: 10px;
-  height: 3.4rem;
+  height: 4rem;
   padding-left: 1rem;
+  width: 100%;
 }
 
 .SearchBar:focus {
@@ -22,7 +27,7 @@
 .SuggestionContainer {
   position: absolute;
   top: 4rem;
-  width: 80%;
+  width: 100%;
   background-color: white;
   border-radius: 5px;
   z-index: 2;
@@ -59,8 +64,16 @@
 }
 
 .Button {
-  position: absolute;
-  right: 10.3%;
   width: 7rem;
   background-color: #5b7bf4;
+  position: absolute;
+  right: 0;
+  margin-right: 0.2rem;
+  height: 3.5rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .Button {
+    width: 5rem;
+  }
 }

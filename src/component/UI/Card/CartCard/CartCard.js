@@ -66,26 +66,28 @@ Recives:
   };
 
   return (
-    <div className={classes.Product}>
+    <div className={classes.Container}>
       {/* show spinner if isLoading = true */}
       <div style={{ position: "absolute", right: "1rem", top: "1rem" }}>
-        {isLoading && <Spinner />}
+        {isLoading && <Spinner small={true} />}
       </div>
 
-      {/* product image */}
-      <div className={classes.ImageContainer}>
-        <img src={`/${img}`} alt={name} className={classes.Image} />
-      </div>
+      <div style={{ display: "flex", flexGrow: "1" }}>
+        {/* product image */}
+        <div className={classes.ImageContainer}>
+          <img src={`/${img}`} alt={name} className={classes.Image} />
+        </div>
 
-      {/* product info */}
-      <div className={classes.InfoContainer}>
-        {capitalizeName(name)}
-        {img.includes("vegetables") || img.includes("fruits")
-          ? " x kg"
-          : img.includes("spices")
-          ? " x 100g"
-          : null}
-        <p>{description}</p>
+        {/* product info */}
+        <div className={classes.InfoContainer}>
+          {capitalizeName(name)}
+          {img.includes("vegetables") || img.includes("fruits")
+            ? " x kg"
+            : img.includes("spices")
+            ? " x 100g"
+            : null}
+          <p>{description}</p>
+        </div>
       </div>
 
       {/* buttons and input */}
@@ -149,28 +151,30 @@ Recives:
         )}
       </div>
 
-      {/* price */}
-      <div className={classes.Price}>
-        <p
-          style={{ color: "#888888", fontSize: "1.5rem" }}
-        >{`$ ${price} x ${quantity}`}</p>
-        <p>$ {(price * quantity).toFixed(2)}</p>
-      </div>
+      <div className={classes.PriceAndDelete}>
+        {/* price */}
+        <div className={classes.Price}>
+          <p
+            style={{ color: "#888888", fontSize: "1.5rem" }}
+          >{`$ ${price} x ${quantity}`}</p>
+          <p>$ {(price * quantity).toFixed(2)}</p>
+        </div>
 
-      {/* remove product button */}
-      <Button
-        text="X"
-        classFromProps={classes.ButtonDel}
-        onClick={
-          // allows onClick if isLoading = false
-          !isLoading
-            ? async () => {
-                setIsLoading(true);
-                await delProductHandler(id, loginData.token);
-              }
-            : null
-        }
-      />
+        {/* remove product button */}
+        <Button
+          text="X"
+          classFromProps={classes.ButtonDel}
+          onClick={
+            // allows onClick if isLoading = false
+            !isLoading
+              ? async () => {
+                  setIsLoading(true);
+                  await delProductHandler(id, loginData.token);
+                }
+              : null
+          }
+        />
+      </div>
     </div>
   );
 };

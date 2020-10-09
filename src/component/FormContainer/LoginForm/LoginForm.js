@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { useUser } from "../../../context/userContext";
 import { useInputData } from "../../../utils/customHooks";
+import { fetchService } from "../../../utils/fetchServices";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
@@ -28,9 +29,9 @@ const LoginForm = () => {
 
   useEffect(() => {
     // fetches and sets google link
-    fetch("http://localhost:3001/users/login/google")
-      .then((response) => response.json())
-      .then((data) => setGoogleLink(data.url));
+    fetchService("get", "users/login/google").then((data) =>
+      setGoogleLink(data.url)
+    );
   }, []);
 
   useEffect(() => {

@@ -1,13 +1,14 @@
 .Background {
-  grid-column: start-footer/end-footer;
-  margin-top: -10px;
-  margin-bottom: -10px;
   background-color: #eeeeee;
   display: flex;
-  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
 }
 
 .FormContainer {
+  grid-column: start-content/end-content;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -15,8 +16,16 @@
   font-family: "Nunito", sans-serif;
   font-size: 1.5rem;
   padding: 4rem;
-  margin: 4rem;
+  margin: 4rem auto;
+
   border-radius: 15px;
-  height: fit-content;
   max-width: 28rem;
+  height: min-content;
+  z-index: 1;
+}
+
+@media screen and (max-width: 1000px) {
+  .Background {
+    margin-left: -2rem;
+  }
 }

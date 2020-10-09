@@ -77,7 +77,6 @@ Recives:
         <div className={classes.CardFoot}>
           <span>{`$ ${price} `}</span>
           <span className={classes.Name}>{capitalizeName(name)}</span>
-          <span className={classes.Name}>{description}</span>
         </div>
       </div>
     </>

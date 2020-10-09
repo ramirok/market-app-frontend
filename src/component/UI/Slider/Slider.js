@@ -24,60 +24,53 @@ const NextArrow = (props) => {
 };
 
 const Slider = (props) => {
-  // x axis translate
-  const [x, setX] = useState(0);
-
-  // when true show the next arrow
-  const [showNext, setShowNext] = useState(true);
+  const [showArrows, setShowArrows] = useState({ prev: false, next: true });
 
   const slider = useRef();
-  const container = useRef();
 
   // prev arrow method
   const prev = () => {
-    if (-x - 220 < 220) {
-      setX(0);
-    } else if (-x > 0) {
-      setX((x) => x + 220);
-      setShowNext(true);
+    if (slider.current.scrollLeft - 220 < 220) {
+      slider.current.scrollLeft = 0;
+      setShowArrows({ prev: false, next: true });
+    } else if (slider.current.scrollLeft > 0) {
+      slider.current.scrollLeft -= 220;
+      setShowArrows({ prev: true, next: true });
     }
   };
 
   // next arrow method
   const next = () => {
+    const scrollLeftMax =
+      slider.current.scrollWidth - slider.current.clientWidth;
+
     if (
-      -x < slider.current.offsetWidth - container.current.offsetWidth &&
-      slider.current.offsetWidth - container.current.offsetWidth - 200 + x > 200
+      slider.current.scrollLeft < scrollLeftMax &&
+      scrollLeftMax - (slider.current.scrollLeft + 200) > 200
     ) {
-      setX((x) => x - 220);
+      slider.current.scrollLeft += 220;
+      setShowArrows({ prev: true, next: true });
     } else {
-      setX(container.current.offsetWidth - slider.current.offsetWidth - 20);
+      slider.current.scrollLeft = scrollLeftMax;
+      setShowArrows({ prev: true, next: false });
     }
   };
 
   useEffect(() => {
-    // check if it has to show next button in the first render
-    setShowNext(
-      -x < slider.current.offsetWidth - container.current.offsetWidth - 220
-    );
-  }, [x, props.children]);
+    slider.current.scrollLeft = 0;
+  }, []);
 
   return (
-    <div
-      className={classes.ComponentContainer}
-      ref={(ref) => (container.current = ref)}
-    >
-      {-x > 0 && <PrevArrow onClick={prev} />}
-      <div style={{ overflow: "hidden" }}>
-        <div
-          className={classes.Slider}
-          style={{ transform: `translateX(${x}px)` }}
-          ref={(ref) => (slider.current = ref)}
-        >
-          {props.children}
-        </div>
+    <div className={classes.ComponentContainer}>
+      {showArrows.prev && <PrevArrow onClick={prev} />}
+      {showArrows.next && <NextArrow onClick={next} />}
+
+      <div
+        className={classes.SliderContainer}
+        ref={(ref) => (slider.current = ref)}
+      >
+        {props.children}
       </div>
-      {showNext && <NextArrow onClick={next} />}
     </div>
   );
 };

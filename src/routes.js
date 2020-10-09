@@ -1,39 +1,29 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import NewArrivals from "./containers/NewArrivals/NewArrivals";
-import TopSellers from "./containers/TopSellers/TopSellers";
-import History from "./containers/History/History";
-import Discover from "./containers/Discover/Discover";
+import HomePage from "./containers/HomePage/HomePage";
 import LoginForm from "./component/FormContainer/LoginForm/LoginForm";
 import SignUpForm from "./component/FormContainer/SignUpForm/SignUpForm";
 import ForgotPassForm from "./component/FormContainer/ForgotPassForm/ForgotPassForm";
 import ResetPassForm from "./component/FormContainer/ResetPassForm/ResetPassForm";
 import ActivateForm from "./component/FormContainer/ActivateForm/ActivateForm";
-import Category from "./containers/Category/Category";
+import CategoryPage from "./containers/CategoryPage/CategoryPage";
 import AccountSecurity from "./containers/AccountSecurity/AccountSecurity";
 import ShoppingCart from "./containers/ShoppingCart/ShoppingCart";
 import GoogleForm from "./component/FormContainer/GoogleForm/GoogleForm";
 import ChangePass from "./component/FormContainer/ChangePassForm/ChangePassForm";
 import Checkout from "./containers/Checkout/Checkuout";
 import Orders from "./containers/Orders/Orders";
+import page404 from "./containers/page404/page404";
 
 const ROUTES = [
-  //   { path: "/", key: "ROOT", exact: true, component: () => <h1>Log in</h1> },
   {
     path: "/",
     key: "ROOT",
     exact: true,
-    component: () => (
-      <>
-        <NewArrivals />
-        <TopSellers />
-        <Discover />
-        <History />
-      </>
-    ),
+    component: HomePage,
   },
-  { path: "/category/:cat", key: "CAT", component: Category },
+  { path: "/category/:cat", key: "CAT", exact: true, component: CategoryPage },
   {
     path: "/auth/reset/:token",
     key: "AUTH_RESET",
@@ -98,7 +88,7 @@ const ROUTES = [
     routes: [
       {
         path: "/app/account",
-        key: "APP_SECURITY",
+        key: "APP_ACCOUNT",
         exact: true,
         component: AccountSecurity,
       },
@@ -148,7 +138,7 @@ export function RenderRoutes({ routes }) {
       {routes.map((route, i) => {
         return <RouteWithSubRoutes key={route.key} {...route} />;
       })}
-      <Route component={() => <h1>Not Found!</h1>} />
+      <Route component={page404} />
     </Switch>
   );
 }

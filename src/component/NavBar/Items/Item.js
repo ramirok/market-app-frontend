@@ -20,6 +20,8 @@ Recives:
       <span
         style={{ cursor: "pointer" }}
         // Sets event if item recives dropDownMenu as props
+        onClick={() => (dropDownMenu ? setVisible(!visible) : null)}
+        // Sets event if item recives dropDownMenu as props
         onMouseEnter={
           dropDownMenu
             ? () => {

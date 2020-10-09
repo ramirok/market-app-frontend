@@ -5,9 +5,9 @@
   text-decoration: none;
   cursor: pointer;
   color: white;
-  height: 3.4rem;
+  height: 4rem;
   text-align: center;
-  line-height: 3.4rem;
+  line-height: 4rem;
   box-shadow: 10px 10px 60px -14px rgba(0, 0, 0, 0.75);
 }
 
@@ -21,4 +21,10 @@
 
 .Login:active {
   transform: scale(0.95);
+}
+
+@media screen and (max-width: 1000px) {
+  .Login {
+    width: 5rem;
+  }
 }

@@ -10,12 +10,14 @@
   position: relative;
   outline: none;
 }
+
 .MenuItem::after {
   content: "";
   position: absolute;
   height: 1px;
   width: 70%;
   background-color: #eeeeee;
+
   bottom: 1%;
 }
 

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { getSome } from "../../utils/fetchServices";
+import { fetchService } from "../../utils/fetchServices";
+import { useWindowResize } from "../../utils/customHooks";
 import Slider from "../../component/UI/Slider/Slider";
 import ProductCard from "../../component/UI/Card/ProductCard/ProductCard";
 import ProductSectionCard from "../../component/UI/Card/ProductSectionCard/ProductSectionCard";
+import LoadingText from "../../component/UI/LoadingText/LoadingText";
 import classes from "./TopSellers.module.css";
 
 // SVG imports
@@ -15,28 +17,54 @@ const TopSellers = () => {
   // Items to show in Card component
   const [items, setItems] = useState([]);
 
+  const width = useWindowResize();
+
+  // style for loading animation
+  const style =
+    width > 700
+      ? {
+          minWidth: "20rem",
+          width: "20rem",
+          height: "16rem",
+        }
+      : {
+          height: "16rem",
+          minWidth: "15rem",
+          width: "auto",
+          flexGrow: 1,
+        };
+
   useEffect(() => {
     // Set items fetched
-    getSome("sortBy=sold").then((data) => setItems(data));
+    fetchService("get", "products?sortBy=sold").then((data) => setItems(data));
   }, []);
+
+  let render = (
+    <>
+      {/* presentation card */}
+      <ProductSectionCard>
+        <Curve className={classes.Curve} />
+        <Curve2 className={classes.Curve2} />
+        <TopSeller className={classes.MedalIcon} />
+        <p className={classes.Title}>Top Sellers</p>
+      </ProductSectionCard>
+
+      {/* products cards, show loading animation if items are not set yet */}
+      {items.length < 1 ? (
+        <LoadingText style={style} number={3} />
+      ) : (
+        items.map((el) => (
+          // Distribute el's properties: name, img, price, description
+          <ProductCard {...el} key={el.name} />
+        ))
+      )}
+    </>
+  );
 
   return (
     <div className={classes.TopSellersContainer}>
-      <Slider>
-        {/* presentation card */}
-        <ProductSectionCard>
-          <Curve className={classes.Curve} />
-          <Curve2 className={classes.Curve2} />
-          <p className={classes.Title}>Top Sellers</p>
-          <TopSeller className={classes.MedalIcon} />
-        </ProductSectionCard>
-
-        {/* product cards */}
-        {items.map((el) => (
-          // Distribute el's properties: name, img, price, description
-          <ProductCard {...el} key={el.name} />
-        ))}
-      </Slider>
+      {/* use slider for big screens */}
+      {width > 700 ? <Slider>{render}</Slider> : render}
     </div>
   );
 };

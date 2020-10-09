@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
-import { postCart, getCart, delCart, onAprove } from "../utils/fetchServices";
+import { fetchService } from "../utils/fetchServices";
 
 const CartContext = React.createContext();
 
@@ -16,8 +16,8 @@ export const CartProvider = (props) => {
 
   // fetch cart
   const getAllCart = useCallback(async (token) => {
-    const response = await getCart(token);
-    setCartItems(response);
+    const response = await fetchService("get", "cart", token);
+    setCartItems(response.products);
     setLoaded(true);
   }, []);
 
@@ -25,8 +25,10 @@ export const CartProvider = (props) => {
   const addProductHandler = useCallback(
     async (id, quantity, token) => {
       if (token) {
-        const response = await postCart({ id, quantity }, token);
-        setCartItems(response);
+        const response = await fetchService("post", `cart/${id}`, token, {
+          quantity,
+        });
+        setCartItems(response.products);
         return true;
       } else {
         history.push("/auth/login");
@@ -38,14 +40,16 @@ export const CartProvider = (props) => {
 
   // Delete item from cart
   const delProductHandler = async (id, token) => {
-    const response = await delCart(id, token);
+    const response = await fetchService("delete", `cart/${id}`, token);
 
-    setCartItems(response);
+    setCartItems(response.products);
   };
 
   // reset cart after purchase
   const resetCart = async (token, data) => {
-    const response = await onAprove(token, { orderId: data });
+    const response = await fetchService("post", "users/reset-cart", token, {
+      orderId: data,
+    });
     if (response.ok) {
       setCartItems(response);
       return true;

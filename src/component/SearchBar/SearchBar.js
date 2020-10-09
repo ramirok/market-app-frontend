@@ -4,13 +4,15 @@ import {
   useInputData,
   useClickOutsideListenerRef,
 } from "../../utils/customHooks";
-import { getSuggestions } from "../../utils/fetchServices";
+import { fetchService } from "../../utils/fetchServices";
 import { capitalizeName } from "../../utils/helpers";
 import ProductModal from "../UI/Modal/ProductModal/ProductModal";
 import Button from "../Button/Button";
-import NavBar from "../NavBar/NavBar";
 import Spinner from "../UI/Spinner/Spinner";
 import classes from "./SearchBar.module.css";
+
+// SVG imports
+import { ReactComponent as SearchIcon } from "../../assets/magnifying-simple.svg";
 
 const SearchBar = () => {
   // ref for useClickOutside hook
@@ -47,11 +49,14 @@ const SearchBar = () => {
     // if user has typed, fetch suggestions
     if (search.value.length > 0) {
       setIsLoading(true);
-      getSuggestions(search.value).then((response) => {
-        setSuggestions(response);
-        setIsLoading(false);
-        setRunHook(true);
-      });
+
+      fetchService("get", `products/autosuggest?q=${search.value}`).then(
+        (response) => {
+          setSuggestions(response);
+          setIsLoading(false);
+          setRunHook(true);
+        }
+      );
     } else {
       setSuggestions([]);
     }
@@ -61,11 +66,13 @@ const SearchBar = () => {
     // fetch suggestions when search button clicked
     if (search.value.length > 0) {
       setIsLoading(true);
-      getSuggestions(search.value).then((response) => {
-        setSuggestions(response);
-        setIsLoading(false);
-        setRunHook(true);
-      });
+      fetchService("get", `products/autosuggest?q=${search.value}`).then(
+        (response) => {
+          setSuggestions(response);
+          setIsLoading(false);
+          setRunHook(true);
+        }
+      );
     }
   };
 
@@ -80,35 +87,46 @@ const SearchBar = () => {
         />
       )}
 
-      <div className={classes.SearchBarContainer} ref={wrapperRef}>
-        <input
-          className={classes.SearchBar}
-          {...search}
-          placeholder="Search..."
-        />
-        <div className={classes.SuggestionContainer}>
-          {/* Shows first 6 suggestions */}
-          {suggestions.slice(0, 7).map((el) => (
-            <div
-              key={el.name}
-              className={classes.Suggestion}
-              onClick={() => {
-                setModalData(el);
-                setIsOpen(true);
-              }}
-            >
-              {capitalizeName(el.name)}
-            </div>
-          ))}
-        </div>
+      <div className={classes.Container} ref={wrapperRef}>
+        <div className={classes.SearchBarContainer}>
+          <input
+            className={classes.SearchBar}
+            {...search}
+            placeholder="Search..."
+          />
+          <div className={classes.SuggestionContainer}>
+            {/* Shows first 6 suggestions */}
+            {suggestions.slice(0, 7).map((el) => (
+              <div
+                key={el.name}
+                className={classes.Suggestion}
+                onClick={() => {
+                  setModalData(el);
+                  setIsOpen(true);
+                }}
+              >
+                {capitalizeName(el.name)}
+              </div>
+            ))}
+          </div>
 
-        {/* Button shows spinner if isLoading = true */}
-        <Button
-          text={isLoading ? <Spinner white /> : "Search"}
-          classFromProps={classes.Button}
-          onClick={searchHandler}
-        />
-        <NavBar />
+          {/* Button shows spinner if isLoading = true */}
+          <Button
+            text={
+              isLoading ? (
+                <Spinner white />
+              ) : (
+                <SearchIcon
+                  fill="white"
+                  height="60%"
+                  style={{ marginTop: ".5rem" }}
+                />
+              )
+            }
+            classFromProps={classes.Button}
+            onClick={searchHandler}
+          />
+        </div>
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../context/userContext";
 import { useCart } from "../../../../context/cartContext";
 import { capitalizeName } from "../../../../utils/helpers";
-import { postHistory } from "../../../../utils/fetchServices";
+import { fetchService } from "../../../../utils/fetchServices";
 import Modal from "../Modal";
 import Button from "../../../Button/Button";
 import Spinner from "../../Spinner/Spinner";
@@ -15,7 +15,6 @@ const ProductModal = (props) => {
 Recives:
  -isOpen: modal open/close state
  -setIsOpen: changes isOpen state
- -props.children
 */
   const { isOpen, setIsOpen, modalData } = props;
 
@@ -34,7 +33,13 @@ Recives:
 
   useEffect(() => {
     // post last seen item
-    postHistory(loginData.token, props.modalData.id);
+    if (loginData.token) {
+      fetchService(
+        "post",
+        `users/history/${props.modalData.id}`,
+        loginData.token
+      );
+    }
   }, [loginData.token, props.modalData.id]);
 
   return (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useInputData } from "../../../utils/customHooks";
 import { useUser } from "../../../context/userContext";
-import { putUserDetails } from "../../../utils/fetchServices";
+import { fetchService } from "../../../utils/fetchServices";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
@@ -41,10 +41,15 @@ Recives:
             ? async () => {
                 setFormState((prev) => ({ ...prev, loading: true }));
 
-                const response = await putUserDetails(loginData.token, {
-                  fullName: fullName.value,
-                  phoneNumber: phoneNumber.value,
-                });
+                const response = await fetchService(
+                  "put",
+                  "users/user-details",
+                  loginData.token,
+                  {
+                    fullName: fullName.value,
+                    phoneNumber: phoneNumber.value,
+                  }
+                );
 
                 if (response.ok) {
                   // if fetch succeeds, sets form editable = false

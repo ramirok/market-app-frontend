@@ -92,9 +92,6 @@ const ShoppingCart = () => {
 
       <div
         className={classes.CartContainer}
-        onClick={() => {
-          setVisible(true);
-        }}
         onMouseLeave={() => {
           setVisible(false);
         }}
@@ -104,14 +101,15 @@ const ShoppingCart = () => {
           <span className={classes.ItemCount}>{cartItems.length}</span>
         ) : null}
         {/* SVG icon */}
-        <Shopping className={classes.Bag} />
+        <Shopping
+          className={classes.Bag}
+          onClick={() => {
+            setVisible(!visible);
+          }}
+        />
 
         {/* dropDownMenu links */}
-        <DropDownMenu
-          styleCustom={{ right: "0" }}
-          visible={visible}
-          setVisible={setVisible}
-        >
+        <DropDownMenu visible={visible} setVisible={setVisible}>
           {items}
         </DropDownMenu>
       </div>

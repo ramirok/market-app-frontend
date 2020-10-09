@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useUser } from "../../context/userContext";
-import { getOrders } from "../../utils/fetchServices";
+import { fetchService } from "../../utils/fetchServices";
 import Spinner from "../../component/UI/Spinner/Spinner";
 import OrderCard from "../../component/UI/Card/OrderCard/OrderCard";
 import classes from "./Orders.module.css";
@@ -20,7 +20,7 @@ const Orders = () => {
   useEffect(() => {
     if (loginData.token) {
       // fetch orders
-      getOrders(loginData.token).then((data) => {
+      fetchService("get", "users/orders", loginData.token).then((data) => {
         // set orders if response is an array
         data instanceof Array && setOrders(data);
         setLoading(false);

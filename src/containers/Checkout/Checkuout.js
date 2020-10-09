@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { useCart } from "../../context/cartContext";
 import { useUser } from "../../context/userContext";
-import { createOrder, getUserDetails } from "../../utils/fetchServices";
+import { fetchService } from "../../utils/fetchServices";
 import { capitalizeName } from "../../utils/helpers";
 import Button from "../../component/Button/Button";
 import FormContainer from "../../component/FormContainer/FormContainer";
@@ -18,7 +18,8 @@ const Checkout = () => {
   // customHook for cart context
   // cartItems = [array of items]
   // resetCart : reset cart on purchase aprove
-  const { cartItems, resetCart } = useCart();
+  // loaded: cart has been loaded
+  const { cartItems, loaded, resetCart } = useCart();
 
   // state for congratulations message
   const [paidFor, setPaidFor] = useState(false);
@@ -48,54 +49,75 @@ const Checkout = () => {
 
   useEffect(() => {
     // check if user has personal info and address completed
-    getUserDetails(loginData.token).then((data) => {
-      if (data.infoCompleted && data.addressCompleted) {
-        setInfoIncomplete(false);
-      } else {
-        setLoading(loginData.token ? false : true);
-      }
-    });
-
-    // if paidfor=false , error=false and info is completed, load the script and render the button
-    if (!paidFor && !error && !infoIncomplete) {
-      const script = document.createElement("script");
-      script.src =
-        "https://www.paypal.com/sdk/js?client-id=AV_teTqvX8rl7oj3_wY5lD_NaaMO6J6UvmjiHk_lPSFQk5V4SlMoWrn9IAIXx9NNEShlcQb1C5V3anaS";
-      document.body.appendChild(script);
-
-      // add event for script finish loading
-      script.addEventListener("load", () => {
-        setLoading(false);
-        // if the are items in the cart, renders paypal button
-        if (cartItems.length > 0) {
-          window.paypal
-            .Buttons({
-              style: {
-                shape: "pill",
-                color: "blue",
-                layout: "vertical",
-                label: "paypal",
-              },
-              createOrder: async () => {
-                const response = await createOrder(loginData.token);
-                return response.orderID;
-              },
-              onApprove: async (data, actions) => {
-                setLoading(true);
-                const response = await resetCart(loginData.token, data.orderID);
-                response ? setPaidFor(true) : setError(true);
-              },
-              onError: (error) => {
-                setError(true);
-              },
-            })
-            .render(paypalRef.current);
-          document.getElementById("spinner").style.display = "none";
-          document.getElementById("summary-container").style.display = "block";
+    if (loginData.token && loaded) {
+      fetchService("get", "users/user-details", loginData.token).then(
+        (data) => {
+          if (data.infoCompleted && data.addressCompleted) {
+            setInfoIncomplete(false);
+          } else {
+            setLoading(loginData.token ? false : true);
+          }
         }
-      });
+      );
+
+      // if paidfor=false , error=false and info is completed, load the script and render the button
+      if (!paidFor && !error && !infoIncomplete) {
+        const script = document.createElement("script");
+        script.src =
+          "https://www.paypal.com/sdk/js?client-id=AV_teTqvX8rl7oj3_wY5lD_NaaMO6J6UvmjiHk_lPSFQk5V4SlMoWrn9IAIXx9NNEShlcQb1C5V3anaS";
+        document.body.appendChild(script);
+
+        // add event for script finish loading
+        script.addEventListener("load", () => {
+          setLoading(false);
+          // if the are items in the cart, renders paypal button
+          if (cartItems.length > 0) {
+            window.paypal
+              .Buttons({
+                style: {
+                  shape: "pill",
+                  color: "blue",
+                  layout: "vertical",
+                  label: "paypal",
+                },
+                createOrder: async () => {
+                  const response = await fetchService(
+                    "post",
+                    "users/purchase-aproved",
+                    loginData.token
+                  );
+                  return response.orderID;
+                },
+                onApprove: async (data, actions) => {
+                  setLoading(true);
+                  const response = await resetCart(
+                    loginData.token,
+                    data.orderID
+                  );
+                  response ? setPaidFor(true) : setError(true);
+                },
+                onError: (error) => {
+                  setError(true);
+                },
+              })
+              .render(paypalRef.current);
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("summary-container").style.display =
+              "block";
+          }
+        });
+      }
     }
-  }, [paidFor, cartItems, loginData.token, error, resetCart, infoIncomplete]);
+  }, [
+    paidFor,
+    cartItems,
+    loginData.token,
+    error,
+    resetCart,
+    infoIncomplete,
+    history,
+    loaded,
+  ]);
 
   // render paypal button
   let toRender = (

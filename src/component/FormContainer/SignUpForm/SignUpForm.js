@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { signup } from "../../../utils/fetchServices";
+import { fetchService } from "../../../utils/fetchServices";
 import { useInputData } from "../../../utils/customHooks";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
@@ -37,8 +37,9 @@ const SignUpForm = () => {
       ...prevState,
       loading: true,
     }));
-    // Sends request
-    const response = await signup({
+
+    // Sends request with signup data
+    const response = await fetchService("post", "users", null, {
       name: name.value,
       email: email.value,
       password: password.value,

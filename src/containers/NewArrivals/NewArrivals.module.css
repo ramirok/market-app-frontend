@@ -1,14 +1,12 @@
 .NewArrivalsContainer {
-  grid-column: start-name/end-name;
-  max-width: 100%;
-  height: 20rem;
   background-color: #dde1ed;
   border-radius: 20px;
-  margin-top: 3rem;
-  margin-right: 1rem;
-  margin-bottom: 3rem;
   display: flex;
+  box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
   align-items: center;
+
+  height: min-content;
+  padding: 2rem 0;
 }
 
 .NewIcon {
@@ -18,24 +16,23 @@
   transform: rotate(20deg);
   top: 0;
   right: 0;
-  z-index: 3;
+  z-index: 1;
 }
 
 .Curve {
   position: absolute;
   bottom: 0;
-  height: 10rem;
-  width: 30rem;
+  width: 150%;
+  height: 70%;
   transform: rotate(180deg);
   z-index: 1;
-  transition: all 0.5s ease-out;
 }
 
 .Curve2 {
   position: absolute;
   bottom: 0;
-  height: 15rem;
-  width: 30rem;
+  width: 150%;
+  height: 90%;
   transform: rotate(180deg);
 }
 
@@ -46,5 +43,14 @@
   margin-top: auto;
   color: white;
   font-weight: 700;
-  z-index: 2;
+  z-index: 1;
+}
+
+@media screen and (max-width: 700px) {
+  .NewArrivalsContainer {
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem 2rem;
+    justify-content: center;
+  }
 }

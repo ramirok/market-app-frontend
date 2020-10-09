@@ -7,11 +7,11 @@
   color: white;
   text-align: center;
   box-shadow: 10px 10px 60px -14px rgba(0, 0, 0, 0.75);
-  height: 3.4rem;
+  height: 4rem;
 }
 
 .MyAccount {
-  line-height: 3.4rem;
+  line-height: 4rem;
   vertical-align: top;
   display: inline-block;
   background-color: #5b7bf4;
@@ -34,7 +34,7 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   width: 2.5rem;
-  height: 3.4rem;
+  height: 4rem;
   margin-left: 2px;
   transition: all 0.2s;
   padding: 0.4rem;
@@ -78,4 +78,55 @@
 .Logout:hover {
   background-color: #dde1ed;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 1000px) {
+  .MyAccount {
+    cursor: pointer;
+    width: 4rem;
+    height: 4rem;
+    background-color: #5b7bf4;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .MyAccount > :first-child {
+    display: none;
+  }
+
+  .Bell {
+    display: none;
+  }
+
+  .MenuIcon {
+    width: 2.3rem;
+    height: 0.2rem;
+    background-color: white;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .MenuIcon::before {
+    content: "";
+    width: 2.3rem;
+    height: 0.2rem;
+    background-color: white;
+    position: absolute;
+    border-radius: 3px;
+    top: -0.7rem;
+    left: 0;
+  }
+
+  .MenuIcon::after {
+    content: "";
+    width: 2.3rem;
+    height: 0.2rem;
+    background-color: white;
+    position: absolute;
+    border-radius: 3px;
+    bottom: -0.7rem;
+    left: 0;
+  }
 }

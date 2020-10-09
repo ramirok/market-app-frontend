@@ -1,0 +1,41 @@
+.Container {
+  grid-column: start-content / end-content;
+  font-family: "Nunito", sans-serif;
+  font-size: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 10rem;
+}
+
+.IconsContainer {
+  position: relative;
+  width: 30rem;
+  height: 30rem;
+  margin-bottom: 5rem;
+}
+
+.Store {
+  position: absolute;
+  height: 100%;
+  width: auto;
+}
+
+.Missing {
+  position: absolute;
+  height: 50%;
+  width: auto;
+  bottom: -5rem;
+}
+
+@media screen and (max-width: 700px) {
+  .Container {
+    font-size: 3rem;
+    margin-top: 5rem;
+  }
+  .IconsContainer {
+    height: 20rem;
+    width: 20rem;
+  }
+}

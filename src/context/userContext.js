@@ -1,15 +1,7 @@
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import {
-  login,
-  loginGoogle,
-  logout,
-  logoutAll,
-  changePass,
-  forgotPass,
-  resetPass,
-} from "../utils/fetchServices";
+import { fetchService } from "../utils/fetchServices";
 import { saveState, loadState } from "../utils/localStorage";
 
 import { jwtDecode } from "../utils/helpers";
@@ -44,7 +36,7 @@ export const UserProvider = (props) => {
       loading: true,
     }));
 
-    const response = await login({
+    const response = await fetchService("post", "users/login", null, {
       email: email,
       password: password,
     });
@@ -78,7 +70,7 @@ export const UserProvider = (props) => {
       ...prevState,
       loading: true,
     }));
-    const response = await loginGoogle(code);
+    const response = await fetchService("get", `users/login/google${code}`);
 
     if (response.ok) {
       // if succeed, sets loginData and saves localStorage
@@ -90,8 +82,6 @@ export const UserProvider = (props) => {
       });
       saveState({
         token: response.token,
-        name: response.user.name,
-        email: response.user.email,
       });
     } else {
       setLoginData((prevState) => ({
@@ -105,7 +95,8 @@ export const UserProvider = (props) => {
 
   // Logout
   const handleLogout = useCallback(async () => {
-    await logout(loginData.token);
+    await fetchService("post", "users/logout", loginData.token);
+
     window.localStorage.clear();
     setLoginData({
       loading: false,
@@ -118,15 +109,11 @@ export const UserProvider = (props) => {
 
   // Logout All
   const handleLogoutAll = useCallback(async () => {
-    // setLoginData((prevState) => ({
-    //   ...prevState,
-    //   loading: true,
-    // }));
-    const response = await logoutAll(loginData.token);
-    // setLoginData((prevState) => ({
-    //   ...prevState,
-    //   loading: false,
-    // }));
+    const response = await fetchService(
+      "post",
+      "users/logoutAll",
+      loginData.token
+    );
 
     return { succeed: response.ok, message: response.message };
   }, [loginData.token]);
@@ -138,7 +125,14 @@ export const UserProvider = (props) => {
         ...prevState,
         loading: true,
       }));
-      const response = await changePass(loginData.token, data);
+
+      const response = await fetchService(
+        "put",
+        "users/change",
+        loginData.token,
+        data
+      );
+
       setLoginData((prevState) => ({
         ...prevState,
         loading: false,
@@ -156,7 +150,9 @@ export const UserProvider = (props) => {
       loading: true,
     }));
 
-    const response = await forgotPass({ email });
+    const response = await fetchService("post", "users/forgot-pass", null, {
+      email,
+    });
 
     setLoginData((prevState) => ({
       ...prevState,
@@ -172,7 +168,7 @@ export const UserProvider = (props) => {
       loading: true,
     }));
 
-    const response = await resetPass({
+    const response = await fetchService("put", "users/reset-pass", null, {
       resetLink: token,
       password,
       passwordConfirmation,

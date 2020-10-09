@@ -3,8 +3,8 @@
   height: 16rem;
   width: 20rem;
   flex-shrink: 0;
+  flex-grow: 1;
   box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
-  margin-left: 2rem;
   position: relative;
 }
 
@@ -30,7 +30,6 @@
   bottom: 0;
   height: 26%;
   width: 100%;
-  align-self: flex-end;
   background-color: #eeeeee;
   transition: all 0.2s;
   border-radius: 10px;
@@ -43,18 +42,9 @@
   display: flex;
   flex-direction: column;
   padding-left: 1rem;
-  padding-right: 4rem;
   padding-top: 0.5rem;
+  line-height: 1.8rem;
   overflow: hidden;
-  line-height: 1.7rem;
-}
-
-.CardContainer:hover .CardFoot {
-  height: 40%;
-}
-
-.CardContainer:hover .CardImage {
-  height: 60%;
 }
 
 .Plus {
@@ -78,4 +68,11 @@
 
 .Plus:active {
   transform: scale(0.95);
+}
+
+@media screen and (max-width: 700px) {
+  .CardContainer {
+    min-width: 12rem;
+    width: auto;
+  }
 }

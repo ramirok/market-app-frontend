@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useUser } from "../../context/userContext";
-import { getUserDetails } from "../../utils/fetchServices";
+import { fetchService } from "../../utils/fetchServices";
 import { capitalizeName } from "../../utils/helpers";
 import Button from "../../component/Button/Button";
 import Spinner from "../../component/UI/Spinner/Spinner";
@@ -34,6 +34,9 @@ const AccountSecurity = () => {
   // user info state
   const [userInfo, setUserInfo] = useState({ info: {}, address: {} });
 
+  // loading state for first render
+  const [loading, setLoading] = useState(true);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -43,15 +46,20 @@ const AccountSecurity = () => {
       setEditable((prev) => ({ ...prev, loading: true }));
 
       // fetch user details and set userInfo, and editable state
-      getUserDetails(loginData.token).then((data) => {
-        setUserInfo({ info: data.info, address: data.address });
-        setEditable({
-          newFetch: false,
-          personalInfo: !data.infoCompleted,
-          address: !data.addressCompleted,
-          loading: false,
-        });
-      });
+      if (loginData.token) {
+        fetchService("get", "users/user-details", loginData.token).then(
+          (data) => {
+            setUserInfo({ info: data.info, address: data.address });
+            setEditable({
+              newFetch: false,
+              personalInfo: !data.infoCompleted,
+              address: !data.addressCompleted,
+              loading: false,
+            });
+            setLoading(false);
+          }
+        );
+      }
     }
   }, [loginData.token, editable.newFetch]);
 
@@ -59,7 +67,6 @@ const AccountSecurity = () => {
     if (securityState.message) {
       // clears message after 3s
       const timer = setTimeout(() => {
-        // setMessage(null);
         setSecurityState({ succeed: false, message: null });
       }, 3000);
       return function () {
@@ -109,7 +116,11 @@ const AccountSecurity = () => {
         <div className={classes.Section}>
           <h3 className={classes.Title}>Personal Data</h3>
           <div className={classes.PersonalInfoContainer}>
-            {editable.personalInfo ? (
+            {loading ? (
+              <div style={{ margin: "auto" }}>
+                <Spinner />
+              </div>
+            ) : editable.personalInfo ? (
               <PersonalInfoForm
                 // sends userInfo as placeholders when editing
                 placeholders={{
@@ -143,11 +154,15 @@ const AccountSecurity = () => {
           </div>
         </div>
 
-        {/* address info section */}
+        {/* address section */}
         <div className={classes.Section}>
           <h3 className={classes.Title}>Address Data</h3>
           <div className={classes.AddressContainer}>
-            {editable.address ? (
+            {loading ? (
+              <div style={{ margin: "auto" }}>
+                <Spinner />
+              </div>
+            ) : editable.address ? (
               <AddressForm
                 // sends userInfo as placeholders when editing
                 placeholders={{
@@ -181,7 +196,7 @@ const AccountSecurity = () => {
           {/* buttons container */}
           <div className={classes.ButtonsContainer}>
             {/* logoutAll button */}
-            <div>
+            <div style={{ height: "min-content" }}>
               <Button
                 text="Logout from other devices"
                 classFromProps={classes.Button}

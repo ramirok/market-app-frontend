@@ -9,6 +9,7 @@ import classes from "./GoogleForm.module.css";
 const GoogleForm = () => {
   // get token from url param
   const { search } = useLocation();
+  console.log(search);
 
   // customHook for user context:
   // loginData returns ={name, email, token}
@@ -23,6 +24,10 @@ const GoogleForm = () => {
   const history = useHistory();
 
   useEffect(() => {
+    if (!search) {
+      return history.push("/");
+    }
+
     //   sends google redirect code query param
     handleLoginGoogle(search).then((response) => {
       if (response.succeed) {

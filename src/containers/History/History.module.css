@@ -1,11 +1,13 @@
 .HistoryContainer {
+  grid-column: start-content/end-content;
   position: relative;
-  grid-column: start-name/end-content;
-  width: 100%;
-  padding: 2rem 0;
   background-color: #dde1ed;
   border-radius: 20px;
-  margin: 3rem 0;
+  box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
+  align-items: center;
+
+  height: min-content;
+  padding: 2rem 0;
 }
 
 .NameContainer {
@@ -13,6 +15,11 @@
   display: flex;
   top: 1rem;
   left: 2rem;
+}
+
+.ProductsContainer {
+  display: flex;
+  margin-top: 2rem;
 }
 
 .Name {
@@ -25,4 +32,13 @@
 .HistoryIcon {
   width: 2.5rem;
   height: 2.5rem;
+}
+
+@media screen and (max-width: 700px) {
+  .ProductsContainer {
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 0 2rem;
+    justify-content: center;
+  }
 }

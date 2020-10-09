@@ -1,10 +1,36 @@
 .HeaderContainer {
-  grid-row: start-header/end-navbar;
-  grid-column: start-footer / end-footer;
   background-color: #dde1ed;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
+  padding: 1rem 2rem;
+  z-index: 2;
+  position: relative;
+}
+
+.BarAndLinks {
+  width: 50%;
+  margin-top: 3.5rem;
+}
+
+.Menu {
+  display: flex;
+  position: relative;
+}
+
+.Menu > :first-child {
+  margin-right: 3rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .BarAndLinks {
+    width: 45%;
+    margin-top: 0;
+  }
+
+  .Menu > :first-child {
+    margin-right: 1rem;
+  }
 }

@@ -52,3 +52,17 @@
   margin-top: 2rem;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 700px) {
+  .ButtonAdd {
+    width: 3rem;
+  }
+
+  .ButtonRemove {
+    width: 3rem;
+  }
+
+  .ButtonAddCart {
+    width: 6rem;
+  }
+}

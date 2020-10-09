@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-import { activateAcc } from "../../../utils/fetchServices";
+import { fetchService } from "../../../utils/fetchServices";
 import FormContainer from "../FormContainer";
 import Button from "../../Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
@@ -23,8 +23,8 @@ const ActivateForm = () => {
   const [succeed, setSucceed] = useState(false);
 
   useEffect(() => {
-    // fetch with token
-    activateAcc({ token }).then((response) => {
+    // send token for account activation
+    fetchService("post", "users/activate", null, { token }).then((response) => {
       setSucceed(response.ok);
       setMessage(response.message);
       setLoading(false);

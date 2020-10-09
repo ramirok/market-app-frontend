@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+import { useWindowResize } from "../../../utils/customHooks";
 import classes from "./DropDownMenu.module.css";
 
 const DropDownMenu = React.memo((props) => {
@@ -9,30 +10,39 @@ const DropDownMenu = React.memo((props) => {
   -visible: visible state
   -setVisible: toggle visible state
   */
-  const { styleCustom, visible, setVisible } = props;
+  const { visible, setVisible } = props;
 
   // Toggle component classes when props.visible changes
   const [dropDownClasses, setDropDownClasses] = useState(classes.Hidden);
 
+  const windowWidth = useWindowResize();
+
   useEffect(() => {
     // When visible changes to false, class will set to hidden in 600ms
     let timerToClear;
+
     if (!visible) {
-      timerToClear = setTimeout(() => {
-        setDropDownClasses(classes.Hidden);
-      }, 600);
+      // if on mobile or width<1000, hide menu inmediately
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      ) || windowWidth < 1000
+        ? setDropDownClasses(classes.Hidden)
+        : // if on desktop, hide in 600ms
+          (timerToClear = setTimeout(() => {
+            setDropDownClasses(classes.Hidden);
+          }, 600));
     } else {
       setDropDownClasses(classes.Visible);
     }
+
     return function () {
       clearTimeout(timerToClear);
     };
-  }, [visible]);
+  }, [visible, windowWidth]);
 
   return (
     <div
       className={dropDownClasses}
-      style={{ ...styleCustom }}
       onMouseEnter={() => {
         setVisible(true);
       }}

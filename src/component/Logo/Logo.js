@@ -12,7 +12,7 @@ const Logo = () => {
       <Link to="/">
         <AppLogo className={classes.Logo} />
       </Link>
-      <p className={classes.AppName}>Market App</p>
+      {<p className={classes.AppName}>Market App</p>}
     </div>
   );
 };

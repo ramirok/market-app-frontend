@@ -62,7 +62,7 @@ const ShoppingCart = () => {
 
             {/* total price */}
             {totalPrice ? (
-              <div className={classes.TotalPrice}>
+              <div className={classes.TotalPriceContainer}>
                 <p>Total</p>
                 <p className={classes.Price}>{`$ ${totalPrice.toFixed(2)}`}</p>
                 <Button

@@ -68,3 +68,23 @@ export const useTraceUpdate = (props) => {
     prev.current = props;
   });
 };
+
+//---------- track window resize----------
+
+export const useWindowResize = () => {
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  const updateDimensions = () => {
+    const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    setWindowWidth(windowWidth);
+  };
+
+  useEffect(() => {
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  return windowWidth;
+};

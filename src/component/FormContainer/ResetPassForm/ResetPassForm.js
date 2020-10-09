@@ -60,7 +60,7 @@ const ResetPassForm = () => {
           classFromProps={classes.Button}
           onClick={() =>
             loginData.token
-              ? history.push("/app/security")
+              ? history.push("/app/account")
               : history.push("/auth/login")
           }
         />

@@ -13,11 +13,11 @@ const App = () => {
   return (
     <UserProvider>
       <CartProvider>
+        <Header />
         <div className={classes.Container}>
-          <Header />
           <RenderRoutes routes={ROUTES} />
-          <Footer />
         </div>
+        <Footer />
       </CartProvider>
     </UserProvider>
   );

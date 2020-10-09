@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import { useUser } from "../../context/userContext";
-import { getHistory } from "../../utils/fetchServices";
+import { fetchService } from "../../utils/fetchServices";
+import { useWindowResize } from "../../utils/customHooks";
 import ProductCard from "../../component/UI/Card/ProductCard/ProductCard";
 import Slider from "../../component/UI/Slider/Slider";
 import classes from "./History.module.css";
@@ -14,20 +15,33 @@ const History = () => {
   // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
+  const width = useWindowResize();
+
   // Items to show in Card component
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     // when there is a token, get user's history
     if (loginData.token) {
-      getHistory(loginData.token).then((data) => setItems(data));
+      fetchService("get", "users/history", loginData.token).then((data) => {
+        setItems(data);
+      });
     }
   }, [loginData.token]);
 
   // if no items in history, return null
-  if (items.length < 1) {
+  if (items.length < 8) {
     return null;
   }
+
+  let render = (
+    <>
+      {items.map((el) => (
+        // Distribute el's properties: name, img, price, description
+        <ProductCard {...el} key={el.name} />
+      ))}
+    </>
+  );
 
   return (
     <div className={classes.HistoryContainer}>
@@ -38,13 +52,9 @@ const History = () => {
       </div>
 
       {/* carousel */}
-      <div style={{ marginTop: "2rem" }}>
-        <Slider>
-          {items.map((el) => (
-            // Distribute el's properties: name, img, price, description
-            <ProductCard {...el} key={el.name} />
-          ))}
-        </Slider>
+      <div className={classes.ProductsContainer}>
+        {/* use slider for big screens */}
+        {width > 700 ? <Slider>{render}</Slider> : render}
       </div>
     </div>
   );

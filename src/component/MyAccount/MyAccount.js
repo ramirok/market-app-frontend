@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import { useUser } from "../../context/userContext";
 import { capitalizeName } from "../../utils/helpers";
+import { useWindowResize } from "../../utils/customHooks";
 import Spinner from "../UI/Spinner/Spinner";
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import DropDownItemLink from "../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
@@ -25,7 +25,7 @@ const MyAccount = () => {
   // logout handler
   const { handleLogout, loginData } = useUser();
 
-  const history = useHistory();
+  const width = useWindowResize();
 
   // DropDownMenu list items
   const svgStyle = { height: "2rem", width: "2rem" };
@@ -37,17 +37,18 @@ const MyAccount = () => {
 
   return (
     <div className={classes.MyAccountContainer}>
-      <span
+      <div
         className={classes.MyAccount}
         onClick={() => {
-          setVisible(true);
+          setVisible(!visible);
         }}
         onMouseLeave={() => {
           setVisible(false);
         }}
       >
-        My Account
-      </span>
+        <span>My Account</span>
+        <div className={classes.MenuIcon} />
+      </div>
       <Bell className={classes.Bell} />
 
       <DropDownMenu visible={visible} setVisible={setVisible}>
@@ -63,6 +64,7 @@ const MyAccount = () => {
             to={`/app/${el}`}
             img={list[el]}
             name={el}
+            onClick={width < 1000 ? () => setVisible(false) : null}
           />
         ))}
 
@@ -72,7 +74,6 @@ const MyAccount = () => {
           onClick={async () => {
             setIsLoading(true);
             await handleLogout();
-            history.push("/");
           }}
         >
           Log Out

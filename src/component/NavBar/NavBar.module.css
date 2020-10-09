@@ -1,7 +1,12 @@
 .NavBar {
-  position: absolute;
-  top: 5rem;
+  margin-top: 1.5rem;
 }
 .List {
   display: flex;
+  justify-content: space-around;
+}
+
+.List > :first-child {
+  position: relative;
+  color: rgb(30, 30, 30);
 }

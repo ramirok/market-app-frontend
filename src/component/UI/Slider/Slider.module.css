@@ -3,10 +3,21 @@
   position: relative;
 }
 
-.Slider {
+.SliderContainer {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
   display: flex;
-  width: fit-content;
-  transition: all 0.5s;
+  gap: 2rem;
+}
+
+.SliderContainer > :first-child {
+  margin-left: 2rem;
+}
+
+.SliderContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .PrevArrowContainer {
@@ -19,7 +30,7 @@
   transform: translateY(-50%);
   border-radius: 50%;
   cursor: pointer;
-  z-index: 3;
+  z-index: 1;
   transition: all 0.1s;
   display: flex;
   align-items: center;
@@ -37,7 +48,7 @@
   transform: translateY(-50%);
   border-radius: 50%;
   cursor: pointer;
-  z-index: 3;
+  z-index: 1;
   transition: all 0.1s;
   display: flex;
   align-items: center;
@@ -81,4 +92,10 @@
 
 .ComponentContainer:hover .PrevArrowContainer {
   opacity: 1;
+}
+
+@media screen and (max-width: 1000px) {
+  .SliderContainer {
+    overflow-x: auto;
+  }
 }

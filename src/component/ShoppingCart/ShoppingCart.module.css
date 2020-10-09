@@ -5,7 +5,7 @@
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s;
-  height: 3.4rem;
+  height: 4rem;
   box-shadow: 10px 10px 60px -14px rgba(0, 0, 0, 0.75);
   position: relative;
 }
@@ -29,8 +29,8 @@
 
 .Bag {
   background-color: #5b7bf4;
-  height: 3.4rem;
-  width: 3.5rem;
+  height: 4rem;
+  width: 4rem;
   border-radius: 10px;
   transition: all 0.2s;
   padding: 0.3rem;

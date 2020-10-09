@@ -1,11 +1,4 @@
 .Hidden {
-  margin-top: 1rem;
-  position: absolute;
-  width: 20rem;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 10px 10px 50px -20px rgba(0, 0, 0, 0.75);
-  overflow: hidden;
   display: none;
 }
 
@@ -16,19 +9,22 @@
   background-color: white;
   border-radius: 10px;
   box-shadow: 10px 10px 50px -20px rgba(0, 0, 0, 0.75);
-  overflow: hidden;
   animation-name: appears;
   animation-duration: 0.3s;
   z-index: 2;
+  right: 0;
+  top: 100%;
 }
 
 @keyframes appears {
   0% {
     opacity: 0;
+    transform: translateY(-10%);
   }
 
   100% {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
