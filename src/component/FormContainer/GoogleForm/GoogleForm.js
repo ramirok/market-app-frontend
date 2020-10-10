@@ -9,7 +9,6 @@ import classes from "./GoogleForm.module.css";
 const GoogleForm = () => {
   // get token from url param
   const { search } = useLocation();
-  console.log(search);
 
   // customHook for user context:
   // loginData returns ={name, email, token}

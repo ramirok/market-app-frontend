@@ -45,7 +45,6 @@ const LoginForm = () => {
       };
     }
   }, [message]);
-
   return (
     <FormContainer>
       <>

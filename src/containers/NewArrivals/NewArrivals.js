@@ -36,7 +36,7 @@ const NewArrivals = () => {
 
   useEffect(() => {
     // Set items fetched
-    fetchService("get", "products?sortBy=created<_at").then((data) =>
+    fetchService("get", "products?sortBy=createdAt").then((data) =>
       setItems(data)
     );
   }, []);
