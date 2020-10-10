@@ -74,10 +74,12 @@ export const UserProvider = (props) => {
 
     if (response.ok) {
       // if succeed, sets loginData and saves localStorage
+
+      const decodedToken = jwtDecode(response.token);
       setLoginData({
         loading: false,
-        name: response.user.name,
-        email: response.user.email,
+        name: decodedToken.name,
+        email: decodedToken.email,
         token: response.token,
       });
       saveState({
