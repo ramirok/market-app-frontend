@@ -64,7 +64,7 @@ const Checkout = () => {
       if (!paidFor && !error && !infoIncomplete) {
         const script = document.createElement("script");
         script.src =
-          "https://www.paypal.com/sdk/js?client-id=AV_teTqvX8rl7oj3_wY5lD_NaaMO6J6UvmjiHk_lPSFQk5V4SlMoWrn9IAIXx9NNEShlcQb1C5V3anaS";
+          "https://www.paypal.com/sdk/js?client-id=AfDyAFundVVqCD-SQLf583QoeZsuJI6ocD9GxyiODndW2jAB9IuNS8ET_1g4NjEpoUUdRH82OF2uQLRT";
         document.body.appendChild(script);
 
         // add event for script finish loading
