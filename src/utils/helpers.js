@@ -67,3 +67,12 @@ export const jwtDecode = (t) => {
   const payload = JSON.parse(window.atob(t.split(".")[1]));
   return payload;
 };
+
+//---------- debounce ----------
+export const debounce = (cb, delay) => {
+  let timeout;
+  return () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(cb, delay);
+  };
+};

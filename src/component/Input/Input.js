@@ -29,7 +29,7 @@ Recives:
         <div className={classes.InputContainer}>
           <label htmlFor="email">{label}</label>
           <input
-            {...rest} //spread value and onChange atributes
+            {...rest} //input value and onChange atributes
             type={type}
             id="email"
             className={classes.Input}
@@ -50,7 +50,7 @@ Recives:
         <div className={classes.InputContainer}>
           <label htmlFor={label}>{label}</label>
           <input
-            {...rest} //spread value and onChange atributes
+            {...rest} //input value and onChange atributes
             type={"text"}
             id={label}
             className={classes.Input}
@@ -71,7 +71,7 @@ Recives:
         <div className={classes.InputContainer}>
           <label htmlFor={label}>{label}</label>
           <input
-            {...rest} //spread value and onChange atributes
+            {...rest} //input value and onChange atributes
             type={type}
             id={label}
             className={classes.Input}
@@ -93,7 +93,7 @@ Recives:
           <label htmlFor={label}>{label}</label>
           <input
             type="text"
-            {...rest} //spread value and onChange atributes
+            {...rest} //input value and onChange atributes
             id={label}
             className={classes.Input}
             style={check}

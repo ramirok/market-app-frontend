@@ -50,13 +50,21 @@ const SearchBar = () => {
     if (search.value.length > 0) {
       setIsLoading(true);
 
-      fetchService("get", `products/autosuggest?q=${search.value}`).then(
-        (response) => {
-          setSuggestions(response);
-          setIsLoading(false);
-          setRunHook(true);
-        }
+      // perform fetch 500ms after user finished typing
+      let timer;
+      timer = setTimeout(
+        () =>
+          fetchService("get", `products/autosuggest?q=${search.value}`).then(
+            (response) => {
+              console.log("fetching");
+              setSuggestions(response);
+              setIsLoading(false);
+              setRunHook(true);
+            }
+          ),
+        500
       );
+      return () => clearTimeout(timer);
     } else {
       setSuggestions([]);
     }
