@@ -131,7 +131,6 @@ const AccountSecurity = () => {
             ) : (
               <>
                 <Button
-                  text="edit"
                   classFromProps={classes.ButtonEdit}
                   onClick={() => {
                     // shows personalInfo form
@@ -140,7 +139,9 @@ const AccountSecurity = () => {
                       personalInfo: true,
                     }));
                   }}
-                />
+                >
+                  edit
+                </Button>
 
                 {userInfoData}
                 <div>
@@ -173,7 +174,6 @@ const AccountSecurity = () => {
             ) : (
               <>
                 <Button
-                  text="edit"
                   classFromProps={classes.ButtonEdit}
                   onClick={() => {
                     // shows address form
@@ -182,7 +182,9 @@ const AccountSecurity = () => {
                       address: true,
                     }));
                   }}
-                />
+                >
+                  edit
+                </Button>
                 {userAddressData}
                 <span style={{ marginBottom: "3.5rem" }} />
               </>
@@ -198,26 +200,26 @@ const AccountSecurity = () => {
             {/* logoutAll button */}
             <div style={{ height: "min-content" }}>
               <Button
-                text="Logout from other devices"
                 classFromProps={classes.Button}
                 onClick={
                   // alows onClick when loading = false
-                  !securityState.loading
-                    ? async () => {
-                        setSecurityState((prev) => ({
-                          ...prev,
-                          loading: true,
-                        }));
-                        const response = await handleLogoutAll();
-                        setSecurityState({
-                          succeed: response.succeed,
-                          message: response.message,
-                          loading: false,
-                        });
-                      }
-                    : null
+                  async () => {
+                    setSecurityState((prev) => ({
+                      ...prev,
+                      loading: true,
+                    }));
+                    const response = await handleLogoutAll();
+                    setSecurityState({
+                      succeed: response.succeed,
+                      message: response.message,
+                      loading: false,
+                    });
+                  }
                 }
-              />
+                disabled={securityState.loading}
+              >
+                Logout from other devices
+              </Button>
 
               {/* message */}
               <p
@@ -230,12 +232,13 @@ const AccountSecurity = () => {
 
             {/* show changePass form button */}
             <Button
-              text="Change password"
               classFromProps={classes.Button}
               onClick={() => {
                 history.push("/app/security/change");
               }}
-            />
+            >
+              Change password
+            </Button>
           </div>
         </div>
       </div>

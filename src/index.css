@@ -9,7 +9,6 @@
 html {
   font-family: "Arial", sans-serif;
   font-size: 62.5%;
-
-  position: relative;
   min-height: 100%;
+  position: relative;
 }

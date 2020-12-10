@@ -56,17 +56,17 @@ const ResetPassForm = () => {
       {succeed ? (
         // if succeeds show go back button
         <Button
-          text="Go back"
           classFromProps={classes.Button}
           onClick={() =>
             loginData.token
               ? history.push("/app/account")
               : history.push("/auth/login")
           }
-        />
+        >
+          Go back
+        </Button>
       ) : (
         <Button
-          text="Reset password"
           classFromProps={
             password.isValid && passwordConfirmation.isValid
               ? classes.Button
@@ -74,22 +74,26 @@ const ResetPassForm = () => {
           }
           onClick={
             // allows on click if password and password confirmation are valid, and loading = false
-            password.isValid &&
-            passwordConfirmation.isValid &&
-            !loginData.loading
-              ? async (e) => {
-                  e.preventDefault();
-                  const response = await handleResetPassword(
-                    token,
-                    password.value,
-                    passwordConfirmation.value
-                  );
-                  setSucceed(response.succeed);
-                  setMessage(response.message);
-                }
-              : (e) => e.preventDefault()
+            async (e) => {
+              console.log("resserting");
+              e.preventDefault();
+              const response = await handleResetPassword(
+                token,
+                password.value,
+                passwordConfirmation.value
+              );
+              setSucceed(response.succeed);
+              setMessage(response.message);
+            }
           }
-        />
+          disabled={
+            !password.isValid ||
+            !passwordConfirmation.isValid ||
+            loginData.loading
+          }
+        >
+          Reset password
+        </Button>
       )}
     </FormContainer>
   );

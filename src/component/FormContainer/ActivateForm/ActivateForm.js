@@ -34,10 +34,11 @@ const ActivateForm = () => {
   const succeedButton = succeed ? (
     // shows login button if activation succeeds
     <Button
-      text="Switch to login"
       classFromProps={classes.Button}
       onClick={() => history.push("/auth/login")}
-    />
+    >
+      Switch to login
+    </Button>
   ) : (
     // show try again message if activation fails
     <p className={classes.Failed}>Please try again!</p>

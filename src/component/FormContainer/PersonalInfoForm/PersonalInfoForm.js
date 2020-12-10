@@ -33,42 +33,43 @@ Recives:
   return (
     <>
       <Button
-        text="ok"
         classFromProps={classes.ButtonOk}
         onClick={
           // allows on click when loading = false
-          !formState.loading
-            ? async () => {
-                setFormState((prev) => ({ ...prev, loading: true }));
+          async () => {
+            console.log("pressed ok");
+            setFormState((prev) => ({ ...prev, loading: true }));
 
-                const response = await fetchService(
-                  "put",
-                  "users/user-details",
-                  loginData.token,
-                  {
-                    fullName: fullName.value,
-                    phoneNumber: phoneNumber.value,
-                  }
-                );
-
-                if (response.ok) {
-                  // if fetch succeeds, sets form editable = false
-                  return setEditable((prev) => ({
-                    ...prev,
-                    personalInfo: false,
-                    newFetch: true,
-                  }));
-                }
-
-                // if fetch fails, sets message
-                setFormState({
-                  loading: false,
-                  message: response.message,
-                });
+            const response = await fetchService(
+              "put",
+              "users/user-details",
+              loginData.token,
+              {
+                fullName: fullName.value,
+                phoneNumber: phoneNumber.value,
               }
-            : null
+            );
+
+            if (response.ok) {
+              // if fetch succeeds, sets form editable = false
+              return setEditable((prev) => ({
+                ...prev,
+                personalInfo: false,
+                newFetch: true,
+              }));
+            }
+
+            // if fetch fails, sets message
+            setFormState({
+              loading: false,
+              message: response.message,
+            });
+          }
         }
-      />
+        disabled={formState.loading}
+      >
+        ok
+      </Button>
       <Input
         {...fullName}
         label="Full Name:"

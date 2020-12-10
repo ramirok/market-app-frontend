@@ -83,36 +83,34 @@ Recives:
         {/* buttons */}
         <div className={classes.ButtonsContainer}>
           <Button
-            text="-"
             classFromProps={classes.ButtonRemove}
             onClick={() => {
               setAmount(amount > 1 ? amount - 1 : 1);
             }}
-          />
+          >
+            -
+          </Button>
           <Button
-            text="+"
             classFromProps={classes.ButtonAdd}
             onClick={() => setAmount(amount + 1)}
-          />
+          >
+            +
+          </Button>
           <Button
             // shows spinner when isLoading = true
-            text={isLoading ? <Spinner white /> : "Add"}
             classFromProps={classes.ButtonAddCart}
             onClick={
               // allows on click when isLoading = false
-              !isLoading
-                ? async () => {
-                    setIsLoading(true);
-                    await addProductHandler(
-                      modalData.id,
-                      amount,
-                      loginData.token
-                    );
-                    setIsOpen(false);
-                  }
-                : null
+              async () => {
+                setIsLoading(true);
+                await addProductHandler(modalData.id, amount, loginData.token);
+                setIsOpen(false);
+              }
             }
-          />
+            disabled={isLoading}
+          >
+            {isLoading ? <Spinner white /> : "Add"}
+          </Button>
         </div>
       </div>
     </Modal>

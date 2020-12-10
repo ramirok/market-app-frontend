@@ -119,21 +119,17 @@ const SearchBar = () => {
           </div>
 
           {/* Button shows spinner if isLoading = true */}
-          <Button
-            text={
-              isLoading ? (
-                <Spinner white />
-              ) : (
-                <SearchIcon
-                  fill="white"
-                  height="60%"
-                  style={{ marginTop: ".5rem" }}
-                />
-              )
-            }
-            classFromProps={classes.Button}
-            onClick={searchHandler}
-          />
+          <Button classFromProps={classes.Button} onClick={searchHandler}>
+            {isLoading ? (
+              <Spinner white />
+            ) : (
+              <SearchIcon
+                fill="white"
+                height="60%"
+                style={{ marginTop: ".5rem" }}
+              />
+            )}
+          </Button>
         </div>
       </div>
     </>

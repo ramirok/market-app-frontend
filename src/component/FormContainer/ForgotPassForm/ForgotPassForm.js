@@ -54,31 +54,32 @@ const ForgotPassForm = () => {
         // if fails, keep showing ok and cancel buttons
         <>
           <Button
-            text="Ok"
             classFromProps={
               email.isValid ? classes.ButtonOk : classes.ButtonOkDisabled
             }
             onClick={
               // allows on click when email input is a valid email and loading = false
-              email.isValid && !loginData.loading
-                ? async (e) => {
-                    e.preventDefault();
-                    const response = await handleForgotPassword(email.value);
-                    setSucceed(response.succeed);
-                    setMessage(response.message);
-                  }
-                : (e) => e.preventDefault()
+              async (e) => {
+                e.preventDefault();
+                const response = await handleForgotPassword(email.value);
+                setSucceed(response.succeed);
+                setMessage(response.message);
+              }
             }
-          />
+            disabled={!email.isValid || loginData.loading}
+          >
+            Ok
+          </Button>
           <br style={{ marginBottom: "3rem" }} />
           <Button
-            text="Cancel"
             classFromProps={classes.ButtonCancel}
             onClick={(e) => {
               e.preventDefault();
               history.push("/auth/login");
             }}
-          />
+          >
+            Cancel
+          </Button>
         </>
       )}
     </FormContainer>

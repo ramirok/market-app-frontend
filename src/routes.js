@@ -1,54 +1,54 @@
-import React, { lazy } from "react";
+import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import HomePage from "./containers/HomePage/HomePage";
-// import LoginForm from "./component/FormContainer/LoginForm/LoginForm";
-// import SignUpForm from "./component/FormContainer/SignUpForm/SignUpForm";
-// import ForgotPassForm from "./component/FormContainer/ForgotPassForm/ForgotPassForm";
-// import ResetPassForm from "./component/FormContainer/ResetPassForm/ResetPassForm";
-// import ActivateForm from "./component/FormContainer/ActivateForm/ActivateForm";
-// import CategoryPage from "./containers/CategoryPage/CategoryPage";
-// import AccountSecurity from "./containers/AccountSecurity/AccountSecurity";
-// import ShoppingCart from "./containers/ShoppingCart/ShoppingCart";
-// import GoogleForm from "./component/FormContainer/GoogleForm/GoogleForm";
-// import ChangePass from "./component/FormContainer/ChangePassForm/ChangePassForm";
-// import Checkout from "./containers/Checkout/Checkuout";
-// import Orders from "./containers/Orders/Orders";
+import LoginForm from "./component/FormContainer/LoginForm/LoginForm";
+import SignUpForm from "./component/FormContainer/SignUpForm/SignUpForm";
+import ForgotPassForm from "./component/FormContainer/ForgotPassForm/ForgotPassForm";
+import ResetPassForm from "./component/FormContainer/ResetPassForm/ResetPassForm";
+import ActivateForm from "./component/FormContainer/ActivateForm/ActivateForm";
+import CategoryPage from "./containers/CategoryPage/CategoryPage";
+import AccountSecurity from "./containers/AccountSecurity/AccountSecurity";
+import ShoppingCart from "./containers/ShoppingCart/ShoppingCart";
+import GoogleForm from "./component/FormContainer/GoogleForm/GoogleForm";
+import ChangePass from "./component/FormContainer/ChangePassForm/ChangePassForm";
+import Checkout from "./containers/Checkout/Checkuout";
+import Orders from "./containers/Orders/Orders";
 import page404 from "./containers/page404/page404";
 
 // Lazy Loads
-const LoginForm = lazy(() =>
-  import("./component/FormContainer/LoginForm/LoginForm")
-);
-const SignUpForm = lazy(() =>
-  import("./component/FormContainer/SignUpForm/SignUpForm")
-);
-const ForgotPassForm = lazy(() =>
-  import("./component/FormContainer/ForgotPassForm/ForgotPassForm")
-);
-const ResetPassForm = lazy(() =>
-  import("./component/FormContainer/ResetPassForm/ResetPassForm")
-);
-const ActivateForm = lazy(() =>
-  import("./component/FormContainer/ActivateForm/ActivateForm")
-);
-const CategoryPage = lazy(() =>
-  import("./containers/CategoryPage/CategoryPage")
-);
-const AccountSecurity = lazy(() =>
-  import("./containers/AccountSecurity/AccountSecurity")
-);
-const ShoppingCart = lazy(() =>
-  import("./containers/ShoppingCart/ShoppingCart")
-);
-const GoogleForm = lazy(() =>
-  import("./component/FormContainer/GoogleForm/GoogleForm")
-);
-const ChangePass = lazy(() =>
-  import("./component/FormContainer/ChangePassForm/ChangePassForm")
-);
-const Checkout = lazy(() => import("./containers/Checkout/Checkuout"));
-const Orders = lazy(() => import("./containers/Orders/Orders"));
+// const LoginForm = lazy(() =>
+//   import("./component/FormContainer/LoginForm/LoginForm")
+// );
+// const SignUpForm = lazy(() =>
+//   import("./component/FormContainer/SignUpForm/SignUpForm")
+// );
+// const ForgotPassForm = lazy(() =>
+//   import("./component/FormContainer/ForgotPassForm/ForgotPassForm")
+// );
+// const ResetPassForm = lazy(() =>
+//   import("./component/FormContainer/ResetPassForm/ResetPassForm")
+// );
+// const ActivateForm = lazy(() =>
+//   import("./component/FormContainer/ActivateForm/ActivateForm")
+// );
+// const CategoryPage = lazy(() =>
+//   import("./containers/CategoryPage/CategoryPage")
+// );
+// const AccountSecurity = lazy(() =>
+//   import("./containers/AccountSecurity/AccountSecurity")
+// );
+// const ShoppingCart = lazy(() =>
+//   import("./containers/ShoppingCart/ShoppingCart")
+// );
+// const GoogleForm = lazy(() =>
+//   import("./component/FormContainer/GoogleForm/GoogleForm")
+// );
+// const ChangePass = lazy(() =>
+//   import("./component/FormContainer/ChangePassForm/ChangePassForm")
+// );
+// const Checkout = lazy(() => import("./containers/Checkout/Checkuout"));
+// const Orders = lazy(() => import("./containers/Orders/Orders"));
 
 const ROUTES = [
   {

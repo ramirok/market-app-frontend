@@ -36,45 +36,44 @@ Recives:
   return (
     <>
       <Button
-        text="ok"
         classFromProps={classes.ButtonOk}
         onClick={
           // allows on click when loading = false
-          !formState.loading
-            ? async () => {
-                setFormState({ loading: true });
-
-                const response = await fetchService(
-                  "put",
-                  "users/user-details",
-                  loginData.token,
-                  {
-                    state: state.value,
-                    city: city.value,
-                    zipCode: zipCode.value,
-                    street: street.value,
-                    streetNumber: streetNumber.value,
-                  }
-                );
-
-                if (response.ok) {
-                  // if fetch succeeds, sets form editable = false
-                  return setEditable((prev) => ({
-                    ...prev,
-                    address: false,
-                    newFetch: true,
-                  }));
-                }
-
-                // if fetch fails, sets message
-                setFormState({
-                  loading: false,
-                  message: response.message,
-                });
+          async () => {
+            setFormState({ loading: true });
+            const response = await fetchService(
+              "put",
+              "users/user-details",
+              loginData.token,
+              {
+                state: state.value,
+                city: city.value,
+                zipCode: zipCode.value,
+                street: street.value,
+                streetNumber: streetNumber.value,
               }
-            : null
+            );
+
+            if (response.ok) {
+              // if fetch succeeds, sets form editable = false
+              return setEditable((prev) => ({
+                ...prev,
+                address: false,
+                newFetch: true,
+              }));
+            }
+
+            // if fetch fails, sets message
+            setFormState({
+              loading: false,
+              message: response.message,
+            });
+          }
         }
-      />
+        disabled={formState.loading}
+      >
+        ok
+      </Button>
 
       <Input {...state} label="State:" placeholder={placeholders.state} />
       <br style={{ marginBottom: "3rem" }} />

@@ -1,14 +1,13 @@
 .Background {
+  grid-column: start-footer/end-footer;
+  grid-row: start-content/end-content;
   background-color: #eeeeee;
-  display: flex;
   width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
+  height: calc(100vh - 17rem);
+  margin-bottom: -4rem;
 }
 
 .FormContainer {
-  grid-column: start-content/end-content;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -17,7 +16,6 @@
   font-size: 1.5rem;
   padding: 4rem;
   margin: 4rem auto;
-
   border-radius: 15px;
   max-width: 28rem;
   height: min-content;
@@ -26,6 +24,9 @@
 
 @media screen and (max-width: 1000px) {
   .Background {
+    grid-column: start-content/end-content;
+    height: calc(100vh - 10rem);
     margin-left: -2rem;
+    width: calc(100% + 4rem);
   }
 }

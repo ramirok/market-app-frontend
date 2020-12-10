@@ -66,10 +66,11 @@ const ShoppingCart = () => {
                 <p>Total</p>
                 <p className={classes.Price}>{`$ ${totalPrice.toFixed(2)}`}</p>
                 <Button
-                  text="Proced to checkout"
                   classFromProps={classes.ButtonCheckout}
                   onClick={() => history.push("/app/checkout")}
-                />
+                >
+                  Proced to checkout
+                </Button>
               </div>
             ) : (
               // if the are no items in the cart

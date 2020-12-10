@@ -93,24 +93,24 @@ Recives:
       {/* buttons and input */}
       <div className={classes.ButtonsContainer}>
         <Button
-          text="-"
           classFromProps={classes.ButtonRemove}
           onClick={
             // allows onClick if isLoading = false
-            !isLoading
-              ? quantity > 1
-                ? async () => {
-                    setIsLoading(true);
-                    await addProductHandler(id, -1, loginData.token);
-                    setIsLoading(false);
-                  }
-                : async () => {
-                    setIsLoading(true);
-                    await delProductHandler(id, loginData.token);
-                  }
-              : null
+            quantity > 1
+              ? async () => {
+                  setIsLoading(true);
+                  await addProductHandler(id, -1, loginData.token);
+                  setIsLoading(false);
+                }
+              : async () => {
+                  setIsLoading(true);
+                  await delProductHandler(id, loginData.token);
+                }
           }
-        />
+          disabled={isLoading}
+        >
+          -
+        </Button>
 
         <form onSubmit={handleSubmitOnEnter}>
           <input
@@ -126,19 +126,20 @@ Recives:
         </form>
 
         <Button
-          text="+"
           classFromProps={classes.ButtonAdd}
           onClick={
             // allows onClick if isLoading = false
-            !isLoading
-              ? async () => {
-                  setIsLoading(true);
-                  await addProductHandler(id, 1, loginData.token);
-                  setIsLoading(false);
-                }
-              : null
+
+            async () => {
+              setIsLoading(true);
+              await addProductHandler(id, 1, loginData.token);
+              setIsLoading(false);
+            }
           }
-        />
+          disabled={isLoading}
+        >
+          +
+        </Button>
 
         {/* if user inputs value (amount), show ok button to fetch new quantity  */}
         {quantity !== amount && (
@@ -162,18 +163,18 @@ Recives:
 
         {/* remove product button */}
         <Button
-          text="X"
           classFromProps={classes.ButtonDel}
           onClick={
             // allows onClick if isLoading = false
-            !isLoading
-              ? async () => {
-                  setIsLoading(true);
-                  await delProductHandler(id, loginData.token);
-                }
-              : null
+            async () => {
+              setIsLoading(true);
+              await delProductHandler(id, loginData.token);
+            }
           }
-        />
+          disabled={isLoading}
+        >
+          X
+        </Button>
       </div>
     </div>
   );

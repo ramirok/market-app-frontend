@@ -5,16 +5,20 @@ import classes from "./Button.module.css";
 const Button = (props) => {
   /*
 Recives:
- -text: text to display
  -classFromPros: custom styles
  -onClick: onCLick handler
+ -disabled
 */
-  const { text, classFromProps, onClick, id } = props;
+  const { classFromProps, onClick, disabled } = props;
 
   const classesForButton = [classFromProps, classes.ButtonGeneral];
   return (
-    <button id={id} className={classesForButton.join(" ")} onClick={onClick}>
-      {text}
+    <button
+      className={classesForButton.join(" ")}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {props.children}
     </button>
   );
 };

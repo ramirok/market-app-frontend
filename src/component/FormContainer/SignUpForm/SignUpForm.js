@@ -76,7 +76,6 @@ const SignUpForm = () => {
         <p className={classes.checkMail}>Check your mail!</p>
       ) : (
         <Button
-          text="Sign Up"
           classFromProps={
             email.isValid && password.isValid && name.isValid
               ? classes.Button
@@ -84,14 +83,17 @@ const SignUpForm = () => {
           }
           onClick={
             // allows onClick when email, password and name input are valid, and loading = false
-            email.isValid &&
-            password.isValid &&
-            name.isValid &&
-            !signupData.loading
-              ? handleSubmit
-              : (e) => e.preventDefault()
+            handleSubmit
           }
-        />
+          disabled={
+            !email.isValid ||
+            !password.isValid ||
+            !name.isValid ||
+            signupData.loading
+          }
+        >
+          Sign Up
+        </Button>
       )}
     </FormContainer>
   );

@@ -55,7 +55,6 @@ const LoginForm = () => {
           {loginData.loading ? <Spinner /> : message}
         </p>
         <Button
-          text="Login"
           classFromProps={
             email.isValid && password.value
               ? classes.ButtonLogin
@@ -63,20 +62,21 @@ const LoginForm = () => {
           }
           onClick={
             // allows on click if email is a valid email address, pasword has value and loading = false
-            email.isValid && password.value && !loginData.loading
-              ? async (e) => {
-                  // if login succeeds, redirects to "/"
-                  const response = await handleLogin(
-                    e,
-                    email.value,
-                    password.value
-                  );
-                  setMessage(response.message);
-                  response.succeed && history.push("/");
-                }
-              : (e) => e.preventDefault()
+            async (e) => {
+              // if login succeeds, redirects to "/"
+              const response = await handleLogin(
+                e,
+                email.value,
+                password.value
+              );
+              setMessage(response.message);
+              response.succeed && history.push("/");
+            }
           }
-        />
+          disabled={!email.isValid || !password.value || loginData.loading}
+        >
+          Login
+        </Button>
         <br style={{ marginBottom: "3rem" }} />
 
         {/* login with google button */}
@@ -86,13 +86,14 @@ const LoginForm = () => {
 
         <br style={{ marginBottom: "3rem" }} />
         <Button
-          text="Forgot password?"
           classFromProps={classes.ButtonForgot}
           onClick={(e) => {
             e.preventDefault();
             history.push("/auth/forgot");
           }}
-        />
+        >
+          Forgot password?
+        </Button>
       </>
     </FormContainer>
   );

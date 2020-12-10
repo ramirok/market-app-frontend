@@ -161,10 +161,11 @@ const Checkout = () => {
           Something went wrong, please try again.
         </p>
         <Button
-          text="Ok"
           classFromProps={classes.Button}
           onClick={() => window.location.reload()}
-        />
+        >
+          Ok
+        </Button>
       </>
     );
   }
@@ -177,9 +178,10 @@ const Checkout = () => {
         <p style={{ marginBottom: "2rem" }}>Your order has been placed.</p>
         <Button
           classFromProps={classes.Button}
-          text="Check orders"
           onClick={() => history.push("/app/orders")}
-        />
+        >
+          Check orders
+        </Button>
       </>
     );
   }
@@ -193,10 +195,11 @@ const Checkout = () => {
           settings.
         </p>
         <Button
-          text="Ok"
           classFromProps={classes.Button}
           onClick={() => history.push("/app/account")}
-        />
+        >
+          Ok
+        </Button>
       </>
     );
   }

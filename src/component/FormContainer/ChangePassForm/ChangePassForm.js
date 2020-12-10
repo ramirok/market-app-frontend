@@ -56,7 +56,6 @@ const ChangePassForm = () => {
       </p>
 
       <Button
-        text="Ok"
         classFromProps={
           password.isValid &&
           passwordConfirmation.isValid &&
@@ -67,28 +66,31 @@ const ChangePassForm = () => {
         }
         onClick={
           // allows on click if password, passwordConfirmation = true, current password has value and loading = false
-          password.isValid &&
-          passwordConfirmation.isValid &&
-          currentPass.value &&
-          !loginData.loading
-            ? async (e) => {
-                e.preventDefault();
-                const response = await handleChangePassword({
-                  currentPass: currentPass.value,
-                  password: password.value,
-                  passwordConfirmation: passwordConfirmation.value,
-                });
-                setSucceed(response.succeed);
-                setMessage(response.message);
-                if (response.succeed) {
-                  currentPass.onChange({ target: { value: "" } });
-                  password.onChange({ target: { value: "" } });
-                  passwordConfirmation.onChange({ target: { value: "" } });
-                }
-              }
-            : (e) => e.preventDefault()
+          async (e) => {
+            e.preventDefault();
+            const response = await handleChangePassword({
+              currentPass: currentPass.value,
+              password: password.value,
+              passwordConfirmation: passwordConfirmation.value,
+            });
+            setSucceed(response.succeed);
+            setMessage(response.message);
+            if (response.succeed) {
+              currentPass.onChange({ target: { value: "" } });
+              password.onChange({ target: { value: "" } });
+              passwordConfirmation.onChange({ target: { value: "" } });
+            }
+          }
         }
-      />
+        disabled={
+          !password.isValid ||
+          !passwordConfirmation.isValid ||
+          !currentPass.value ||
+          loginData.loading
+        }
+      >
+        Ok
+      </Button>
       <br style={{ marginBottom: "3rem" }} />
 
       {/* if message check mail if reset pass link sent successfully */}
@@ -96,7 +98,6 @@ const ChangePassForm = () => {
         <p className={classes.checkMail}>Check your mail!</p>
       ) : (
         <Button
-          text="I don't know my password"
           classFromProps={classes.ButtonForgot}
           onClick={async (e) => {
             e.preventDefault();
@@ -105,7 +106,10 @@ const ChangePassForm = () => {
             setCheckMail(true);
             setMessage(response.message);
           }}
-        />
+          disabled={loginData.loading}
+        >
+          I don't know my password
+        </Button>
       )}
     </FormContainer>
   );
