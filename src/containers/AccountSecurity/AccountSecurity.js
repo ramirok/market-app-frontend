@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useUser } from "../../context/userContext";
@@ -11,79 +11,101 @@ import AddressForm from "../../component/FormContainer/AddressForm/AddressForm";
 import LoadingText from "../../component/UI/LoadingText/LoadingText";
 import classes from "./AccountSecurity.module.css";
 
+const initialState = {
+  info: {},
+  address: {},
+  message: null,
+  succeed: false,
+  personalInfoEditable: false,
+  addressEditable: false,
+  fetchDataAgain: true,
+  loadingGradientAnimation: false,
+  loadingLogoutSpinner: false,
+  loadingFirstRender: true,
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "EDIT_PERSONAL_INFO":
+      return { ...state, personalInfoEditable: true };
+    case "EDIT_ADDRESS":
+      return { ...state, addressEditable: true };
+    case "SUBMIT_PERSONAL_INFO":
+      return {
+        ...state,
+        personalInfoEditable: false,
+        fetchDataAgain: true,
+        loadingGradientAnimation: true,
+      };
+    case "SUBMIT_ADDRESS":
+      return {
+        ...state,
+        addressEditable: false,
+        fetchDataAgain: true,
+        loadingGradientAnimation: true,
+      };
+
+    case "SET_INFO_AND_ADDRESS_DATA":
+      return {
+        ...state,
+        fetchDataAgain: false,
+        loadingGradientAnimation: false,
+        loadingFirstRender: false,
+        info: { ...action.payload.info },
+        address: { ...action.payload.address },
+      };
+    case "TRIGGER_LOGOUT_SPINNER":
+      return { ...state, loadingLogoutSpinner: true };
+    case "LOGOUT_ALL":
+      return { ...state, ...action.payload, loadingLogoutSpinner: false };
+    case "CLEAR_MESSAGE":
+      return { ...state, succeed: false, message: null };
+    default:
+      return { ...state };
+  }
+};
+
 const AccountSecurity = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
   // customHook for user context:
   // loginData returns ={name, email, token}
   const { loginData, handleLogoutAll } = useUser();
 
-  // succeed and message state for logout all
-  const [securityState, setSecurityState] = useState({
-    succeed: false,
-    message: null,
-    loading: false,
-  });
-
-  // edit info state
-  const [editable, setEditable] = useState({
-    personalInfo: false,
-    address: false,
-    newFetch: true,
-    loading: false,
-  });
-
-  // user info state
-  const [userInfo, setUserInfo] = useState({ info: {}, address: {} });
-
-  // loading state for first render
-  const [loading, setLoading] = useState(true);
-
   const history = useHistory();
 
   useEffect(() => {
-    // only performs fetch when editable.newFetch = true
-    if (editable.newFetch) {
-      // set loading = true
-      setEditable((prev) => ({ ...prev, loading: true }));
-
-      // fetch user details and set userInfo, and editable state
+    // only performs fetch when state.fetchDataAgain = true
+    if (state.fetchDataAgain) {
       if (loginData.token) {
         fetchService("get", "users/user-details", loginData.token).then(
           (data) => {
-            setUserInfo({ info: data.info, address: data.address });
-            setEditable({
-              newFetch: false,
-              personalInfo: !data.infoCompleted,
-              address: !data.addressCompleted,
-              loading: false,
-            });
-            setLoading(false);
+            dispatch({ type: "SET_INFO_AND_ADDRESS_DATA", payload: data });
           }
         );
       }
     }
-  }, [loginData.token, editable.newFetch]);
+  }, [loginData.token, state.fetchDataAgain]);
 
   useEffect(() => {
-    if (securityState.message) {
+    if (state.message) {
       // clears message after 3s
       const timer = setTimeout(() => {
-        setSecurityState({ succeed: false, message: null });
+        dispatch({ type: "CLEAR_MESSAGE" });
       }, 3000);
       return function () {
         clearTimeout(timer);
       };
     }
-  }, [securityState.message]);
+  }, [state.message]);
 
   // user info to render
   const userInfoData = [];
-  for (const key in userInfo.info) {
+  for (const key in state.info) {
     userInfoData.push(
       <React.Fragment key={key}>
         <div>
           <p>{capitalizeName(key)}:</p>
           <p className={classes.Text}>
-            {editable.loading ? <LoadingText /> : userInfo.info[key]}
+            {state.loadingGradientAnimation ? <LoadingText /> : state.info[key]}
           </p>
         </div>
         <br style={{ marginBottom: "3rem" }} />
@@ -93,13 +115,17 @@ const AccountSecurity = () => {
 
   // user address to render
   const userAddressData = [];
-  for (const key in userInfo.address) {
+  for (const key in state.address) {
     userAddressData.push(
       <React.Fragment key={key}>
         <div>
           <p>{capitalizeName(key)}:</p>
           <p className={classes.Text}>
-            {editable.loading ? <LoadingText /> : userInfo.address[key]}
+            {state.loadingGradientAnimation ? (
+              <LoadingText />
+            ) : (
+              state.address[key]
+            )}
           </p>
         </div>
         <br style={{ marginBottom: "3rem" }} />
@@ -115,30 +141,25 @@ const AccountSecurity = () => {
         {/* personal info section */}
         <div className={classes.Section}>
           <h3 className={classes.Title}>Personal Data</h3>
-          <div className={classes.PersonalInfoContainer}>
-            {loading ? (
+          <div className={classes.FormContainer}>
+            {state.loadingFirstRender ? (
               <div style={{ margin: "auto" }}>
                 <Spinner />
               </div>
-            ) : editable.personalInfo ? (
+            ) : state.personalInfoEditable ? (
               <PersonalInfoForm
                 // sends userInfo as placeholders when editing
                 placeholders={{
-                  ...userInfo.info,
+                  ...state.info,
                 }}
-                setEditable={setEditable}
+                dispatch={dispatch}
               />
             ) : (
               <>
                 <Button
                   classFromProps={classes.ButtonEdit}
-                  onClick={() => {
-                    // shows personalInfo form
-                    setEditable((prev) => ({
-                      ...prev,
-                      personalInfo: true,
-                    }));
-                  }}
+                  inverted={true}
+                  onClick={() => dispatch({ type: "EDIT_PERSONAL_INFO" })}
                 >
                   edit
                 </Button>
@@ -147,7 +168,11 @@ const AccountSecurity = () => {
                 <div>
                   <p>Email:</p>
                   <p className={classes.Text}>
-                    {editable.loading ? <LoadingText /> : loginData.email}
+                    {state.loadingGradientAnimation ? (
+                      <LoadingText />
+                    ) : (
+                      loginData.email
+                    )}
                   </p>
                 </div>
               </>
@@ -158,30 +183,25 @@ const AccountSecurity = () => {
         {/* address section */}
         <div className={classes.Section}>
           <h3 className={classes.Title}>Address Data</h3>
-          <div className={classes.AddressContainer}>
-            {loading ? (
+          <div className={classes.FormContainer}>
+            {state.loadingFirstRender ? (
               <div style={{ margin: "auto" }}>
                 <Spinner />
               </div>
-            ) : editable.address ? (
+            ) : state.addressEditable ? (
               <AddressForm
                 // sends userInfo as placeholders when editing
                 placeholders={{
-                  ...userInfo.address,
+                  ...state.address,
                 }}
-                setEditable={setEditable}
+                dispatch={dispatch}
               />
             ) : (
               <>
                 <Button
                   classFromProps={classes.ButtonEdit}
-                  onClick={() => {
-                    // shows address form
-                    setEditable((prev) => ({
-                      ...prev,
-                      address: true,
-                    }));
-                  }}
+                  inverted={true}
+                  onClick={() => dispatch({ type: "EDIT_ADDRESS" })}
                 >
                   edit
                 </Button>
@@ -201,22 +221,18 @@ const AccountSecurity = () => {
             <div style={{ height: "min-content" }}>
               <Button
                 classFromProps={classes.Button}
-                onClick={
-                  // alows onClick when loading = false
-                  async () => {
-                    setSecurityState((prev) => ({
-                      ...prev,
-                      loading: true,
-                    }));
-                    const response = await handleLogoutAll();
-                    setSecurityState({
-                      succeed: response.succeed,
+                onClick={async () => {
+                  dispatch({ type: "TRIGGER_LOGOUT_SPINNER" });
+                  const response = await handleLogoutAll();
+                  dispatch({
+                    type: "LOGOUT_ALL",
+                    payload: {
                       message: response.message,
-                      loading: false,
-                    });
-                  }
-                }
-                disabled={securityState.loading}
+                      succeed: response.succeed,
+                    },
+                  });
+                }}
+                disabled={state.loadingLogoutSpinner}
               >
                 Logout from other devices
               </Button>
@@ -224,9 +240,9 @@ const AccountSecurity = () => {
               {/* message */}
               <p
                 className={classes.Message}
-                style={{ color: securityState.succeed ? "green" : "red" }}
+                style={{ color: state.succeed ? "green" : "red" }}
               >
-                {securityState.loading ? <Spinner /> : securityState.message}
+                {state.loadingLogoutSpinner ? <Spinner /> : state.message}
               </p>
             </div>
 

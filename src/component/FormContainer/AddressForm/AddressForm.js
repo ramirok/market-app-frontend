@@ -11,10 +11,10 @@ import classes from "./AddressForm.module.css";
 const AddressForm = (props) => {
   /*
 Recives:
- -setEditable: set editable to false when the form is successfully submited
  -placeholders: placeholders for inputs
+ -dispatch to reducer
 */
-  const { setEditable, placeholders } = props;
+  const { placeholders, dispatch } = props;
 
   // customHook for user context:
   // loginData returns ={name, email, token}
@@ -27,49 +27,43 @@ Recives:
   });
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const state = useInputData("name");
-  const city = useInputData("name");
-  const zipCode = useInputData("number", true); //second argument true for validation
-  const street = useInputData("name");
-  const streetNumber = useInputData("number", true); //second argument true for validation
+  const state = useInputData({ type: "text" });
+  const city = useInputData({ type: "text" });
+  const zipCode = useInputData({ type: "number", validate: true });
+  const street = useInputData({ type: "text" });
+  const streetNumber = useInputData({ type: "number", validate: true });
+
+  const submitAddressData = async () => {
+    setFormState({ loading: true });
+    const response = await fetchService(
+      "put",
+      "users/user-details",
+      loginData.token,
+      {
+        state: state.value,
+        city: city.value,
+        zipCode: zipCode.value,
+        street: street.value,
+        streetNumber: streetNumber.value,
+      }
+    );
+
+    if (response.ok) {
+      return dispatch({ type: "SUBMIT_ADDRESS" });
+    }
+
+    // if fetch fails, sets message
+    setFormState({
+      loading: false,
+      message: response.message,
+    });
+  };
 
   return (
-    <>
+    <form>
       <Button
         classFromProps={classes.ButtonOk}
-        onClick={
-          // allows on click when loading = false
-          async () => {
-            setFormState({ loading: true });
-            const response = await fetchService(
-              "put",
-              "users/user-details",
-              loginData.token,
-              {
-                state: state.value,
-                city: city.value,
-                zipCode: zipCode.value,
-                street: street.value,
-                streetNumber: streetNumber.value,
-              }
-            );
-
-            if (response.ok) {
-              // if fetch succeeds, sets form editable = false
-              return setEditable((prev) => ({
-                ...prev,
-                address: false,
-                newFetch: true,
-              }));
-            }
-
-            // if fetch fails, sets message
-            setFormState({
-              loading: false,
-              message: response.message,
-            });
-          }
-        }
+        onClick={submitAddressData}
         disabled={formState.loading}
       >
         ok
@@ -97,7 +91,7 @@ Recives:
         {/* if loading shows spinner, else shows message */}
         {formState.loading ? <Spinner /> : formState.message}
       </p>
-    </>
+    </form>
   );
 };
 

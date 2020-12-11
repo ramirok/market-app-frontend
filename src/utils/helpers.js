@@ -9,7 +9,7 @@ export const capitalizeName = (string = "") => {
 };
 
 //---------- input validation ----------
-export const checkValidity = (value, type, newPass) => {
+export const checkValidity = (value, type, passConfirmation) => {
   let isValid = true;
   const error = [];
 
@@ -22,29 +22,28 @@ export const checkValidity = (value, type, newPass) => {
 
     case "password":
       let includesNum = false;
-      let includesLetter = false;
-      let hasLength;
+      let includesOtherChars = false;
+      let isLongEnough = value.length >= 6;
 
-      hasLength = value.length >= 6;
-      for (let i = 0; i < value.length; i++) {
-        isNaN(parseInt(value[i]))
-          ? (includesLetter = true)
+      for (let letter of value) {
+        isNaN(parseInt(letter))
+          ? (includesOtherChars = true)
           : (includesNum = true);
       }
 
-      if (newPass) {
-        isValid = value === newPass && isValid;
+      if (passConfirmation) {
+        isValid = value === passConfirmation && isValid;
         if (!isValid) error.push("Passwords needs to match");
       }
 
-      isValid = includesNum && includesLetter && hasLength && isValid;
+      isValid = includesNum && includesOtherChars && isLongEnough && isValid;
 
       if (!includesNum) error.push("Must include 1 digit");
-      if (!includesLetter) error.push("Must include 1 letter");
-      if (!hasLength) error.push("Must have 6 characters minimum.");
+      if (!includesOtherChars) error.push("Must include 1 letter");
+      if (!isLongEnough) error.push("Must have 6 characters minimum.");
       break;
 
-    case "name":
+    case "text":
       isValid = value.length >= 4;
       error.push("Minimun 4 characters");
       break;

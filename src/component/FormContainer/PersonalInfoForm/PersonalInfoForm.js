@@ -11,10 +11,10 @@ import classes from "./PersonalInfoForm.module.css";
 const PersonalInfoForm = (props) => {
   /*
 Recives:
- -setEditable: set editable to false when the form is successfully submited
  -placeholders: placeholders for inputs
+ -dispatch to reducer
 */
-  const { setEditable, placeholders } = props;
+  const { placeholders, dispatch } = props;
 
   // customHook for user context:
   // loginData returns ={name, email, token}
@@ -27,45 +27,38 @@ Recives:
   });
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const fullName = useInputData("name", true);
-  const phoneNumber = useInputData("number", true); //second argument true for validation
+  const fullName = useInputData({ type: "text", validate: true });
+  const phoneNumber = useInputData({ type: "number", validate: true });
+
+  const submitPersonalData = async () => {
+    setFormState((prev) => ({ ...prev, loading: true }));
+
+    const response = await fetchService(
+      "put",
+      "users/user-details",
+      loginData.token,
+      {
+        fullName: fullName.value,
+        phoneNumber: phoneNumber.value,
+      }
+    );
+
+    if (response.ok) {
+      return dispatch({ type: "SUBMIT_PERSONAL_INFO" });
+    }
+
+    // if fetch fails, sets message
+    setFormState({
+      loading: false,
+      message: response.message,
+    });
+  };
 
   return (
-    <>
+    <form>
       <Button
         classFromProps={classes.ButtonOk}
-        onClick={
-          // allows on click when loading = false
-          async () => {
-            console.log("pressed ok");
-            setFormState((prev) => ({ ...prev, loading: true }));
-
-            const response = await fetchService(
-              "put",
-              "users/user-details",
-              loginData.token,
-              {
-                fullName: fullName.value,
-                phoneNumber: phoneNumber.value,
-              }
-            );
-
-            if (response.ok) {
-              // if fetch succeeds, sets form editable = false
-              return setEditable((prev) => ({
-                ...prev,
-                personalInfo: false,
-                newFetch: true,
-              }));
-            }
-
-            // if fetch fails, sets message
-            setFormState({
-              loading: false,
-              message: response.message,
-            });
-          }
-        }
+        onClick={submitPersonalData}
         disabled={formState.loading}
       >
         ok
@@ -91,7 +84,7 @@ Recives:
         {/* if loading shows spinner, else shows message */}
         {formState.loading ? <Spinner /> : formState.message}
       </p>
-    </>
+    </form>
   );
 };
 

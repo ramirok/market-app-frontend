@@ -29,8 +29,7 @@ export const UserProvider = (props) => {
   const history = useHistory();
 
   // Login
-  const handleLogin = async (e, email, password) => {
-    e.preventDefault();
+  const handleLogin = async (email, password) => {
     setLoginData((prevState) => ({
       ...prevState,
       loading: true,

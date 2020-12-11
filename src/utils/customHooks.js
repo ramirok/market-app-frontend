@@ -4,8 +4,10 @@ import { checkValidity } from "./helpers";
 
 //---------- form input hook ----------
 
-//recives input type, ie:"email, password, text"
-export const useInputData = (type, check = false, newPass) => {
+// //recives input type, ie:"email, password, text"
+export const useInputData = (
+  options = { type: "text", validate: false, confirmPass: "" }
+) => {
   // input value state
   const [value, setValue] = useState("");
 
@@ -13,21 +15,23 @@ export const useInputData = (type, check = false, newPass) => {
   const [touched, setTouched] = useState(false);
 
   const onChange = (e) => {
-    // set input value en user types in input
     setValue(e.target.value);
     e.target.value < 1 ? setTouched(false) : setTouched(true);
   };
 
-  // validate input when check = true and touched = true
-  if (check && touched) {
-    const { isValid, error } = checkValidity(value, type, newPass);
-    return { type, value, onChange, isValid, error };
+  // validate input when validate = true and touched = true
+  if (options.validate && touched) {
+    const { isValid, error } = checkValidity(
+      value,
+      options.type,
+      options.confirmPass
+    );
+    return { type: options.type, value, onChange, isValid, error };
   }
 
-  // if no check or no touched
-  return { type, value, onChange };
+  // if no validate or no touched
+  return { type: options.type, value, onChange };
 };
-
 //---------- click outside component hook ----------
 
 // recives a reference and a callback to be executed

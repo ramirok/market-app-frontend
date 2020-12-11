@@ -23,9 +23,13 @@ const ChangePassForm = () => {
   const [checkMail, setCheckMail] = useState(false);
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const currentPass = useInputData("password");
-  const password = useInputData("password", true); //second argument true for validation
-  const passwordConfirmation = useInputData("password", true, password.value); //second argument true for validation
+  const currentPass = useInputData({ type: "password" });
+  const password = useInputData({ type: "password", validate: true });
+  const passwordConfirmation = useInputData({
+    type: "password",
+    validate: true,
+    confirmPass: password.value,
+  });
 
   useEffect(() => {
     if (message) {
@@ -38,6 +42,29 @@ const ChangePassForm = () => {
       };
     }
   }, [message]);
+
+  const submitChangePass = async (e) => {
+    e.preventDefault();
+    const response = await handleChangePassword({
+      currentPass: currentPass.value,
+      password: password.value,
+      passwordConfirmation: passwordConfirmation.value,
+    });
+    setSucceed(response.succeed);
+    setMessage(response.message);
+    if (response.succeed) {
+      currentPass.onChange({ target: { value: "" } });
+      password.onChange({ target: { value: "" } });
+      passwordConfirmation.onChange({ target: { value: "" } });
+    }
+  };
+
+  const ClickForgotPass = async () => {
+    const response = await handleForgotPassword(loginData.email);
+    setSucceed(response.succeed);
+    setCheckMail(true);
+    setMessage(response.message);
+  };
 
   return (
     <FormContainer>
@@ -56,32 +83,7 @@ const ChangePassForm = () => {
       </p>
 
       <Button
-        classFromProps={
-          password.isValid &&
-          passwordConfirmation.isValid &&
-          currentPass.value &&
-          !loginData.loading
-            ? classes.ButtonOk
-            : classes.ButtonDisabled
-        }
-        onClick={
-          // allows on click if password, passwordConfirmation = true, current password has value and loading = false
-          async (e) => {
-            e.preventDefault();
-            const response = await handleChangePassword({
-              currentPass: currentPass.value,
-              password: password.value,
-              passwordConfirmation: passwordConfirmation.value,
-            });
-            setSucceed(response.succeed);
-            setMessage(response.message);
-            if (response.succeed) {
-              currentPass.onChange({ target: { value: "" } });
-              password.onChange({ target: { value: "" } });
-              passwordConfirmation.onChange({ target: { value: "" } });
-            }
-          }
-        }
+        onClick={submitChangePass}
         disabled={
           !password.isValid ||
           !passwordConfirmation.isValid ||
@@ -98,14 +100,8 @@ const ChangePassForm = () => {
         <p className={classes.checkMail}>Check your mail!</p>
       ) : (
         <Button
-          classFromProps={classes.ButtonForgot}
-          onClick={async (e) => {
-            e.preventDefault();
-            const response = await handleForgotPassword(loginData.email);
-            setSucceed(response.succeed);
-            setCheckMail(true);
-            setMessage(response.message);
-          }}
+          inverted={true}
+          onClick={ClickForgotPass}
           disabled={loginData.loading}
         >
           I don't know my password

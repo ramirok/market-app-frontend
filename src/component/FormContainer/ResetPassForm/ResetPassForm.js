@@ -26,8 +26,12 @@ const ResetPassForm = () => {
   const [message, setMessage] = useState(null);
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const password = useInputData("password", true); //second argument true for validation
-  const passwordConfirmation = useInputData("password", true, password.value); //second argument true for validation
+  const password = useInputData({ type: "password", validate: true });
+  const passwordConfirmation = useInputData({
+    type: "password",
+    validate: true,
+    confirmPass: password.value,
+  });
 
   useEffect(() => {
     if (message) {
@@ -40,6 +44,16 @@ const ResetPassForm = () => {
       };
     }
   }, [message]);
+
+  const submitNewPass = async () => {
+    const response = await handleResetPassword(
+      token,
+      password.value,
+      passwordConfirmation.value
+    );
+    setSucceed(response.succeed);
+    setMessage(response.message);
+  };
 
   return (
     <FormContainer>
@@ -56,7 +70,6 @@ const ResetPassForm = () => {
       {succeed ? (
         // if succeeds show go back button
         <Button
-          classFromProps={classes.Button}
           onClick={() =>
             loginData.token
               ? history.push("/app/account")
@@ -67,25 +80,7 @@ const ResetPassForm = () => {
         </Button>
       ) : (
         <Button
-          classFromProps={
-            password.isValid && passwordConfirmation.isValid
-              ? classes.Button
-              : classes.ButtonDisabled
-          }
-          onClick={
-            // allows on click if password and password confirmation are valid, and loading = false
-            async (e) => {
-              console.log("resserting");
-              e.preventDefault();
-              const response = await handleResetPassword(
-                token,
-                password.value,
-                passwordConfirmation.value
-              );
-              setSucceed(response.succeed);
-              setMessage(response.message);
-            }
-          }
+          onClick={submitNewPass}
           disabled={
             !password.isValid ||
             !passwordConfirmation.isValid ||

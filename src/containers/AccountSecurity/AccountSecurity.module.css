@@ -42,18 +42,6 @@
   left: 18rem;
   width: 5rem;
   height: 2.5rem;
-  border: 1px solid #5b7bf4;
-  color: #5b7bf4;
-  background-color: white;
-}
-
-.ButtonOk {
-  position: absolute;
-  top: 1rem;
-  left: 18rem;
-  width: 5rem;
-  height: 2.5rem;
-  background-color: #5b7bf4;
 }
 
 .ButtonsContainer {
@@ -66,7 +54,6 @@
 
 .Button {
   width: 20rem;
-  background-color: #5b7bf4;
   margin: 3rem 5rem;
 }
 
@@ -78,18 +65,12 @@
   line-height: 1.5rem;
 }
 
-.PersonalInfoContainer {
+.FormContainer {
   min-width: 30rem;
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
-}
-
-.AddressContainer {
-  min-width: 30rem;
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
+  padding: 0 2rem;
 }
 
 .Text {

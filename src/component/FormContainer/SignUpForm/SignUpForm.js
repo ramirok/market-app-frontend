@@ -17,9 +17,9 @@ const SignUpForm = () => {
   });
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const name = useInputData("name", true); //second argument true for validation
-  const email = useInputData("email", true); //second argument true for validation
-  const password = useInputData("password", true); //second argument true for validation
+  const name = useInputData({ type: "text", validate: true });
+  const email = useInputData({ type: "email", validate: true });
+  const password = useInputData({ type: "password", validate: true });
 
   useEffect(() => {
     // clears message after 3s
@@ -31,8 +31,7 @@ const SignUpForm = () => {
     };
   }, [signupData.message]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const submitSignupForm = async () => {
     setSignupData((prevState) => ({
       ...prevState,
       loading: true,
@@ -76,15 +75,7 @@ const SignUpForm = () => {
         <p className={classes.checkMail}>Check your mail!</p>
       ) : (
         <Button
-          classFromProps={
-            email.isValid && password.isValid && name.isValid
-              ? classes.Button
-              : classes.ButtonDisabled
-          }
-          onClick={
-            // allows onClick when email, password and name input are valid, and loading = false
-            handleSubmit
-          }
+          onClick={submitSignupForm}
           disabled={
             !email.isValid ||
             !password.isValid ||

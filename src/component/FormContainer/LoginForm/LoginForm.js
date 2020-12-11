@@ -21,18 +21,8 @@ const LoginForm = () => {
   const [message, setMessage] = useState(null);
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const email = useInputData("email", true); //second argument true for validation
-  const password = useInputData("password");
-
-  // google link
-  const [googleLink, setGoogleLink] = useState("");
-
-  useEffect(() => {
-    // fetches and sets google link
-    fetchService("get", "users/login/google").then((data) =>
-      setGoogleLink(data.url)
-    );
-  }, []);
+  const email = useInputData({ type: "email", validate: true });
+  const password = useInputData({ type: "password" });
 
   useEffect(() => {
     if (message) {
@@ -45,56 +35,52 @@ const LoginForm = () => {
       };
     }
   }, [message]);
+
+  const submitLoginForm = async () => {
+    // if login succeeds, redirects to "/"
+    const response = await handleLogin(email.value, password.value);
+    setMessage(response.message);
+    response.succeed && history.push("/");
+  };
+
   return (
     <FormContainer>
-      <>
-        <Input {...email} label={"Email"} />
-        <br style={{ marginBottom: "3rem" }} />
-        <Input {...password} label={"Password"} />
-        <p className={classes.Message}>
-          {loginData.loading ? <Spinner /> : message}
-        </p>
-        <Button
-          classFromProps={
-            email.isValid && password.value
-              ? classes.ButtonLogin
-              : classes.ButtonLoginDisabled
-          }
-          onClick={
-            // allows on click if email is a valid email address, pasword has value and loading = false
-            async (e) => {
-              // if login succeeds, redirects to "/"
-              const response = await handleLogin(
-                e,
-                email.value,
-                password.value
-              );
-              setMessage(response.message);
-              response.succeed && history.push("/");
-            }
-          }
-          disabled={!email.isValid || !password.value || loginData.loading}
-        >
-          Login
-        </Button>
-        <br style={{ marginBottom: "3rem" }} />
+      <Input {...email} label="Email" />
+      <br style={{ marginBottom: "3rem" }} />
+      <Input {...password} label="Password" />
 
-        {/* login with google button */}
-        <a href={googleLink} className={classes.Link}>
-          Login with Google
-        </a>
+      <p className={classes.Message}>
+        {loginData.loading ? <Spinner /> : message}
+      </p>
+      <Button
+        onClick={submitLoginForm}
+        disabled={!email.isValid || !password.value || loginData.loading}
+      >
+        Login
+      </Button>
+      <br style={{ marginBottom: "3rem" }} />
 
-        <br style={{ marginBottom: "3rem" }} />
-        <Button
-          classFromProps={classes.ButtonForgot}
-          onClick={(e) => {
-            e.preventDefault();
-            history.push("/auth/forgot");
-          }}
-        >
-          Forgot password?
-        </Button>
-      </>
+      {/* login with google button */}
+      <Button
+        classFromProps={classes.ButtonGoogle}
+        onClick={() => {
+          fetchService("get", "users/login/google").then(
+            (data) => (window.location.href = data.url)
+          );
+        }}
+      >
+        Login with Google
+      </Button>
+
+      <br style={{ marginBottom: "3rem" }} />
+      <Button
+        inverted={true}
+        onClick={() => {
+          history.push("/auth/forgot");
+        }}
+      >
+        Forgot password?
+      </Button>
     </FormContainer>
   );
 };
