@@ -15,7 +15,7 @@ const ForgotPassForm = () => {
   const { loginData, handleForgotPassword } = useUser();
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const email = useInputData("email", true); //second argument true for validation
+  const email = useInputData({ type: "email", validate: "true" });
 
   // message state from fetch response
   const [message, setMessage] = useState(null);
@@ -36,6 +36,12 @@ const ForgotPassForm = () => {
     }
   }, [message]);
 
+  const submitForgotPassForm = async () => {
+    const response = await handleForgotPassword(email.value);
+    setSucceed(response.succeed);
+    setMessage(response.message);
+  };
+
   return (
     <FormContainer>
       <Input {...email} label={"Email"} />
@@ -54,27 +60,15 @@ const ForgotPassForm = () => {
         // if fails, keep showing ok and cancel buttons
         <>
           <Button
-            classFromProps={
-              email.isValid ? classes.ButtonOk : classes.ButtonOkDisabled
-            }
-            onClick={
-              // allows on click when email input is a valid email and loading = false
-              async (e) => {
-                e.preventDefault();
-                const response = await handleForgotPassword(email.value);
-                setSucceed(response.succeed);
-                setMessage(response.message);
-              }
-            }
+            onClick={submitForgotPassForm}
             disabled={!email.isValid || loginData.loading}
           >
             Ok
           </Button>
           <br style={{ marginBottom: "3rem" }} />
           <Button
-            classFromProps={classes.ButtonCancel}
-            onClick={(e) => {
-              e.preventDefault();
+            inverted={true}
+            onClick={() => {
               history.push("/auth/login");
             }}
           >

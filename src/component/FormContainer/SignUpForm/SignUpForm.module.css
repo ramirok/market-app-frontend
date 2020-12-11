@@ -37,16 +37,3 @@
   line-height: 3rem;
   font-weight: 700;
 }
-
-.Button {
-  background-color: #5b7bf4;
-  width: 20rem;
-}
-.ButtonDisabled {
-  background-color: grey;
-  width: 20rem;
-}
-
-.ButtonDisabled:active {
-  transform: scale(1);
-}

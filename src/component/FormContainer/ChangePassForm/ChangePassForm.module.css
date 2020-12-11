@@ -5,35 +5,8 @@
   line-height: 1.5rem;
 }
 
-.ButtonOk {
-  background-color: #5b7bf4;
-  width: 20rem;
-}
-
-.ButtonDisabled {
-  background-color: grey;
-  width: 20rem;
-}
-
-.ButtonDisabled:active {
-  transform: scale(1);
-}
-
-.ButtonCancel {
-  width: 20rem;
-  background-color: #5b7bf4;
-}
-
-.ButtonForgot {
-  border: 1px solid #5b7bf4;
-  color: #5b7bf4;
-  width: 20rem;
-  background-color: white;
-}
-
 .checkMail {
   color: #5b7bf4;
-  width: 20rem;
   text-align: center;
   border-bottom: 1px solid #5b7bf4;
   line-height: 3rem;

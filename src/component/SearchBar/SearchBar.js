@@ -40,7 +40,7 @@ const SearchBar = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // customHook useInputData returns: type, value, onChange handler
-  const search = useInputData("text");
+  const search = useInputData({ type: "text" });
 
   // set suggestions fetched
   const [suggestions, setSuggestions] = useState([]);

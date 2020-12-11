@@ -6,43 +6,6 @@
   line-height: 1.5rem;
 }
 
-.ButtonLogin {
-  background-color: #5b7bf4;
-  width: 20rem;
-}
-
-.Link {
-  display: inline-block;
-  font-family: "Nunito", sans-serif;
-  font-weight: 700;
+.ButtonGoogle {
   background-color: #db4437;
-  font-size: 1.3333rem;
-  color: white;
-  height: 3rem;
-  width: 20rem;
-  border-radius: 10px;
-  text-decoration: none;
-  text-align: center;
-  line-height: 3rem;
-  transition: all 0.2s;
-}
-
-.Link:active {
-  transform: scale(0.96);
-}
-
-.ButtonLoginDisabled {
-  background-color: grey;
-  width: 20rem;
-}
-
-.ButtonLoginDisabled:active {
-  transform: scale(1);
-}
-
-.ButtonForgot {
-  border: 1px solid #5b7bf4;
-  color: #5b7bf4;
-  width: 20rem;
-  background-color: white;
 }

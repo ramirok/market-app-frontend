@@ -1,4 +1,5 @@
 .ButtonGeneral {
+  background-color: #5b7bf4;
   height: 3rem;
   border: 0;
   border-radius: 10px;
@@ -7,6 +8,16 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+.Disabled {
+  background-color: grey;
+}
+
+.Inverted {
+  border: 1px solid #5b7bf4;
+  color: #5b7bf4;
+  background-color: white;
 }
 
 .ButtonGeneral:active {

@@ -160,12 +160,7 @@ const Checkout = () => {
         <p style={{ marginBottom: "1rem" }}>
           Something went wrong, please try again.
         </p>
-        <Button
-          classFromProps={classes.Button}
-          onClick={() => window.location.reload()}
-        >
-          Ok
-        </Button>
+        <Button onClick={() => window.location.reload()}>Ok</Button>
       </>
     );
   }
@@ -176,10 +171,7 @@ const Checkout = () => {
       <>
         <h3 style={{ marginBottom: "1rem" }}>Congratulations</h3>
         <p style={{ marginBottom: "2rem" }}>Your order has been placed.</p>
-        <Button
-          classFromProps={classes.Button}
-          onClick={() => history.push("/app/orders")}
-        >
+        <Button onClick={() => history.push("/app/orders")}>
           Check orders
         </Button>
       </>
@@ -194,12 +186,7 @@ const Checkout = () => {
           Please complete your personal information and address in account
           settings.
         </p>
-        <Button
-          classFromProps={classes.Button}
-          onClick={() => history.push("/app/account")}
-        >
-          Ok
-        </Button>
+        <Button onClick={() => history.push("/app/account")}>Ok</Button>
       </>
     );
   }
