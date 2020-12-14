@@ -1,32 +1,34 @@
-import React from "react";
-import ReactModal from "react-modal";
-
+import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import classes from "./Modal.module.css";
 
 const Modal = (props) => {
-  /*
-Recives:
- -isOpen: modal open/close state
- -setIsOpen: changes isOpen state
-*/
-  const { isOpen, setIsOpen } = props;
+  const { children, setIsOpen } = props;
 
-  // Close modal when backdrop is clicked
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+  const elRef = useRef(null);
 
-  return (
-    <ReactModal
-      // Modal component settings
-      onRequestClose={closeModal}
-      className={classes.Content}
-      isOpen={isOpen}
-      ariaHideApp={false}
-      style={{ overlay: { zIndex: "3" } }}
-    >
-      {props.children}
-    </ReactModal>
+  if (!elRef.current) {
+    const div = document.createElement("div");
+    elRef.current = div;
+    div.className = classes.Backgroud;
+    div.id = "background";
+    div.onclick = (e) => {
+      if (e.target.id === "background") {
+        setIsOpen(false);
+      }
+    };
+  }
+
+  useEffect(() => {
+    const portalRoot = document.getElementById("modal");
+    portalRoot.appendChild(elRef.current);
+
+    return () => portalRoot.removeChild(elRef.current);
+  }, []);
+
+  return createPortal(
+    <div className={classes.Content}>{children}</div>,
+    elRef.current
   );
 };
 
