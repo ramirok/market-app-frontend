@@ -13,10 +13,10 @@ import classes from "./ProductModal.module.css";
 const ProductModal = (props) => {
   /*
 Recives:
- -isOpen: modal open/close state
  -setIsOpen: changes isOpen state
+ -modalData: product info 
 */
-  const { isOpen, setIsOpen, modalData } = props;
+  const { setIsOpen, modalData } = props;
 
   // customHook for user context:
   // loginData returns ={name, email, token}
@@ -43,7 +43,7 @@ Recives:
   }, [loginData.token, props.modalData.id]);
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+    <Modal setIsOpen={setIsOpen}>
       {/* Image Container */}
       <div className={classes.ImageContainer}>
         <img

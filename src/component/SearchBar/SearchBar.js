@@ -56,7 +56,6 @@ const SearchBar = () => {
         () =>
           fetchService("get", `products/autosuggest?q=${search.value}`).then(
             (response) => {
-              console.log("fetching");
               setSuggestions(response);
               setIsLoading(false);
               setRunHook(true);
@@ -87,13 +86,7 @@ const SearchBar = () => {
   return (
     <>
       {/* Renders modal when is open = true */}
-      {isOpen && (
-        <ProductModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          modalData={modalData}
-        />
-      )}
+      {isOpen && <ProductModal setIsOpen={setIsOpen} modalData={modalData} />}
 
       <div className={classes.Container} ref={wrapperRef}>
         <div className={classes.SearchBarContainer}>
