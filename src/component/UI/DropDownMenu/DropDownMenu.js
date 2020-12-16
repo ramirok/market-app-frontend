@@ -25,7 +25,7 @@ const DropDownMenu = React.memo((props) => {
       // if on mobile or width<1000, hide menu inmediately
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
-      ) || windowWidth < 1000
+      )
         ? setDropDownClasses(classes.Hidden)
         : // if on desktop, hide in 600ms
           (timerToClear = setTimeout(() => {

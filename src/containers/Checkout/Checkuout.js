@@ -50,15 +50,17 @@ const Checkout = () => {
   useEffect(() => {
     // check if user has personal info and address completed
     if (loginData.token && loaded) {
-      fetchService("get", "users/user-details", loginData.token).then(
-        (data) => {
-          if (data.infoCompleted && data.addressCompleted) {
-            setInfoIncomplete(false);
-          } else {
-            setLoading(loginData.token ? false : true);
-          }
+      fetchService({
+        method: "get",
+        url: "users/user-details",
+        token: loginData.token,
+      }).then((data) => {
+        if (data.infoCompleted && data.addressCompleted) {
+          setInfoIncomplete(false);
+        } else {
+          setLoading(loginData.token ? false : true);
         }
-      );
+      });
 
       // if paidfor=false , error=false and info is completed, load the script and render the button
       if (!paidFor && !error && !infoIncomplete) {
@@ -81,11 +83,11 @@ const Checkout = () => {
                   label: "paypal",
                 },
                 createOrder: async () => {
-                  const response = await fetchService(
-                    "post",
-                    "users/purchase-aproved",
-                    loginData.token
-                  );
+                  const response = await fetchService({
+                    method: "post",
+                    url: "users/purchase-aproved",
+                    token: loginData.token,
+                  });
                   return response.orderID;
                 },
                 onApprove: async (data, actions) => {
@@ -191,7 +193,17 @@ const Checkout = () => {
     );
   }
 
-  return <FormContainer>{loading ? <Spinner /> : toRender}</FormContainer>;
+  return (
+    <FormContainer>
+      {loading ? (
+        <span style={{ margin: "0 auto" }}>
+          <Spinner />
+        </span>
+      ) : (
+        toRender
+      )}
+    </FormContainer>
+  );
 };
 
 export default Checkout;

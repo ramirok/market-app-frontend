@@ -14,7 +14,7 @@
   font-weight: 400;
   font-size: 1.5rem;
   position: absolute;
-  left: 3rem;
+  left: 2.5rem;
   z-index: 1;
   display: block;
   background-color: #f7d360;
@@ -64,7 +64,7 @@
   justify-content: space-between;
   align-items: center;
   text-decoration: none;
-  height: 3rem;
+  height: 5rem;
   font-weight: 400;
   color: black;
   padding: 2rem;

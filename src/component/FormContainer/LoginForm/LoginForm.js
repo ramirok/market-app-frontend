@@ -64,7 +64,7 @@ const LoginForm = () => {
       <Button
         classFromProps={classes.ButtonGoogle}
         onClick={() => {
-          fetchService("get", "users/login/google").then(
+          fetchService({ method: "get", url: "users/login/google" }).then(
             (data) => (window.location.href = data.url)
           );
         }}

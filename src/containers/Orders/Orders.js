@@ -20,7 +20,11 @@ const Orders = () => {
   useEffect(() => {
     if (loginData.token) {
       // fetch orders
-      fetchService("get", "users/orders", loginData.token).then((data) => {
+      fetchService({
+        method: "get",
+        url: "users/orders",
+        token: loginData.token,
+      }).then((data) => {
         // set orders if response is an array
         data instanceof Array && setOrders(data);
         setLoading(false);

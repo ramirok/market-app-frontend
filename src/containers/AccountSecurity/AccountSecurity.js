@@ -76,11 +76,20 @@ const AccountSecurity = () => {
     // only performs fetch when state.fetchDataAgain = true
     if (state.fetchDataAgain) {
       if (loginData.token) {
-        fetchService("get", "users/user-details", loginData.token).then(
-          (data) => {
-            dispatch({ type: "SET_INFO_AND_ADDRESS_DATA", payload: data });
-          }
-        );
+        fetchService({
+          method: "get",
+          url: "users/user-details",
+          token: loginData.token,
+        }).then((data) => {
+          console.log(data);
+          if (data.addressCompleted === false)
+            dispatch({ type: "EDIT_ADDRESS" });
+
+          if (data.infoCompleted === false)
+            dispatch({ type: "EDIT_PERSONAL_INFO" });
+
+          dispatch({ type: "SET_INFO_AND_ADDRESS_DATA", payload: data });
+        });
       }
     }
   }, [loginData.token, state.fetchDataAgain]);

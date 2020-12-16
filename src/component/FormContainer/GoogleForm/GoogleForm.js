@@ -42,7 +42,9 @@ const GoogleForm = () => {
     <FormContainer>
       {/* shows spinner if loading = true */}
       {loginData.loading ? (
-        <Spinner />
+        <span style={{ margin: "0 auto" }}>
+          <Spinner />
+        </span>
       ) : (
         <>
           <p

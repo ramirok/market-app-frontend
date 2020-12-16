@@ -37,11 +37,14 @@ const SignUpForm = () => {
       loading: true,
     }));
 
-    // Sends request with signup data
-    const response = await fetchService("post", "users", null, {
-      name: name.value,
-      email: email.value,
-      password: password.value,
+    const response = await fetchService({
+      method: "post",
+      url: "users",
+      body: {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+      },
     });
     setSignupData((prevState) => ({
       ...prevState,

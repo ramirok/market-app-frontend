@@ -1,6 +1,5 @@
 .Background {
   grid-column: start-footer/end-footer;
-  grid-row: start-content/end-content;
   background-color: #eeeeee;
   width: 100%;
   height: calc(100vh - 17rem);

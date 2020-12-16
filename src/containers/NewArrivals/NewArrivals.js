@@ -25,7 +25,7 @@ const NewArrivals = () => {
       ? {
           minWidth: "20rem",
           width: "20rem",
-          height: "16rem",
+          height: "23rem",
         }
       : {
           height: "16rem",
@@ -36,9 +36,10 @@ const NewArrivals = () => {
 
   useEffect(() => {
     // Set items fetched
-    fetchService("get", "products?sortBy=createdAt").then((data) =>
-      setItems(data)
-    );
+    fetchService({
+      method: "get",
+      url: "products?sortBy=createdAt",
+    }).then((data) => setItems(data));
   }, []);
 
   let render = (
@@ -53,7 +54,7 @@ const NewArrivals = () => {
 
       {/* products cards, show loading animation if items are not set yet */}
       {items.length < 1 ? (
-        <LoadingText style={style} number={3} />
+        <LoadingText style={style} number={5} />
       ) : (
         items.map((el) => (
           // Distribute el's properties: name, img, price, description

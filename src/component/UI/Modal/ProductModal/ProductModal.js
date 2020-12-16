@@ -34,11 +34,11 @@ Recives:
   useEffect(() => {
     // post last seen item
     if (loginData.token) {
-      fetchService(
-        "post",
-        `users/history/${props.modalData.id}`,
-        loginData.token
-      );
+      fetchService({
+        method: "post",
+        url: `users/history/${props.modalData.id}`,
+        token: loginData.token,
+      });
     }
   }, [loginData.token, props.modalData.id]);
 

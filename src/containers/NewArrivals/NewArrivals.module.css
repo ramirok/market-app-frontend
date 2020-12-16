@@ -10,8 +10,8 @@
 }
 
 .NewIcon {
-  width: 7rem;
-  height: 7rem;
+  width: 12rem;
+  height: 12rem;
   position: absolute;
   transform: rotate(20deg);
   top: 0;
@@ -47,6 +47,11 @@
 }
 
 @media screen and (max-width: 700px) {
+  .NewIcon {
+    width: 7rem;
+    height: 7rem;
+  }
+
   .NewArrivalsContainer {
     flex-wrap: wrap;
     gap: 2rem;

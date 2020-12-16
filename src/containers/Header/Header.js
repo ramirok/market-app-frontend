@@ -20,29 +20,31 @@ const Header = () => {
   const windowWidth = useWindowResize();
 
   return (
-    <div className={classes.HeaderContainer}>
-      <Logo />
-      <div className={classes.BarAndLinks}>
-        <SearchBar />
+    <div className={classes.Background}>
+      <div className={classes.HeaderContainer}>
+        <Logo />
+        <div className={classes.BarAndLinks}>
+          <SearchBar />
 
-        {/* only shows navBar when screen is wider than 1000 */}
-        {windowWidth > 1000 && <NavBar />}
-      </div>
+          {/* only shows navBar when screen is wider than 1000 */}
+          {windowWidth > 1000 && <NavBar />}
+        </div>
 
-      <div className={classes.Menu}>
-        {loginData.token ? (
-          <>
-            {/* if user is loggedIn */}
-            <MyAccount />
-            <ShoppingCart />
-          </>
-        ) : (
-          <>
-            {/* if user isn't loggedIn */}
-            <Login />
-            <SignUp />
-          </>
-        )}
+        <div className={classes.Menu}>
+          {loginData.token ? (
+            <>
+              {/* if user is loggedIn */}
+              <MyAccount />
+              <ShoppingCart />
+            </>
+          ) : (
+            <>
+              {/* if user isn't loggedIn */}
+              <Login />
+              <SignUp />
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

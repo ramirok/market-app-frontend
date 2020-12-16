@@ -23,7 +23,11 @@ const History = () => {
   useEffect(() => {
     // when there is a token, get user's history
     if (loginData.token) {
-      fetchService("get", "users/history", loginData.token).then((data) => {
+      fetchService({
+        method: "get",
+        url: "users/history",
+        token: loginData.token,
+      }).then((data) => {
         setItems(data);
       });
     }

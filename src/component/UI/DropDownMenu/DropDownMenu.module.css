@@ -27,9 +27,3 @@
     transform: translateY(0);
   }
 }
-
-.LogoContainer {
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
-}

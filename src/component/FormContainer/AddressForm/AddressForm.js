@@ -35,18 +35,19 @@ Recives:
 
   const submitAddressData = async () => {
     setFormState({ loading: true });
-    const response = await fetchService(
-      "put",
-      "users/user-details",
-      loginData.token,
-      {
+
+    const response = await fetchService({
+      method: "put",
+      url: "users/user-details",
+      token: loginData.token,
+      body: {
         state: state.value,
         city: city.value,
         zipCode: zipCode.value,
         street: street.value,
         streetNumber: streetNumber.value,
-      }
-    );
+      },
+    });
 
     if (response.ok) {
       return dispatch({ type: "SUBMIT_ADDRESS" });

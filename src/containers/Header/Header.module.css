@@ -1,13 +1,18 @@
-.HeaderContainer {
+.Background {
   background-color: #dde1ed;
+  box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
+  z-index: 2;
+}
+
+.HeaderContainer {
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
-  padding: 1rem 2rem;
-  z-index: 2;
+  padding: 1rem 1rem;
   position: relative;
+  max-width: 130rem;
 }
 
 .BarAndLinks {
@@ -25,9 +30,17 @@
 }
 
 @media screen and (max-width: 1000px) {
+  .Background {
+    position: sticky;
+    top: 0;
+  }
+
   .BarAndLinks {
     width: 45%;
     margin-top: 0;
+  }
+  .Menu {
+    margin-right: 0.5rem;
   }
 
   .Menu > :first-child {

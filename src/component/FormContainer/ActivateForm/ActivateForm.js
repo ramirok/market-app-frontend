@@ -24,7 +24,11 @@ const ActivateForm = () => {
 
   useEffect(() => {
     // send token for account activation
-    fetchService("post", "users/activate", null, { token }).then((response) => {
+    fetchService({
+      method: "post",
+      url: "users/activate",
+      body: { token },
+    }).then((response) => {
       setSucceed(response.ok);
       setMessage(response.message);
       setLoading(false);

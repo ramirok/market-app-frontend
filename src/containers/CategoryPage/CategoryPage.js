@@ -17,7 +17,9 @@ const Category = () => {
 
   useEffect(() => {
     // Set items fetched
-    fetchService("get", `products/cat/${cat}`).then((data) => setItems(data));
+    fetchService({ method: "get", url: `products/cat/${cat}` }).then((data) =>
+      setItems(data)
+    );
   }, [cat]);
 
   // Category list for side menu

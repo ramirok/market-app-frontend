@@ -1,6 +1,6 @@
 .CardContainer {
   background-color: white;
-  height: 16rem;
+  height: 23rem;
   width: 20rem;
   flex-shrink: 0;
   box-shadow: 10px 10px 60px -40px rgba(0, 0, 0, 0.75);

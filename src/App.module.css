@@ -2,10 +2,9 @@
   width: 100%;
   display: grid;
 
-  grid-template:
-    [start-content] 1fr [end-content] /
-    [start-footer] 2vw [start-content] minmax(0, 1fr)
-    [end-content] 2vw [end-footer];
+  grid-template-columns:
+    [start-footer] auto [start-content] minmax(0, 120rem)
+    [end-content] auto [end-footer];
 
   gap: 3rem;
   padding-bottom: 3rem;

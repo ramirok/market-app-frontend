@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { useUser } from "../../context/userContext";
 import { capitalizeName } from "../../utils/helpers";
-import { useWindowResize } from "../../utils/customHooks";
 import Spinner from "../UI/Spinner/Spinner";
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import DropDownItemLink from "../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
@@ -24,8 +23,6 @@ const MyAccount = () => {
 
   // logout handler
   const { handleLogout, loginData } = useUser();
-
-  const width = useWindowResize();
 
   // DropDownMenu list items
   const svgStyle = { height: "2rem", width: "2rem" };
@@ -64,7 +61,13 @@ const MyAccount = () => {
             to={`/app/${el}`}
             img={list[el]}
             name={el}
-            onClick={width < 1000 ? () => setVisible(false) : null}
+            onClick={
+              /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                navigator.userAgent
+              )
+                ? () => setVisible(false)
+                : null
+            }
           />
         ))}
 

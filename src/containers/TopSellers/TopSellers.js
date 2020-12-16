@@ -25,7 +25,7 @@ const TopSellers = () => {
       ? {
           minWidth: "20rem",
           width: "20rem",
-          height: "16rem",
+          height: "23rem",
         }
       : {
           height: "16rem",
@@ -36,7 +36,9 @@ const TopSellers = () => {
 
   useEffect(() => {
     // Set items fetched
-    fetchService("get", "products?sortBy=sold").then((data) => setItems(data));
+    fetchService({ method: "get", url: "products?sortBy=sold" }).then((data) =>
+      setItems(data)
+    );
   }, []);
 
   let render = (
@@ -51,7 +53,7 @@ const TopSellers = () => {
 
       {/* products cards, show loading animation if items are not set yet */}
       {items.length < 1 ? (
-        <LoadingText style={style} number={3} />
+        <LoadingText style={style} number={5} />
       ) : (
         items.map((el) => (
           // Distribute el's properties: name, img, price, description

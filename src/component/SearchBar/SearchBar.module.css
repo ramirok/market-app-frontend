@@ -68,10 +68,14 @@
   right: 0;
   margin-right: 0.2rem;
   height: 3.5rem;
+  width: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 1000px) {
   .Button {
-    width: 5rem;
+    width: 4rem;
   }
 }

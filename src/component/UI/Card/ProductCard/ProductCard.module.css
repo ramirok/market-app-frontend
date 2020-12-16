@@ -1,6 +1,6 @@
 .CardContainer {
   background-color: white;
-  height: 16rem;
+  height: 23rem;
   width: 20rem;
   flex-shrink: 0;
   flex-grow: 1;
@@ -31,19 +31,17 @@
   height: 26%;
   width: 100%;
   background-color: #eeeeee;
-  transition: all 0.2s;
   border-radius: 10px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   color: rgb(50, 50, 50);
-  font-weight: 400;
   font-family: "Nunito", sans-serif;
   font-size: 1.5rem;
   display: flex;
   flex-direction: column;
   padding-left: 1rem;
   padding-top: 0.5rem;
-  line-height: 1.8rem;
+  line-height: 2.5rem;
   overflow: hidden;
 }
 

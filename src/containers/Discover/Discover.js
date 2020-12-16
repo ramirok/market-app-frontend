@@ -19,15 +19,25 @@ const Discover = () => {
   const width = useWindowResize();
 
   // style for loading animation
-  const style = {
-    minWidth: "20rem",
-    width: "20rem",
-    height: "16rem",
-  };
+  const style =
+    width > 700
+      ? {
+          minWidth: "20rem",
+          width: "20rem",
+          height: "23rem",
+        }
+      : {
+          height: "16rem",
+          minWidth: "15rem",
+          width: "auto",
+          flexGrow: 1,
+        };
 
   useEffect(() => {
     // Set items fetched
-    fetchService("get", "products").then((data) => setItems(data));
+    fetchService({ method: "get", url: "products" }).then((data) =>
+      setItems(data)
+    );
   }, []);
 
   const row1 = (

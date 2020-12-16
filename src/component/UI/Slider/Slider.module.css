@@ -15,6 +15,17 @@
 .SliderContainer > :first-child {
   margin-left: 2rem;
 }
+.SliderContainer > :last-child {
+  position: relative;
+}
+
+.SliderContainer > :last-child::after {
+  content: "";
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  right: -2rem;
+}
 
 .SliderContainer::-webkit-scrollbar {
   display: none;

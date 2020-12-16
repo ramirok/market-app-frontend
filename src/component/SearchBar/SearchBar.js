@@ -54,13 +54,14 @@ const SearchBar = () => {
       let timer;
       timer = setTimeout(
         () =>
-          fetchService("get", `products/autosuggest?q=${search.value}`).then(
-            (response) => {
-              setSuggestions(response);
-              setIsLoading(false);
-              setRunHook(true);
-            }
-          ),
+          fetchService({
+            method: "get",
+            url: `products/autosuggest?q=${search.value}`,
+          }).then((response) => {
+            setSuggestions(response);
+            setIsLoading(false);
+            setRunHook(true);
+          }),
         500
       );
       return () => clearTimeout(timer);
@@ -73,13 +74,14 @@ const SearchBar = () => {
     // fetch suggestions when search button clicked
     if (search.value.length > 0) {
       setIsLoading(true);
-      fetchService("get", `products/autosuggest?q=${search.value}`).then(
-        (response) => {
-          setSuggestions(response);
-          setIsLoading(false);
-          setRunHook(true);
-        }
-      );
+      fetchService({
+        method: "get",
+        url: `products/autosuggest?q=${search.value}`,
+      }).then((response) => {
+        setSuggestions(response);
+        setIsLoading(false);
+        setRunHook(true);
+      });
     }
   };
 
@@ -116,11 +118,7 @@ const SearchBar = () => {
             {isLoading ? (
               <Spinner white />
             ) : (
-              <SearchIcon
-                fill="white"
-                height="60%"
-                style={{ marginTop: ".5rem" }}
-              />
+              <SearchIcon fill="white" height="60%" width="3rem" />
             )}
           </Button>
         </div>

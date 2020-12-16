@@ -35,9 +35,10 @@ export const UserProvider = (props) => {
   const handleLogin = async (email, password) => {
     dispatch({ type: "TRIGGER_LOADING" });
 
-    const response = await fetchService("post", "users/login", null, {
-      email: email,
-      password: password,
+    const response = await fetchService({
+      method: "post",
+      url: "users/login",
+      body: { email: email, password: password },
     });
 
     if (response.ok) {
@@ -67,7 +68,10 @@ export const UserProvider = (props) => {
   const handleLoginGoogle = useCallback(async (code) => {
     dispatch({ type: "TRIGGER_LOADING" });
 
-    const response = await fetchService("get", `users/login/google${code}`);
+    const response = await fetchService({
+      method: "get",
+      url: `users/login/google${code}`,
+    });
 
     if (response.ok) {
       // if succeed, sets loginData and saves localStorage
@@ -94,8 +98,11 @@ export const UserProvider = (props) => {
 
   // Logout
   const handleLogout = useCallback(async () => {
-    // await fetchService("post", "users/logout", loginData.token);
-    await fetchService("post", "users/logout", loginData.token);
+    await fetchService({
+      method: "post",
+      url: "users/logout",
+      token: loginData.token,
+    });
 
     window.localStorage.clear();
     dispatch({
@@ -112,11 +119,11 @@ export const UserProvider = (props) => {
 
   // Logout All
   const handleLogoutAll = useCallback(async () => {
-    const response = await fetchService(
-      "post",
-      "users/logoutAll",
-      loginData.token
-    );
+    const response = await fetchService({
+      method: "post",
+      url: "users/logoutAll",
+      token: loginData.token,
+    });
     return { succeed: response.ok, message: response.message };
   }, [loginData.token]);
 
@@ -125,12 +132,12 @@ export const UserProvider = (props) => {
     async (data) => {
       dispatch({ type: "TRIGGER_LOADING" });
 
-      const response = await fetchService(
-        "put",
-        "users/change",
-        loginData.token,
-        data
-      );
+      const response = await fetchService({
+        method: "put",
+        url: "users/change",
+        token: loginData.token,
+        body: data,
+      });
 
       dispatch({ type: "TRIGGER_LOADING" });
 
@@ -143,8 +150,10 @@ export const UserProvider = (props) => {
   const handleForgotPassword = async (email) => {
     dispatch({ type: "TRIGGER_LOADING" });
 
-    const response = await fetchService("post", "users/forgot-pass", null, {
-      email,
+    const response = await fetchService({
+      method: "post",
+      url: "users/forgot-pass",
+      body: { email },
     });
 
     dispatch({ type: "TRIGGER_LOADING" });
@@ -155,10 +164,14 @@ export const UserProvider = (props) => {
   const handleResetPassword = async (token, password, passwordConfirmation) => {
     dispatch({ type: "TRIGGER_LOADING" });
 
-    const response = await fetchService("put", "users/reset-pass", null, {
-      resetLink: token,
-      password,
-      passwordConfirmation,
+    const response = await fetchService({
+      method: "put",
+      url: "users/reset-pass",
+      body: {
+        resetLink: token,
+        password,
+        passwordConfirmation,
+      },
     });
 
     dispatch({ type: "TRIGGER_LOADING" });
