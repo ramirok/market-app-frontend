@@ -55,7 +55,7 @@ Recives:
   };
 
   return (
-    <form>
+    <form onSubmit={(e) => e.preventDefault()}>
       <Button
         classFromProps={classes.ButtonOk}
         onClick={submitPersonalData}

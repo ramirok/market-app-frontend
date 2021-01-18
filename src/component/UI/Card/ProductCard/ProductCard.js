@@ -36,7 +36,6 @@ Recives:
       {/* Renders modal when is open = true */}
       {isOpen && (
         <ProductModal
-          isOpen={isOpen}
           setIsOpen={setIsOpen}
           modalData={{ name, img, price, description, id }}
         />
