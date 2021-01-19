@@ -16,40 +16,6 @@ import Checkout from "./containers/Checkout/Checkuout";
 import Orders from "./containers/Orders/Orders";
 import page404 from "./containers/page404/page404";
 
-// Lazy Loads
-// const LoginForm = lazy(() =>
-//   import("./component/FormContainer/LoginForm/LoginForm")
-// );
-// const SignUpForm = lazy(() =>
-//   import("./component/FormContainer/SignUpForm/SignUpForm")
-// );
-// const ForgotPassForm = lazy(() =>
-//   import("./component/FormContainer/ForgotPassForm/ForgotPassForm")
-// );
-// const ResetPassForm = lazy(() =>
-//   import("./component/FormContainer/ResetPassForm/ResetPassForm")
-// );
-// const ActivateForm = lazy(() =>
-//   import("./component/FormContainer/ActivateForm/ActivateForm")
-// );
-// const CategoryPage = lazy(() =>
-//   import("./containers/CategoryPage/CategoryPage")
-// );
-// const AccountSecurity = lazy(() =>
-//   import("./containers/AccountSecurity/AccountSecurity")
-// );
-// const ShoppingCart = lazy(() =>
-//   import("./containers/ShoppingCart/ShoppingCart")
-// );
-// const GoogleForm = lazy(() =>
-//   import("./component/FormContainer/GoogleForm/GoogleForm")
-// );
-// const ChangePass = lazy(() =>
-//   import("./component/FormContainer/ChangePassForm/ChangePassForm")
-// );
-// const Checkout = lazy(() => import("./containers/Checkout/Checkuout"));
-// const Orders = lazy(() => import("./containers/Orders/Orders"));
-
 const ROUTES = [
   {
     path: "/",

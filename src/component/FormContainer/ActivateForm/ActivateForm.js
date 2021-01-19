@@ -35,17 +35,15 @@ const ActivateForm = () => {
     });
   }, [token]);
 
+  // if activation succeeds, show login button
   const succeedButton = succeed ? (
-    // shows login button if activation succeeds
     <Button onClick={() => history.push("/auth/login")}>Switch to login</Button>
   ) : (
-    // show try again message if activation fails
     <p className={classes.Failed}>Please try again!</p>
   );
 
   return (
     <FormContainer>
-      {/* shows spinner if loading = true */}
       {loading ? (
         <Spinner />
       ) : (

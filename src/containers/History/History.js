@@ -17,7 +17,7 @@ const History = () => {
 
   const width = useWindowResize();
 
-  // Items to show in Card component
+  // items to show in Card component
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const History = () => {
     }
   }, [loginData.token]);
 
-  // if no items in history, return null
+  // if history has less than 8 items, don't show history
   if (items.length < 8) {
     return null;
   }
@@ -41,7 +41,7 @@ const History = () => {
   let render = (
     <>
       {items.map((el) => (
-        // Distribute el's properties: name, img, price, description
+        // Distribute product's properties: name, img, price, description
         <ProductCard {...el} key={el.name} />
       ))}
     </>
@@ -55,7 +55,7 @@ const History = () => {
         <HistoryIcon className={classes.HistoryIcon} />
       </div>
 
-      {/* carousel */}
+      {/* products */}
       <div className={classes.ProductsContainer}>
         {/* use slider for big screens */}
         {width > 700 ? <Slider>{render}</Slider> : render}

@@ -12,7 +12,7 @@ const PersonalInfoForm = (props) => {
   /*
 Recives:
  -placeholders: placeholders for inputs
- -dispatch to reducer
+ -dispatch actions to reducer
 */
   const { placeholders, dispatch } = props;
 
@@ -20,7 +20,6 @@ Recives:
   // loginData returns ={name, email, token}
   const { loginData } = useUser();
 
-  // form state
   const [formState, setFormState] = useState({
     loading: false,
     message: null,
@@ -81,7 +80,6 @@ Recives:
         className={classes.Message}
         style={{ color: formState.succeed ? "green" : "red" }}
       >
-        {/* if loading shows spinner, else shows message */}
         {formState.loading ? <Spinner /> : formState.message}
       </p>
     </form>

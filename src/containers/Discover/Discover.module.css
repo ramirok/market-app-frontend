@@ -7,7 +7,8 @@
   align-items: center;
 
   height: min-content;
-  padding: 2rem 0;
+  padding: 1rem 1rem;
+  padding-top: 3rem;
 }
 
 .NameContainer {
@@ -19,7 +20,6 @@
 
 .ProductsContainer {
   display: flex;
-  margin-top: 2rem;
 }
 
 .Name {
@@ -37,8 +37,6 @@
 @media screen and (max-width: 700px) {
   .ProductsContainer {
     flex-wrap: wrap;
-    gap: 2rem;
-    padding: 0 2rem;
     justify-content: center;
   }
 }

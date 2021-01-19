@@ -49,12 +49,11 @@ const ForgotPassForm = () => {
         className={classes.Message}
         style={{ color: succeed ? "green" : "red" }}
       >
-        {/* if loading shows spinner, else shows message */}
         {loginData.loading ? <Spinner /> : message}
       </p>
 
       {succeed ? (
-        // if succeeds, shows check mail message
+        // if succeeds, shows 'check mail' message
         <p className={classes.checkMail}>Check your mail!</p>
       ) : (
         // if fails, keep showing ok and cancel buttons

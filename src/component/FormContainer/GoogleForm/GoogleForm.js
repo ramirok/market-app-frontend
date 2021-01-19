@@ -27,12 +27,11 @@ const GoogleForm = () => {
       return history.push("/");
     }
 
-    //   sends google redirect code query param
     handleLoginGoogle(search).then((response) => {
       if (response.succeed) {
-        // if login succeed, redirects to "/"
         return history.push("/");
       }
+      // login failed
       setSucceed(false);
       setMessage(response.message);
     });
@@ -40,7 +39,6 @@ const GoogleForm = () => {
 
   return (
     <FormContainer>
-      {/* shows spinner if loading = true */}
       {loginData.loading ? (
         <span style={{ margin: "0 auto" }}>
           <Spinner />

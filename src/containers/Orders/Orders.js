@@ -14,12 +14,11 @@ const Orders = () => {
   // orders to show
   const [orders, setOrders] = useState([]);
 
-  // loading state
+  // loading state for spinner
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (loginData.token) {
-      // fetch orders
       fetchService({
         method: "get",
         url: "users/orders",

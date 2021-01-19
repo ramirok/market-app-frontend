@@ -52,6 +52,8 @@ const LoginForm = () => {
       <p className={classes.Message}>
         {loginData.loading ? <Spinner /> : message}
       </p>
+
+      {/* login button */}
       <Button
         onClick={submitLoginForm}
         disabled={!email.isValid || !password.value || loginData.loading}
@@ -71,8 +73,9 @@ const LoginForm = () => {
       >
         Login with Google
       </Button>
-
       <br style={{ marginBottom: "3rem" }} />
+
+      {/* forgot password button */}
       <Button
         inverted={true}
         onClick={() => {

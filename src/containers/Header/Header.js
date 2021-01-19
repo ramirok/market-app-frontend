@@ -25,8 +25,6 @@ const Header = () => {
         <Logo />
         <div className={classes.BarAndLinks}>
           <SearchBar />
-
-          {/* only shows navBar when screen is wider than 1000 */}
           {windowWidth > 1000 && <NavBar />}
         </div>
 

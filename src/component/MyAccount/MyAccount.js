@@ -15,7 +15,7 @@ import { ReactComponent as LogOut } from "../../assets/myaccount/logout.svg";
 import { ReactComponent as ShoppingCart } from "../../assets/shopping-cart.svg";
 
 const MyAccount = () => {
-  //Toggles dropDownMenu visibility onClick and onLeave
+  //toggles dropDownMenu visibility onClick and onLeave
   const [visible, setVisible] = useState(false);
 
   // loading state for logout spinner
@@ -24,7 +24,7 @@ const MyAccount = () => {
   // logout handler
   const { handleLogout, loginData } = useUser();
 
-  // DropDownMenu list items
+  // dropDownMenu list items
   const svgStyle = { height: "2rem", width: "2rem" };
   const list = {
     Cart: <ShoppingCart style={svgStyle} />,

@@ -13,7 +13,7 @@ Recives:
 */
   const { type, label, isValid, error, ...rest } = props;
 
-  // add style if recives isValid
+  // add validation style if recives isValid prop
   let check = {};
   if (isValid === true) {
     check = { borderBottom: "2px solid blue" };
@@ -23,8 +23,6 @@ Recives:
 
   switch (type) {
     case "email":
-      //Input type email
-
       return (
         <div className={classes.InputContainer}>
           <label htmlFor="email">{label}</label>
@@ -43,9 +41,8 @@ Recives:
           )}
         </div>
       );
-    case "number":
-      //Input type number
 
+    case "number":
       return (
         <div className={classes.InputContainer}>
           <label htmlFor={label}>{label}</label>
@@ -64,9 +61,8 @@ Recives:
           )}
         </div>
       );
-    case "password":
-      //Input type password
 
+    case "password":
       return (
         <div className={classes.InputContainer}>
           <label htmlFor={label}>{label}</label>
@@ -85,9 +81,9 @@ Recives:
           )}
         </div>
       );
+
     default:
       //Input type text
-
       return (
         <div className={classes.InputContainer}>
           <label htmlFor={label}>{label}</label>

@@ -7,22 +7,21 @@ import ProductCard from "../../component/UI/Card/ProductCard/ProductCard";
 import classes from "./CategoryPage.module.css";
 
 const Category = () => {
-  // Get param from URL
+  // get param from URL
   const { cat } = useParams();
 
-  // Items to show in Card component
+  // items to show in card component
   const [items, setItems] = useState([]);
 
   const width = useWindowResize();
 
   useEffect(() => {
-    // Set items fetched
     fetchService({ method: "get", url: `products/cat/${cat}` }).then((data) =>
       setItems(data)
     );
   }, [cat]);
 
-  // Category list for side menu
+  // category list for side menu
   const categoryList = [
     "Vegetables",
     "Fruits",
@@ -58,7 +57,7 @@ const Category = () => {
         <div className={classes.Products}>
           {/* Sets a card for every item  */}
           {items.map((el) =>
-            // Distribute el's properties: name, img, price, description
+            // distribute product's properties: name, img, price, description
             width > 700 ? (
               <div key={el.name}>
                 <ProductCard {...el} />

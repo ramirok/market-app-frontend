@@ -18,7 +18,7 @@ Recives:
 */
   const { id, name, img, price, description } = props;
 
-  // Toggles modal visibility
+  // toggles modal visibility
   const [isOpen, setIsOpen] = useState(false);
 
   // customHook for cart context
@@ -46,7 +46,6 @@ Recives:
         <div
           className={classes.CardImage}
           onClick={() => {
-            // open modal onClick
             setIsOpen(true);
           }}
         >
@@ -68,7 +67,6 @@ Recives:
               : null
           }
         >
-          {/* shows spinner if loading = true */}
           {isLoading ? <Spinner white /> : "+"}
         </div>
 

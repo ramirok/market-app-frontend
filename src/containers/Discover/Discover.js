@@ -13,7 +13,7 @@ import classes from "./Discover.module.css";
 import { ReactComponent as DiscoverIcon } from "../../assets/more-products.svg";
 
 const Discover = () => {
-  // Items to show in Card component
+  // items to show in Card component
   const [items, setItems] = useState([]);
 
   const width = useWindowResize();
@@ -34,7 +34,6 @@ const Discover = () => {
         };
 
   useEffect(() => {
-    // Set items fetched
     fetchService({ method: "get", url: "products" }).then((data) =>
       setItems(data)
     );
@@ -47,7 +46,7 @@ const Discover = () => {
         <LoadingText style={style} number={8} />
       ) : (
         items.slice(0, 15).map((el) => (
-          // Distribute el's properties: name, img, price, description
+          // Distribute product's properties: name, img, price, description
           <ProductCard {...el} key={el.name} />
         ))
       )}
@@ -61,7 +60,7 @@ const Discover = () => {
         <LoadingText style={style} number={8} />
       ) : (
         items.slice(15, 30).map((el) => (
-          // Distribute el's properties: name, img, price, description
+          // Distribute product's properties: name, img, price, description
           <ProductCard {...el} key={el.name} />
         ))
       )}

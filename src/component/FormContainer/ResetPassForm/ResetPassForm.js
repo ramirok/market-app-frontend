@@ -19,7 +19,7 @@ const ResetPassForm = () => {
   // loginData returns ={name, email, token}
   const { loginData, handleResetPassword } = useUser();
 
-  // reset pass succeed
+  // reset pass succeeded
   const [succeed, setSucceed] = useState(false);
 
   // message state from fetch response
@@ -67,8 +67,9 @@ const ResetPassForm = () => {
       >
         {loginData.loading ? <Spinner /> : message}
       </p>
+
+      {/* if succeeds show go back button */}
       {succeed ? (
-        // if succeeds show go back button
         <Button
           onClick={() =>
             loginData.token

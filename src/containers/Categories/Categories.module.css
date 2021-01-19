@@ -7,8 +7,7 @@
   justify-content: center;
 
   height: min-content;
-  padding: 2rem 2rem;
-  gap: 2rem;
+  padding: 1rem 1rem;
 
   flex-wrap: wrap;
 }
@@ -26,6 +25,7 @@
   font-weight: 400;
   border: 3px solid white;
   cursor: pointer;
+  margin: 1rem;
 }
 
 .Card:link {

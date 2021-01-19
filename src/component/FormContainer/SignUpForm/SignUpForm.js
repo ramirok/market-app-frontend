@@ -73,7 +73,7 @@ const SignUpForm = () => {
         {signupData.loading ? <Spinner /> : signupData.message}
       </p>
 
-      {/* if succeed shows check email message, else show sign up button */}
+      {/* if succeed show 'check email' message, otherwise show sign up button */}
       {signupData.succeed ? (
         <p className={classes.checkMail}>Check your mail!</p>
       ) : (

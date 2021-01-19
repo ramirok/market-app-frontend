@@ -14,7 +14,7 @@ import { ReactComponent as Curve } from "../../assets/curveAsymmetrical.svg";
 import { ReactComponent as Curve2 } from "../../assets/curveAsymmetrical2.svg";
 
 const TopSellers = () => {
-  // Items to show in Card component
+  // items to show in Card component
   const [items, setItems] = useState([]);
 
   const width = useWindowResize();
@@ -35,7 +35,6 @@ const TopSellers = () => {
         };
 
   useEffect(() => {
-    // Set items fetched
     fetchService({ method: "get", url: "products?sortBy=sold" }).then((data) =>
       setItems(data)
     );
@@ -56,7 +55,7 @@ const TopSellers = () => {
         <LoadingText style={style} number={5} />
       ) : (
         items.map((el) => (
-          // Distribute el's properties: name, img, price, description
+          // Distribute product's properties: name, img, price, description
           <ProductCard {...el} key={el.name} />
         ))
       )}

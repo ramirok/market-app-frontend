@@ -13,13 +13,13 @@ const ChangePassForm = () => {
   // loginData returns ={name, email, token}
   const { loginData, handleChangePassword, handleForgotPassword } = useUser();
 
-  // succeed status for message
+  // succeed status for message color
   const [succeed, setSucceed] = useState(false);
 
   // message state from fetch response
   const [message, setMessage] = useState(null);
 
-  //
+  // shows 'check mail' message instead of forgot pass button
   const [checkMail, setCheckMail] = useState(false);
 
   // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
@@ -74,7 +74,7 @@ const ChangePassForm = () => {
       <br style={{ marginBottom: "3rem" }} />
       <Input {...passwordConfirmation} label="Confirm new password." />
 
-      {/* message */}
+      {/* succeed or error message */}
       <p
         className={classes.Message}
         style={{ color: succeed ? "green" : "red" }}
@@ -82,6 +82,7 @@ const ChangePassForm = () => {
         {loginData.loading ? <Spinner /> : message}
       </p>
 
+      {/* ok button */}
       <Button
         onClick={submitChangePass}
         disabled={
@@ -95,7 +96,7 @@ const ChangePassForm = () => {
       </Button>
       <br style={{ marginBottom: "3rem" }} />
 
-      {/* if message check mail if reset pass link sent successfully */}
+      {/* don't know my password button */}
       {checkMail ? (
         <p className={classes.checkMail}>Check your mail!</p>
       ) : (

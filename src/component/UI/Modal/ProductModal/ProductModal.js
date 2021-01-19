@@ -97,16 +97,12 @@ Recives:
             +
           </Button>
           <Button
-            // shows spinner when isLoading = true
             classFromProps={classes.ButtonAddCart}
-            onClick={
-              // allows on click when isLoading = false
-              async () => {
-                setIsLoading(true);
-                await addProductHandler(modalData.id, amount, loginData.token);
-                setIsOpen(false);
-              }
-            }
+            onClick={async () => {
+              setIsLoading(true);
+              await addProductHandler(modalData.id, amount, loginData.token);
+              setIsOpen(false);
+            }}
             disabled={isLoading}
           >
             {isLoading ? <Spinner white /> : "Add"}

@@ -19,6 +19,7 @@ const SearchBar = () => {
   const wrapperRef = useRef(null);
 
   // only runs useClickOutside hook when runHook = true
+  //will allow to click anywhere ouside of the search bar to remove suggestions
   const [runHook, setRunHook] = useState(false);
 
   // cleans suggestions if clicked outside
@@ -33,7 +34,8 @@ const SearchBar = () => {
 
   // open state for modal
   const [isOpen, setIsOpen] = useState(false);
-  // Data for product modal
+
+  // product data for modal
   const [modalData, setModalData] = useState({});
 
   // loading state for spinner
@@ -46,11 +48,9 @@ const SearchBar = () => {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    // if user has typed, fetch suggestions
+    // if user has typed, fetch suggestions after 500ms
     if (search.value.length > 0) {
       setIsLoading(true);
-
-      // perform fetch 500ms after user finished typing
       let timer;
       timer = setTimeout(
         () =>
@@ -71,7 +71,7 @@ const SearchBar = () => {
   }, [search.value]);
 
   const searchHandler = () => {
-    // fetch suggestions when search button clicked
+    // fetch suggestions when search button has been clicked
     if (search.value.length > 0) {
       setIsLoading(true);
       fetchService({
@@ -87,7 +87,7 @@ const SearchBar = () => {
 
   return (
     <>
-      {/* Renders modal when is open = true */}
+      {/* renders modal when is open = true */}
       {isOpen && <ProductModal setIsOpen={setIsOpen} modalData={modalData} />}
 
       <div className={classes.Container} ref={wrapperRef}>
@@ -113,7 +113,6 @@ const SearchBar = () => {
             ))}
           </div>
 
-          {/* Button shows spinner if isLoading = true */}
           <Button classFromProps={classes.Button} onClick={searchHandler}>
             {isLoading ? (
               <Spinner white />

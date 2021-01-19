@@ -11,10 +11,8 @@ import { ReactComponent as Snacks } from "../../assets/categories/snacks.svg";
 import { ReactComponent as Canned } from "../../assets/categories/canned.svg";
 
 const NavBar = () => {
-  // style for svgs
-  const svgStyle = { height: "2rem", width: "2rem" };
-
   // DropDownMenu list items
+  const svgStyle = { height: "2rem", width: "2rem" };
   const list = {
     Vegetables: <Vegetables style={svgStyle} />,
     Fruits: <Fruits style={svgStyle} />,
@@ -26,7 +24,7 @@ const NavBar = () => {
   return (
     <nav className={classes.NavBar}>
       <ul className={classes.List}>
-        {/* Only Categories has a dropDownMenu */}
+        {/* only 'Categories' has a dropDownMenu */}
         <Item name={"Categories"} dropDownMenu={list} />
         <Item name="Deals" />
         <Item name="History" />

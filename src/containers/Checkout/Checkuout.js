@@ -27,10 +27,10 @@ const Checkout = () => {
   // state for error message
   const [error, setError] = useState(false);
 
-  // state for when info is incompleted
+  // state for when info is incomplet
   const [infoIncomplete, setInfoIncomplete] = useState(true);
 
-  // loading state
+  // loading state for spinner
   const [loading, setLoading] = useState(true);
 
   // reference for paypal button

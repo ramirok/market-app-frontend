@@ -5,7 +5,7 @@ import classes from "./Item.module.css";
 import DropDownItemLink from "../../UI/DropDownMenu/DropDownItemLink/DropDownItemLink";
 
 const Item = (props) => {
-  // Toggles dropDownMenu visibility onEnter and onLeave
+  // toggles dropDownMenu visibility onEnter and onLeave
   const [visible, setVisible] = useState(false);
 
   /*
@@ -19,9 +19,8 @@ Recives:
     <li className={classes.Item}>
       <span
         style={{ cursor: "pointer" }}
-        // Sets event if item recives dropDownMenu as props
+        // Sets onClick, onMouseEnter and onMouseLeave events if item recives dropDownMenu as props
         onClick={() => (dropDownMenu ? setVisible(!visible) : null)}
-        // Sets event if item recives dropDownMenu as props
         onMouseEnter={
           dropDownMenu
             ? () => {
@@ -29,7 +28,6 @@ Recives:
               }
             : null
         }
-        // Sets event if item recives dropDownMenu as props
         onMouseLeave={
           dropDownMenu
             ? () => {
@@ -41,7 +39,7 @@ Recives:
         {name}
       </span>
 
-      {/* Renders dropDownMenu if item recives dropDownMenu as props */}
+      {/* renders dropDownMenu if item recives dropDownMenu as props */}
       {dropDownMenu && (
         <DropDownMenu visible={visible} setVisible={setVisible}>
           {Object.keys(dropDownMenu).map((el) => (

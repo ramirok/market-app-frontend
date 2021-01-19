@@ -40,7 +40,6 @@ Recives:
   const [amount, setAmount] = useState(quantity);
 
   useEffect(() => {
-    // set amount to quantity retrived from the cart
     setAmount(quantity);
   }, [quantity]);
 
@@ -67,7 +66,6 @@ Recives:
 
   return (
     <div className={classes.Container}>
-      {/* show spinner if isLoading = true */}
       <div style={{ position: "absolute", right: "1rem", top: "1rem" }}>
         {isLoading && <Spinner small={true} />}
       </div>
@@ -164,13 +162,10 @@ Recives:
         {/* remove product button */}
         <Button
           classFromProps={classes.ButtonDel}
-          onClick={
-            // allows onClick if isLoading = false
-            async () => {
-              setIsLoading(true);
-              await delProductHandler(id, loginData.token);
-            }
-          }
+          onClick={async () => {
+            setIsLoading(true);
+            await delProductHandler(id, loginData.token);
+          }}
           disabled={isLoading}
         >
           X

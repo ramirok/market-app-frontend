@@ -12,7 +12,7 @@ const AddressForm = (props) => {
   /*
 Recives:
  -placeholders: placeholders for inputs
- -dispatch to reducer
+ -dispatch: dispatch actions to reducer
 */
   const { placeholders, dispatch } = props;
 
@@ -72,16 +72,20 @@ Recives:
 
       <Input {...state} label="State:" placeholder={placeholders.state} />
       <br style={{ marginBottom: "3rem" }} />
+
       <Input {...city} label="City:" placeholder={placeholders.city} />
       <br style={{ marginBottom: "3rem" }} />
+
       <Input
         {...zipCode}
         label="Zip Code:"
         placeholder={placeholders.zipCode}
       />
       <br style={{ marginBottom: "3rem" }} />
+
       <Input {...street} label="Street:" placeholder={placeholders.street} />
       <br style={{ marginBottom: "3rem" }} />
+
       <Input
         {...streetNumber}
         label="Street Number:"
@@ -89,7 +93,6 @@ Recives:
       />
       <br style={{ marginBottom: "3rem" }} />
       <p className={classes.Message} style={{ color: "red" }}>
-        {/* if loading shows spinner, else shows message */}
         {formState.loading ? <Spinner /> : formState.message}
       </p>
     </form>

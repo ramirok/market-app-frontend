@@ -12,16 +12,17 @@ import classes from "./ShoppingCart.module.css";
 import { ReactComponent as Shopping } from "../../assets/shopping-cart.svg";
 
 const ShoppingCart = () => {
-  //Toggles dropDownMenu visibility onClick and onLeave
+  //toggles dropDownMenu visibility onClick and onLeave
   const [visible, setVisible] = useState(false);
 
-  // Toggles modal visibility
+  // toggles modal visibility
   const [isOpen, setIsOpen] = useState(false);
-  // Data for product modal
+
+  // product data for modal
   const [modalData, setModalData] = useState({});
 
   // customHook for user context:
-  // loginData = {message, loading, userId, token}
+  // loginData = {name, email, token}
   const { loginData } = useUser();
 
   // customHook for cart context
@@ -30,7 +31,7 @@ const ShoppingCart = () => {
   const { cartItems, getAllCart } = useCart();
 
   useEffect(() => {
-    // fetches user's cart on first render
+    // fetch user's cart on first render
     getAllCart(loginData.token);
   }, [loginData.token, getAllCart]);
 
@@ -96,10 +97,11 @@ const ShoppingCart = () => {
           setVisible(false);
         }}
       >
-        {/* if cart has items, show item count icon */}
+        {/* if cart has items, show item count icon (yellow circle) */}
         {cartItems.length > 0 ? (
           <span className={classes.ItemCount}>{cartItems.length}</span>
         ) : null}
+
         {/* SVG icon */}
         <Shopping
           className={classes.Bag}

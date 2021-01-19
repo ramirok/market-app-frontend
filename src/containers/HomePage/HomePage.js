@@ -16,7 +16,7 @@ const HomePage = () => {
       <div className={classes.FirstRow}>
         <NewArrivals />
 
-        {/* shows categories when screen width is less than 1000, in bigger screens, categories is included is navBar */}
+        {/* shows categories when screen width is less than 1000, in bigger screens, categories menu is included in navBar */}
         {width < 1000 && <Categories />}
 
         <TopSellers />

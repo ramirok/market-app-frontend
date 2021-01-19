@@ -6,13 +6,12 @@ import classes from "./DropDownMenu.module.css";
 const DropDownMenu = React.memo((props) => {
   /*
   Recives:
-  -styleCustom: custom inline-style
   -visible: visible state
   -setVisible: toggle visible state
   */
   const { visible, setVisible } = props;
 
-  // Toggle component classes when props.visible changes
+  // toggle component classes when props.visible changes
   const [dropDownClasses, setDropDownClasses] = useState(classes.Hidden);
 
   const windowWidth = useWindowResize();
@@ -27,8 +26,7 @@ const DropDownMenu = React.memo((props) => {
         navigator.userAgent
       )
         ? setDropDownClasses(classes.Hidden)
-        : // if on desktop, hide in 600ms
-          (timerToClear = setTimeout(() => {
+        : (timerToClear = setTimeout(() => {
             setDropDownClasses(classes.Hidden);
           }, 600));
     } else {
