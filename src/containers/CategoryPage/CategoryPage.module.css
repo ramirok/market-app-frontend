@@ -10,7 +10,6 @@
   grid-column: start-content/end-content;
   grid-row: start-content/end-content;
   display: flex;
-  gap: 2rem;
   padding-top: 3rem;
 }
 
@@ -20,10 +19,16 @@
   box-shadow: 10px 10px 50px -40px rgba(0, 0, 0, 0.75);
   text-align: center;
   height: min-content;
+  margin-top: 1rem;
 }
 
 .List {
   list-style: none;
+}
+
+.List > li {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .Item {
@@ -71,7 +76,6 @@
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: 2rem;
 }
 
 @media screen and (max-width: 1000px) {
@@ -88,7 +92,10 @@
   .List {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
     justify-content: space-evenly;
+  }
+
+  .Products {
+    margin-top: 1rem;
   }
 }

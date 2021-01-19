@@ -10,6 +10,7 @@
 
   display: inline-block;
   margin: auto 0;
+  margin: 1rem;
 }
 
 @-webkit-keyframes loading {

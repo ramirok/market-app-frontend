@@ -9,10 +9,10 @@
   scroll-behavior: smooth;
   scrollbar-width: none;
   display: flex;
-  gap: 2rem;
 }
 
 .SliderContainer > :first-child {
+  margin: 1rem;
   margin-left: 2rem;
 }
 .SliderContainer > :last-child {
