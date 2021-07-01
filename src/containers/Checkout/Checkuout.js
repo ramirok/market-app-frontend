@@ -128,6 +128,12 @@ const Checkout = () => {
         <Spinner />
       </div>
 
+      <div style={{ borderBottom: "1px solid #cccccc", marginBottom: "1rem" }}>
+        <p>Demo Paypal Account:</p>
+        <p style={{ color: "red" }}>mkbuy@personal.example.com</p>
+        <p style={{ color: "red" }}>pass: marketappbuy</p>
+      </div>
+
       <div id="summary-container" style={{ display: "none" }}>
         <h3 style={{ marginBottom: "1rem" }}>Checkout summary</h3>
 

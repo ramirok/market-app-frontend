@@ -42,7 +42,12 @@ const LoginForm = () => {
     setMessage(response.message);
     response.succeed && history.push("/");
   };
-
+  const submitLoginDemo = async () => {
+    // if login succeeds, redirects to "/"
+    const response = await handleLogin("fortesting@testing.com", "fortesting1");
+    setMessage(response.message);
+    response.succeed && history.push("/");
+  };
   return (
     <FormContainer>
       <Input {...email} label="Email" />
@@ -84,6 +89,8 @@ const LoginForm = () => {
       >
         Forgot password?
       </Button>
+      <br style={{ marginBottom: "3rem" }} />
+      <Button onClick={submitLoginDemo}>Login Demo</Button>
     </FormContainer>
   );
 };
