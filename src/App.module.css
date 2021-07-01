@@ -7,8 +7,12 @@
     [end-content] auto [end-footer];
 
   gap: 3rem;
-  padding-bottom: 3rem;
-  margin-bottom: 4rem;
+  /* padding-bottom: 3rem; */
+  /* margin-bottom: 4rem; */
+
+  min-height: 100%;
+  margin-bottom: -40px; /* Put negative height of the footer here */
+  padding-bottom: 40px; /* Put height of the footer here. Needed for higher than screen height pages */
 }
 
 .SpinnerContainer {

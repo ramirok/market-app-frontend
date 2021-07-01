@@ -5,7 +5,8 @@
   align-items: center;
   justify-content: center;
   height: 4rem;
-  position: absolute;
-  bottom: 0;
+  /* position: relative; */
   width: 100%;
+  /* bottom: 0; */
+  margin-top: 2rem;
 }
