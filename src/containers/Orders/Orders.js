@@ -40,7 +40,9 @@ const Orders = () => {
             <Spinner />
           </div>
         ) : orders.length > 0 ? (
-          orders.map((el, index) => <OrderCard key={index} {...el} />)
+          orders
+            .sort((a, b) => parseInt(b.createdAt) - parseInt(a.createdAt))
+            .map((el, index) => <OrderCard key={index} {...el} />)
         ) : (
           // if no orders:
           <div className={classes.NoOrders}>

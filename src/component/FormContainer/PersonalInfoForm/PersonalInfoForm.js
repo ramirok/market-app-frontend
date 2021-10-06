@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useInputData } from "../../../utils/customHooks";
+import { useForm } from "../../../utils/customHooks";
 import { useUser } from "../../../context/userContext";
 import { fetchService } from "../../../utils/fetchServices";
 import Input from "../../Input/Input";
@@ -25,10 +25,6 @@ Recives:
     message: null,
   });
 
-  // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const fullName = useInputData({ type: "text", validate: true });
-  const phoneNumber = useInputData({ type: "number", validate: true });
-
   const submitPersonalData = async () => {
     setFormState((prev) => ({ ...prev, loading: true }));
 
@@ -37,8 +33,8 @@ Recives:
       url: "users/user-details",
       token: loginData.token,
       body: {
-        fullName: fullName.value,
-        phoneNumber: phoneNumber.value,
+        fullName: data.fullName,
+        phoneNumber: data.phoneNumber,
       },
     });
 
@@ -53,26 +49,54 @@ Recives:
     });
   };
 
+  const { handleSubmit, handleChange, data, errors } = useForm({
+    onSubmit: submitPersonalData,
+
+    initialValues: {
+      fullName: "",
+      phoneNumber: "",
+    },
+
+    validations: {
+      fullName: {
+        pattern: {
+          value: /^[a-z ,.'-]*$/i,
+          message: "Only letters and ,.'-",
+        },
+        custom: {
+          isValid: (value) => (value ? value.length > 3 : true),
+          message: "Must have a least 4 characters",
+        },
+      },
+      phoneNumber: {
+        pattern: {
+          value: /^[0-9\s+\-().]*$/,
+          message: "Only numbers and ()-.+",
+        },
+      },
+    },
+  });
+
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
-      <Button
-        classFromProps={classes.ButtonOk}
-        onClick={submitPersonalData}
-        disabled={formState.loading}
-      >
+    <form onSubmit={handleSubmit}>
+      <Button classFromProps={classes.ButtonOk} disabled={formState.loading}>
         ok
       </Button>
       <Input
-        {...fullName}
         label="Full Name:"
         placeholder={placeholders.fullName}
+        error={errors.fullName}
+        value={data.fullName}
+        onChange={handleChange("fullName")}
       />
       <br style={{ marginBottom: "3rem" }} />
 
       <Input
-        {...phoneNumber}
         label="Phone Number:"
         placeholder={placeholders.phoneNumber}
+        error={errors.phoneNumber}
+        value={data.phoneNumber}
+        onChange={handleChange("phoneNumber")}
       />
       <br style={{ marginBottom: "3rem" }} />
 

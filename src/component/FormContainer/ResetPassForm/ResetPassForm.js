@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import { useUser } from "../../../context/userContext";
-import { useInputData } from "../../../utils/customHooks";
+import { useForm } from "../../../utils/customHooks";
 import FormContainer from "../FormContainer";
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";
@@ -25,14 +25,6 @@ const ResetPassForm = () => {
   // message state from fetch response
   const [message, setMessage] = useState(null);
 
-  // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const password = useInputData({ type: "password", validate: true });
-  const passwordConfirmation = useInputData({
-    type: "password",
-    validate: true,
-    confirmPass: password.value,
-  });
-
   useEffect(() => {
     if (message) {
       // clears message after 3s
@@ -48,18 +40,58 @@ const ResetPassForm = () => {
   const submitNewPass = async () => {
     const response = await handleResetPassword(
       token,
-      password.value,
-      passwordConfirmation.value
+      data.password,
+      data.passwordConfirmation
     );
     setSucceed(response.succeed);
     setMessage(response.message);
   };
 
+  const { handleSubmit, handleChange, data, errors } = useForm({
+    onSubmit: submitNewPass,
+
+    initialValues: {
+      password: "",
+      passwordConfirmation: "",
+    },
+
+    validations: {
+      password: {
+        pattern: {
+          value: /^(?=.*[A-Za-z])(?=.*\d)([\s\S]{6,})$/,
+          message: "Must contain at least 1 letter and 1 number",
+        },
+        custom: {
+          isValid: (value) => value.length > 5,
+          message: "Must have a least 6 characters",
+        },
+      },
+      passwordConfirmation: {
+        custom: {
+          isValid: (value) => value === data.password,
+          message: "Must match your password",
+        },
+      },
+    },
+  });
+
   return (
-    <FormContainer>
-      <Input {...password} label={"New Password"} />
+    <FormContainer onSubmit={handleSubmit}>
+      <Input
+        onChange={handleChange("password")}
+        value={data.password}
+        label={"New Password"}
+        error={errors.password}
+        type="password"
+      />
       <br style={{ marginBottom: "3rem" }} />
-      <Input {...passwordConfirmation} label={"Repeat new Password"} />
+      <Input
+        onChange={handleChange("passwordConfirmation")}
+        value={data.passwordConfirmation}
+        label={"Repeat new Password"}
+        error={errors.passwordConfirmation}
+        type="password"
+      />
       <br style={{ marginBottom: "3rem" }} />
       <p
         className={classes.Message}
@@ -80,14 +112,7 @@ const ResetPassForm = () => {
           Go back
         </Button>
       ) : (
-        <Button
-          onClick={submitNewPass}
-          disabled={
-            !password.isValid ||
-            !passwordConfirmation.isValid ||
-            loginData.loading
-          }
-        >
+        <Button onClick={submitNewPass} disabled={loginData.loading}>
           Reset password
         </Button>
       )}

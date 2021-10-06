@@ -81,7 +81,6 @@ const AccountSecurity = () => {
           url: "users/user-details",
           token: loginData.token,
         }).then((data) => {
-          console.log(data);
           if (data.addressCompleted === false)
             dispatch({ type: "EDIT_ADDRESS" });
 

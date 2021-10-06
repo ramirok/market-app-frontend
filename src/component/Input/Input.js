@@ -34,9 +34,15 @@ Recives:
             style={check}
           />
           {/* if isValid = false, shows (!) with tooltip */}
-          {isValid === false && (
+          {/* {isValid === false && (
             <div className={classes.Tooltip}>
               !<span className={classes.TooltipText}>{error.join(".\n")}</span>
+            </div>
+          )} */}
+
+          {error && (
+            <div className={classes.Tooltip}>
+              !<span className={classes.TooltipText}>{error}</span>
             </div>
           )}
         </div>
@@ -74,11 +80,16 @@ Recives:
             style={check}
           />
           {/* if isValid = false, shows (!) with tooltip */}
-          {isValid === false && (
+          {error && (
+            <div className={classes.Tooltip}>
+              !<span className={classes.TooltipText}>{error}</span>
+            </div>
+          )}
+          {/* {isValid === false && (
             <div className={classes.Tooltip}>
               !<span className={classes.TooltipText}>{error.join(".\n")}</span>
             </div>
-          )}
+          )} */}
         </div>
       );
 
@@ -95,9 +106,14 @@ Recives:
             style={check}
           />
           {/* if isValid = false, shows (!) with tooltip */}
-          {isValid === false && (
+          {/* {isValid === false && (
             <div className={classes.Tooltip}>
               !<span className={classes.TooltipText}>{error.join(".\n")}</span>
+            </div>
+          )} */}
+          {error && (
+            <div className={classes.Tooltip}>
+              !<span className={classes.TooltipText}>{error}</span>
             </div>
           )}
         </div>

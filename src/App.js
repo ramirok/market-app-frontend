@@ -14,19 +14,22 @@ const App = () => {
   return (
     <UserProvider>
       <CartProvider>
-        <Header />
-        <div className={classes.Container}>
-          <Suspense
-            fallback={
-              <div className={classes.SpinnerContainer}>
-                <Spinner />
-              </div>
-            }
-          >
-            <RenderRoutes routes={ROUTES} />
-          </Suspense>
+        <div className={classes.App}>
+          <Header />
+          <div className={classes.Container}>
+            <Suspense
+              fallback={
+                <div className={classes.SpinnerContainer}>
+                  <Spinner />
+                </div>
+              }
+            >
+              <RenderRoutes routes={ROUTES} />
+            </Suspense>
+          </div>
+
+          <Footer />
         </div>
-        <Footer />
       </CartProvider>
     </UserProvider>
   );

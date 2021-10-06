@@ -10,7 +10,7 @@ Recives:
  -disabled
  -inverted: white background style
 */
-  const { classFromProps, onClick, disabled, inverted } = props;
+  const { classFromProps, onClick, disabled, inverted, type } = props;
 
   const classesForButton = [classFromProps, classes.ButtonGeneral];
   if (disabled) classesForButton.push(classes.Disabled);
@@ -20,6 +20,7 @@ Recives:
       className={classesForButton.join(" ")}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {props.children}
     </button>

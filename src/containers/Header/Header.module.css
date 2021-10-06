@@ -12,7 +12,8 @@
   align-items: center;
   padding: 1rem 1rem;
   position: relative;
-  max-width: 130rem;
+  /* max-width: 130rem; */
+  max-width: 180rem;
 }
 
 .BarAndLinks {

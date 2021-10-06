@@ -47,15 +47,21 @@ export const CartProvider = (props) => {
   );
 
   // Delete item from cart
-  const delProductHandler = async (id, token) => {
-    const response = await fetchService({
-      method: "delete",
-      url: `cart/${id}`,
-      token,
-    });
-
-    setCartItems(response.products);
-  };
+  const delProductHandler = useCallback(
+    async (id, token) => {
+      const response = await fetchService({
+        method: "delete",
+        url: `cart/${id}`,
+        token,
+      });
+      if (response.ok) {
+        setCartItems(response.products);
+      } else {
+        getAllCart(token);
+      }
+    },
+    [getAllCart]
+  );
 
   // reset cart after purchase
   const resetCart = async (token, data) => {
@@ -83,7 +89,7 @@ export const CartProvider = (props) => {
       getAllCart,
       resetCart,
     };
-  }, [cartItems, loaded, addProductHandler, getAllCart]);
+  }, [cartItems, loaded, addProductHandler, getAllCart, delProductHandler]);
 
   return (
     <CartContext.Provider value={value}>{props.children}</CartContext.Provider>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useUser } from "../../../context/userContext";
-import { useInputData } from "../../../utils/customHooks";
+import { useForm } from "../../../utils/customHooks";
 import { fetchService } from "../../../utils/fetchServices";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
@@ -20,10 +20,6 @@ const LoginForm = () => {
   // message state from fetch response
   const [message, setMessage] = useState(null);
 
-  // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const email = useInputData({ type: "email", validate: true });
-  const password = useInputData({ type: "password" });
-
   useEffect(() => {
     if (message) {
       // clears message after 3 seconds
@@ -38,7 +34,7 @@ const LoginForm = () => {
 
   const submitLoginForm = async () => {
     // if login succeeds, redirects to "/"
-    const response = await handleLogin(email.value, password.value);
+    const response = await handleLogin(data.email, data.password);
     setMessage(response.message);
     response.succeed && history.push("/");
   };
@@ -48,21 +44,53 @@ const LoginForm = () => {
     setMessage(response.message);
     response.succeed && history.push("/");
   };
+
+  const { handleSubmit, handleChange, data, errors } = useForm({
+    onSubmit: submitLoginForm,
+
+    initialValues: {
+      email: "",
+      password: "",
+    },
+
+    validations: {
+      email: {
+        pattern: {
+          value:
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          message: "Enter a valid email.",
+        },
+      },
+      password: {
+        required: { value: true, message: "Please enter your password" },
+      },
+    },
+  });
+
   return (
-    <FormContainer>
-      <Input {...email} label="Email" />
+    <FormContainer onSubmit={handleSubmit}>
+      <Input
+        value={data.email}
+        onChange={handleChange("email")}
+        label="Email"
+        error={errors.email}
+        type="text"
+      />
       <br style={{ marginBottom: "3rem" }} />
-      <Input {...password} label="Password" />
+      <Input
+        value={data.password}
+        onChange={handleChange("password")}
+        label="Password"
+        error={errors.password}
+        type="password"
+      />
 
       <p className={classes.Message}>
         {loginData.loading ? <Spinner /> : message}
       </p>
 
       {/* login button */}
-      <Button
-        onClick={submitLoginForm}
-        disabled={!email.isValid || !password.value || loginData.loading}
-      >
+      <Button type="submit" disabled={loginData.loading}>
         Login
       </Button>
       <br style={{ marginBottom: "3rem" }} />
@@ -75,6 +103,7 @@ const LoginForm = () => {
             (data) => (window.location.href = data.url)
           );
         }}
+        type="button"
       >
         Login with Google
       </Button>
@@ -86,11 +115,14 @@ const LoginForm = () => {
         onClick={() => {
           history.push("/auth/forgot");
         }}
+        type="button"
       >
         Forgot password?
       </Button>
       <br style={{ marginBottom: "3rem" }} />
-      <Button onClick={submitLoginDemo}>Login Demo</Button>
+      <Button onClick={submitLoginDemo} type="button">
+        Login Demo
+      </Button>
     </FormContainer>
   );
 };

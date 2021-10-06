@@ -1,9 +1,18 @@
+.App {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
 .Container {
   width: 100%;
   display: grid;
-
-  grid-template-columns:
+  flex-grow: 1;
+  /* grid-template-columns:
     [start-footer] auto [start-content] minmax(0, 120rem)
+    [end-content] auto [end-footer]; */
+  grid-template-columns:
+    [start-footer] auto [start-content] minmax(0, 180rem)
     [end-content] auto [end-footer];
 
   gap: 3rem;
@@ -11,7 +20,6 @@
   /* margin-bottom: 4rem; */
 
   min-height: 100%;
-  margin-bottom: -40px; /* Put negative height of the footer here */
   padding-bottom: 40px; /* Put height of the footer here. Needed for higher than screen height pages */
 }
 

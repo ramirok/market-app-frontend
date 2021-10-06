@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useUser } from "../../../context/userContext";
-import { useInputData } from "../../../utils/customHooks";
+import { useForm } from "../../../utils/customHooks";
 import FormContainer from "../FormContainer";
 import Button from "../../Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
@@ -13,9 +13,6 @@ const ForgotPassForm = () => {
   // customHook for user context:
   // loginData returns ={name, email, token}
   const { loginData, handleForgotPassword } = useUser();
-
-  // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const email = useInputData({ type: "email", validate: "true" });
 
   // message state from fetch response
   const [message, setMessage] = useState(null);
@@ -37,14 +34,38 @@ const ForgotPassForm = () => {
   }, [message]);
 
   const submitForgotPassForm = async () => {
-    const response = await handleForgotPassword(email.value);
+    const response = await handleForgotPassword(data.email);
     setSucceed(response.succeed);
     setMessage(response.message);
   };
 
+  const { handleSubmit, handleChange, data, errors } = useForm({
+    onSubmit: submitForgotPassForm,
+
+    initialValues: {
+      email: "",
+    },
+
+    validations: {
+      email: {
+        pattern: {
+          value:
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          message: "Enter a valid email.",
+        },
+      },
+    },
+  });
+
   return (
-    <FormContainer>
-      <Input {...email} label={"Email"} />
+    <FormContainer onSubmit={handleSubmit}>
+      <Input
+        value={data.email}
+        onChange={handleChange("email")}
+        label={"Email"}
+        error={errors.email}
+        type="text"
+      />
       <p
         className={classes.Message}
         style={{ color: succeed ? "green" : "red" }}
@@ -58,12 +79,7 @@ const ForgotPassForm = () => {
       ) : (
         // if fails, keep showing ok and cancel buttons
         <>
-          <Button
-            onClick={submitForgotPassForm}
-            disabled={!email.isValid || loginData.loading}
-          >
-            Ok
-          </Button>
+          <Button disabled={loginData.loading}>Ok</Button>
           <br style={{ marginBottom: "3rem" }} />
           <Button
             inverted={true}

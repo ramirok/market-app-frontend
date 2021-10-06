@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useInputData } from "../../../utils/customHooks";
+import { useForm } from "../../../utils/customHooks";
 import { useUser } from "../../../context/userContext";
 import { fetchService } from "../../../utils/fetchServices";
 import Input from "../../Input/Input";
@@ -26,13 +26,6 @@ Recives:
     message: null,
   });
 
-  // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const state = useInputData({ type: "text" });
-  const city = useInputData({ type: "text" });
-  const zipCode = useInputData({ type: "number", validate: true });
-  const street = useInputData({ type: "text" });
-  const streetNumber = useInputData({ type: "number", validate: true });
-
   const submitAddressData = async () => {
     setFormState({ loading: true });
 
@@ -41,11 +34,11 @@ Recives:
       url: "users/user-details",
       token: loginData.token,
       body: {
-        state: state.value,
-        city: city.value,
-        zipCode: zipCode.value,
-        street: street.value,
-        streetNumber: streetNumber.value,
+        state: data.state,
+        city: data.city,
+        zipCode: data.zipCode,
+        street: data.street,
+        streetNumber: data.streetNumber,
       },
     });
 
@@ -60,36 +53,102 @@ Recives:
     });
   };
 
+  const { handleSubmit, handleChange, data, errors } = useForm({
+    onSubmit: submitAddressData,
+
+    initialValues: {
+      state: "",
+      city: "",
+      zipCode: "",
+      street: "",
+      streetNumber: "",
+    },
+
+    validations: {
+      state: {
+        custom: {
+          isValid: (value) => (value ? value.length > 3 : true),
+          message: "Must be at least 4 characters long.",
+        },
+      },
+      city: {
+        custom: {
+          isValid: (value) => (value ? value.length > 3 : true),
+          message: "Must be at least 4 characters long.",
+        },
+      },
+      zipCode: {
+        pattern: { value: /^[0-9]*$/, message: "Enter only numbers." },
+        custom: {
+          isValid: (value) => (value ? value.length > 3 : true),
+          message: "Must be at least 4 characters long.",
+        },
+      },
+      street: {
+        custom: {
+          isValid: (value) => (value ? value.length > 3 : true),
+          message: "Must be at least 4 characters long.",
+        },
+      },
+      streetNumber: {
+        pattern: { value: /^[0-9]*$/, message: "Enter only numbers." },
+      },
+    },
+  });
+
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
-      <Button
-        classFromProps={classes.ButtonOk}
-        onClick={submitAddressData}
-        disabled={formState.loading}
-      >
+    <form onSubmit={handleSubmit}>
+      <Button classFromProps={classes.ButtonOk} disabled={formState.loading}>
         ok
       </Button>
 
-      <Input {...state} label="State:" placeholder={placeholders.state} />
-      <br style={{ marginBottom: "3rem" }} />
-
-      <Input {...city} label="City:" placeholder={placeholders.city} />
-      <br style={{ marginBottom: "3rem" }} />
-
       <Input
-        {...zipCode}
-        label="Zip Code:"
-        placeholder={placeholders.zipCode}
+        label="State:"
+        placeholder={placeholders.state}
+        value={data.state}
+        onChange={handleChange("state")}
+        error={errors.state}
+        type="text"
       />
       <br style={{ marginBottom: "3rem" }} />
 
-      <Input {...street} label="Street:" placeholder={placeholders.street} />
+      <Input
+        label="City:"
+        placeholder={placeholders.city}
+        value={data.city}
+        onChange={handleChange("city")}
+        error={errors.city}
+        type="text"
+      />
       <br style={{ marginBottom: "3rem" }} />
 
       <Input
-        {...streetNumber}
+        label="Zip Code:"
+        placeholder={placeholders.zipCode}
+        value={data.zipCode}
+        onChange={handleChange("zipCode")}
+        error={errors.zipCode}
+        type="text"
+      />
+      <br style={{ marginBottom: "3rem" }} />
+
+      <Input
+        label="Street:"
+        placeholder={placeholders.street}
+        value={data.street}
+        onChange={handleChange("street")}
+        error={errors.street}
+        type="text"
+      />
+      <br style={{ marginBottom: "3rem" }} />
+
+      <Input
         label="Street Number:"
         placeholder={placeholders.streetNumber}
+        value={data.streetNumber}
+        onChange={handleChange("streetNumber")}
+        error={errors.streetNumber}
+        type="text"
       />
       <br style={{ marginBottom: "3rem" }} />
       <p className={classes.Message} style={{ color: "red" }}>

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import { fetchService } from "../../../utils/fetchServices";
-import { useInputData } from "../../../utils/customHooks";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
 import FormContainer from "../FormContainer";
 import classes from "./SignUpForm.module.css";
+
+import { useForm } from "../../../utils/customHooks";
 
 const SignUpForm = () => {
   // Signup state
@@ -15,11 +16,6 @@ const SignUpForm = () => {
     loading: false, //when true shows spinner
     succeed: false, //When true shows switch to login button
   });
-
-  // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const name = useInputData({ type: "text", validate: true });
-  const email = useInputData({ type: "email", validate: true });
-  const password = useInputData({ type: "password", validate: true });
 
   useEffect(() => {
     // clears message after 3s
@@ -41,9 +37,9 @@ const SignUpForm = () => {
       method: "post",
       url: "users",
       body: {
-        name: name.value,
-        email: email.value,
-        password: password.value,
+        name: data.userName,
+        email: data.email,
+        password: data.password,
       },
     });
     setSignupData((prevState) => ({
@@ -53,19 +49,75 @@ const SignUpForm = () => {
       succeed: response.ok,
     }));
     if (response.ok) {
-      name.onChange({ target: { value: "" } });
-      email.onChange({ target: { value: "" } });
-      password.onChange({ target: { value: "" } });
+      setData({ userName: "", email: "", password: "" });
     }
   };
 
+  const { handleSubmit, handleChange, data, setData, errors } = useForm({
+    onSubmit: submitSignupForm,
+
+    initialValues: {
+      userName: "",
+      email: "",
+      password: "",
+    },
+
+    validations: {
+      userName: {
+        pattern: {
+          value: /^[a-zA-Z0-9_]*$/,
+          message: "Only alphanumeric charactes.",
+        },
+        custom: {
+          isValid: (value) => value.length > 3,
+          message: "Must have a least 4 characters.",
+        },
+      },
+      email: {
+        pattern: {
+          value:
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          message: "Enter a valid email.",
+        },
+      },
+      password: {
+        pattern: {
+          value: /^(?=.*[A-Za-z])(?=.*\d)([\s\S]{6,})$/,
+          message: "Must contain at least 1 letter and 1 number",
+        },
+        custom: {
+          isValid: (value) => value.length > 5,
+          message: "Must have a least 6 characters",
+        },
+      },
+    },
+  });
+
   return (
-    <FormContainer>
-      <Input {...name} label={"User name"} />
+    <FormContainer onSubmit={handleSubmit}>
+      <Input
+        onChange={handleChange("userName")}
+        value={data.userName}
+        label={"User name"}
+        error={errors.userName}
+        type="text"
+      />
       <br style={{ marginBottom: "3rem" }} />
-      <Input {...email} label={"Email"} />
+      <Input
+        onChange={handleChange("email")}
+        value={data.email}
+        label={"Email"}
+        error={errors.email}
+        type="text"
+      />
       <br style={{ marginBottom: "3rem" }} />
-      <Input {...password} label={"Password"} />
+      <Input
+        onChange={handleChange("password")}
+        value={data.password}
+        label={"Password"}
+        error={errors.password}
+        type="password"
+      />
       <p
         className={classes.Message}
         style={{ color: signupData.succeed ? "green" : "red" }}
@@ -77,17 +129,7 @@ const SignUpForm = () => {
       {signupData.succeed ? (
         <p className={classes.checkMail}>Check your mail!</p>
       ) : (
-        <Button
-          onClick={submitSignupForm}
-          disabled={
-            !email.isValid ||
-            !password.isValid ||
-            !name.isValid ||
-            signupData.loading
-          }
-        >
-          Sign Up
-        </Button>
+        <Button disabled={signupData.loading}>Sign Up</Button>
       )}
     </FormContainer>
   );

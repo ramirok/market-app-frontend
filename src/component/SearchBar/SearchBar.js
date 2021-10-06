@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 
-import {
-  useInputData,
-  useClickOutsideListenerRef,
-} from "../../utils/customHooks";
+import { useClickOutsideListenerRef, useForm } from "../../utils/customHooks";
 import { fetchService } from "../../utils/fetchServices";
 import { capitalizeName } from "../../utils/helpers";
 import ProductModal from "../UI/Modal/ProductModal/ProductModal";
@@ -41,22 +38,42 @@ const SearchBar = () => {
   // loading state for spinner
   const [isLoading, setIsLoading] = useState(false);
 
-  // customHook useInputData returns: type, value, onChange handler
-  const search = useInputData({ type: "text" });
-
   // set suggestions fetched
   const [suggestions, setSuggestions] = useState([]);
 
+  const searchHandler = () => {
+    // fetch suggestions when search button has been clicked
+    if (data.search.length > 0) {
+      setIsLoading(true);
+      fetchService({
+        method: "get",
+        url: `products/autosuggest?q=${data.search}`,
+      }).then((response) => {
+        setSuggestions(response);
+        setIsLoading(false);
+        setRunHook(true);
+      });
+    }
+  };
+
+  const { handleSubmit, handleChange, data } = useForm({
+    onSubmit: searchHandler,
+
+    initialValues: {
+      search: "",
+    },
+  });
+
   useEffect(() => {
     // if user has typed, fetch suggestions after 500ms
-    if (search.value.length > 0) {
+    if (data.search.length > 0) {
       setIsLoading(true);
       let timer;
       timer = setTimeout(
         () =>
           fetchService({
             method: "get",
-            url: `products/autosuggest?q=${search.value}`,
+            url: `products/autosuggest?q=${data.search}`,
           }).then((response) => {
             setSuggestions(response);
             setIsLoading(false);
@@ -67,23 +84,9 @@ const SearchBar = () => {
       return () => clearTimeout(timer);
     } else {
       setSuggestions([]);
+      setIsLoading(false);
     }
-  }, [search.value]);
-
-  const searchHandler = () => {
-    // fetch suggestions when search button has been clicked
-    if (search.value.length > 0) {
-      setIsLoading(true);
-      fetchService({
-        method: "get",
-        url: `products/autosuggest?q=${search.value}`,
-      }).then((response) => {
-        setSuggestions(response);
-        setIsLoading(false);
-        setRunHook(true);
-      });
-    }
-  };
+  }, [data.search]);
 
   return (
     <>
@@ -91,11 +94,12 @@ const SearchBar = () => {
       {isOpen && <ProductModal setIsOpen={setIsOpen} modalData={modalData} />}
 
       <div className={classes.Container} ref={wrapperRef}>
-        <div className={classes.SearchBarContainer}>
+        <form className={classes.SearchBarContainer} onSubmit={handleSubmit}>
           <input
             className={classes.SearchBar}
-            {...search}
             placeholder="Search..."
+            value={data.search}
+            onChange={handleChange("search")}
           />
           <div className={classes.SuggestionContainer}>
             {/* Shows first 6 suggestions */}
@@ -120,7 +124,7 @@ const SearchBar = () => {
               <SearchIcon fill="white" height="60%" width="3rem" />
             )}
           </Button>
-        </div>
+        </form>
       </div>
     </>
   );

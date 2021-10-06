@@ -1,37 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-import { checkValidity } from "./helpers";
-
-//---------- form input hook ----------
-
-// //recives input type, ie:"email, password, text"
-export const useInputData = (
-  options = { type: "text", validate: false, confirmPass: "" }
-) => {
-  // input value state
-  const [value, setValue] = useState("");
-
-  // input has been typed in
-  const [touched, setTouched] = useState(false);
-
-  const onChange = (e) => {
-    setValue(e.target.value);
-    e.target.value < 1 ? setTouched(false) : setTouched(true);
-  };
-
-  // validate input when validate = true and touched = true
-  if (options.validate && touched) {
-    const { isValid, error } = checkValidity(
-      value,
-      options.type,
-      options.confirmPass
-    );
-    return { type: options.type, value, onChange, isValid, error };
-  }
-
-  // if no validate or no touched
-  return { type: options.type, value, onChange };
-};
 //---------- click outside component hook ----------
 
 // recives a reference and a callback to be executed
@@ -91,4 +59,61 @@ export const useWindowResize = () => {
   }, []);
 
   return windowWidth;
+};
+
+//---------- form input hook ----------
+
+export const useForm = (options) => {
+  const [data, setData] = useState(options?.initialValues || {});
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (key) => (e) => {
+    const value = e.currentTarget.value;
+    setData((prevState) => ({ ...prevState, [key]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validations = options?.validations;
+    if (validations) {
+      let valid = true;
+      const newErrors = {};
+      for (const key in validations) {
+        const value = data[key];
+        const validation = validations[key];
+
+        //   REQUIRED
+        if (validation?.required?.value && !value) {
+          valid = false;
+          newErrors[key] = validation?.required?.message;
+        }
+
+        // PATTERN
+        const pattern = validation?.pattern;
+        if (pattern?.value && !RegExp(pattern.value).test(value)) {
+          valid = false;
+          newErrors[key] = pattern.message;
+        }
+
+        // CUSTOM
+        const custom = validation?.custom;
+        if (custom?.isValid && !custom.isValid(value)) {
+          valid = false;
+          newErrors[key] = custom.message;
+        }
+      }
+
+      if (!valid) {
+        setErrors(newErrors);
+        return;
+      }
+    }
+
+    setErrors({});
+    if (options?.onSubmit) {
+      options.onSubmit();
+    }
+  };
+
+  return { data, setData, handleChange, handleSubmit, errors };
 };

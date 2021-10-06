@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useUser } from "../../../context/userContext";
-import { useInputData } from "../../../utils/customHooks";
+import { useForm } from "../../../utils/customHooks";
 import FormContainer from "../FormContainer";
 import Input from "../../Input/Input";
 import Button from "../../Button/Button";
@@ -22,15 +22,6 @@ const ChangePassForm = () => {
   // shows 'check mail' message instead of forgot pass button
   const [checkMail, setCheckMail] = useState(false);
 
-  // customHook useInputData returns: type, value, onChange handler, isValid and validation errors
-  const currentPass = useInputData({ type: "password" });
-  const password = useInputData({ type: "password", validate: true });
-  const passwordConfirmation = useInputData({
-    type: "password",
-    validate: true,
-    confirmPass: password.value,
-  });
-
   useEffect(() => {
     if (message) {
       // clears message after 3 seconds
@@ -43,19 +34,16 @@ const ChangePassForm = () => {
     }
   }, [message]);
 
-  const submitChangePass = async (e) => {
-    e.preventDefault();
+  const submitChangePass = async () => {
     const response = await handleChangePassword({
-      currentPass: currentPass.value,
-      password: password.value,
-      passwordConfirmation: passwordConfirmation.value,
+      currentPass: data.currentPass,
+      password: data.password,
+      passwordConfirmation: data.passwordConfirmation,
     });
     setSucceed(response.succeed);
     setMessage(response.message);
     if (response.succeed) {
-      currentPass.onChange({ target: { value: "" } });
-      password.onChange({ target: { value: "" } });
-      passwordConfirmation.onChange({ target: { value: "" } });
+      setData({ currentPass: "", password: "", passwordConfirmation: "" });
     }
   };
 
@@ -66,13 +54,66 @@ const ChangePassForm = () => {
     setMessage(response.message);
   };
 
+  const { handleSubmit, handleChange, data, errors, setData } = useForm({
+    onSubmit: submitChangePass,
+
+    initialValues: {
+      currentPass: "",
+      password: "",
+      passwordConfirmation: "",
+    },
+
+    validations: {
+      currentPass: {
+        required: {
+          value: true,
+          message: "Please enter your current password.",
+        },
+      },
+      password: {
+        pattern: {
+          value: /^(?=.*[A-Za-z])(?=.*\d)([\s\S]{6,})$/,
+          message: "Must contain at least 1 letter and 1 number",
+        },
+        custom: {
+          isValid: (value) => value.length > 5,
+          message: "Must have a least 6 characters",
+        },
+      },
+      passwordConfirmation: {
+        custom: {
+          isValid: (value) => value === data.password,
+          message: "Must match your password",
+        },
+      },
+    },
+  });
+
   return (
-    <FormContainer>
-      <Input {...currentPass} label="Current password." />
+    <FormContainer onSubmit={handleSubmit}>
+      <Input
+        label="Current password."
+        value={data.currentPass}
+        onChange={handleChange("currentPass")}
+        error={errors.currentPass}
+        type="password"
+      />
       <br style={{ marginBottom: "3rem" }} />
-      <Input {...password} label="New password." />
+      <Input
+        label="New password."
+        value={data.password}
+        onChange={handleChange("password")}
+        error={errors.password}
+        type="password"
+      />
       <br style={{ marginBottom: "3rem" }} />
-      <Input {...passwordConfirmation} label="Confirm new password." />
+      <Input
+        label="Confirm new password."
+        value={data.passwordConfirmation}
+        onChange={handleChange("passwordConfirmation")}
+        error={errors.passwordConfirmation}
+        type="password"
+      />
 
       {/* succeed or error message */}
       <p
@@ -83,17 +124,7 @@ const ChangePassForm = () => {
       </p>
 
       {/* ok button */}
-      <Button
-        onClick={submitChangePass}
-        disabled={
-          !password.isValid ||
-          !passwordConfirmation.isValid ||
-          !currentPass.value ||
-          loginData.loading
-        }
-      >
-        Ok
-      </Button>
+      <Button disabled={loginData.loading}>Ok</Button>
       <br style={{ marginBottom: "3rem" }} />
 
       {/* don't know my password button */}
