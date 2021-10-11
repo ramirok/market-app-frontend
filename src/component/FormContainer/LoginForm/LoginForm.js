@@ -120,7 +120,11 @@ const LoginForm = () => {
         Forgot password?
       </Button>
       <br style={{ marginBottom: "3rem" }} />
-      <Button onClick={submitLoginDemo} type="button">
+      <Button
+        onClick={submitLoginDemo}
+        type="button"
+        classFromProps={classes.button}
+      >
         Login Demo
       </Button>
     </FormContainer>
